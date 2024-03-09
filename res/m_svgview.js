@@ -22,7 +22,7 @@ export default class SVGGenerator {
     this.offsetY = this.cellHeight / 2;
 
     this.canvasWidth = this.cellWidth * (this.maze.width + 1);
-    this.canvasHeight = this.cellHeight * (this.maze.width + 1);
+    this.canvasHeight = this.cellHeight * (this.maze.height + 1);
     
     this.allSides = false;
   }
