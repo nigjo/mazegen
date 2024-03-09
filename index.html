@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dungeon Walls</title>
+    <style>main .view{
+        display:inline-block;
+        vertical-align:top;
+        margin:.5em;
+      }body{font-family:Arial,sans-serif;}
+      pre{font-family:Consolas,monospace;}</style>
+    <script>window.mazeinfo = {
+        seedtext: new Date().toLocaleString()
+      };</script>
+  </head>
+  <body>
+    <header><h1>Irrgarten
+        <script>document.currentScript.parentNode.appendChild(
+                  document.createElement('span'))
+                  .textContent = '"' + window.mazeinfo.seedtext + '"';</script>
+      </h1></header>
+    <nav></nav>
+    <main>
+      <div id="settings">
+      </div>
+    </main>
+    <script type="module">
+      import RandomKruskal from './res/RandomKruskal.js';
+
+      import IsometricView from './res/isometric.js';
+      import TextView from './res/textview.js';
+      import TopView from './res/topview.js';
+
+      //create a daily maze
+      const m = new RandomKruskal(6, 6, window.mazeinfo.seedtext);
+
+      function add(view) {
+        let w = document.createElement('div');
+        w.classList.add('view');
+        w.classList.add(view.constructor.name);
+        w.append(view.create());
+        document.querySelector('main')
+                .append(w);
+      }
+
+      add(new IsometricView(m));
+      add(new TextView(m));
+      add(new TopView(m));
+
+    </script>
+  </body>
+</html>
