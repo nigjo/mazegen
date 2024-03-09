@@ -15,19 +15,49 @@
       .github-fork-ribbon:after { color: #333;text-shadow:0.08em .08em rgba(255, 255, 255, 0.5) }
     </style>
     <script>window.mazeinfo = {
-        seedtext: new Date().toLocaleString()
-      };</script>
+        seedtext: new Date().toLocaleString(),
+        width: 6,
+        height: 6
+      };
+      function updateMaze(evt) {
+        console.debug(evt);
+        evt.preventDefault();
+        window.mazeinfo.seedtext = evt.target.seedText.value;
+        window.mazeinfo.width = Number(evt.target.width.value);
+        window.mazeinfo.height = Number(evt.target.height.value);
+        window.mazeinfo.update();
+        return false;
+      }
+      let alphabeth = "abcdefghijklmnopqrstuvwxyz";
+      alphabeth += alphabeth.toUpperCase();
+      alphabeth += "0123456789";
+      function createRandom() {
+        let form = document.forms.settings;
+        let seed = '';
+        for (let i = 0; i < 12; i++) {
+          seed += alphabeth.charAt(Math.random() * alphabeth.length);
+        }
+        form.seedText.value = seed;
+        form.requestSubmit();
+      }</script>
   </head>
   <body>
-    <header><h1>Irrgarten
-        <script>document.currentScript.parentNode.appendChild(
-                  document.createElement('span'))
-                  .textContent = '"' + window.mazeinfo.seedtext + '"';</script>
-      </h1></header>
+    <header><h1>Irrgarten<span id="seedtext"></span></h1></header>
     <nav></nav>
     <main>
-      <div id="settings">
+      <div>
+        <form id="settings" name="settings" onsubmit="updateMaze(event);return false;">
+          <label>Seed
+            <input name="seedText" placeholder="Text oder Zahlwert"
+                   size="15" required pattern="\d+|.+">
+          </label>
+          <label>Breite <input type="number" name="width" style="width:4em" min="2" value="6"></label>
+          <label>Höhe <input type="number" name="height" style="width:4em" min="2" value="6"></label>
+          <input type="submit" value="Update">
+          <input type="button" value="Random" onclick="createRandom()">
+        </form>
       </div>
+      <div id="views"></div>
     </main>
     <script type="module">
       import RandomKruskal from './res/RandomKruskal.js';
@@ -36,22 +66,32 @@
       import TextView from './res/textview.js';
       import TopView from './res/topview.js';
 
-      //create a daily maze
-      const m = new RandomKruskal(6, 6, window.mazeinfo.seedtext);
-
-      function add(view) {
+      function add(parent, view) {
         let w = document.createElement('div');
         w.classList.add('view');
         w.classList.add(view.constructor.name);
         w.append(view.create());
-        document.querySelector('main')
-                .append(w);
+        parent.append(w);
       }
 
-      add(new IsometricView(m));
-      add(new TextView(m));
-      add(new TopView(m));
+      window.mazeinfo.update = () => {
+        //create a daily maze
+        const m = new RandomKruskal(
+                window.mazeinfo.width,
+                window.mazeinfo.height,
+                window.mazeinfo.seedtext);
+        document.querySelector('#seedtext')
+                .textContent = ' "' + window.mazeinfo.seedtext + '"';
 
+        let parent = document.createDocumentFragment();
+
+        add(parent, new IsometricView(m));
+        add(parent, new TextView(m));
+        add(parent, new TopView(m));
+
+        document.querySelector('#views').replaceChildren(parent);
+      };
+      window.mazeinfo.update();
     </script>
     <footer>
       &copy; <a href="https://github.com/nigjo">Jens Hofschröer</a>
