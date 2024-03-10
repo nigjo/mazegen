@@ -13,13 +13,14 @@ export default class Maze {
   static WEST = 8;
 
   constructor(width, height, seed = null) {
+    let usedSeed=null;
     if (typeof (seed) === 'string')
     {
       if (seed.match(/^\d+$/)) {
-        seed = Number(seed);
+        usedSeed = Number(seed);
       } else {
         //function hashCode(){
-        seed = ((s) => {
+        usedSeed = ((s) => {
           var hash = 0, i, chr;
           if (s.length === 0)
             return hash;
@@ -32,8 +33,8 @@ export default class Maze {
         })(seed);
       }
     }
-    seed = seed !== null ? seed : (width * height * 51);
-    console.debug('seed', seed);
+    usedSeed = usedSeed !== null ? usedSeed : (width * height * 51);
+    console.debug('width:', width, 'height:', height, 'seed:', seed, usedSeed);
 
     let rng = ((a) => {
       let rnd = function () {
@@ -43,7 +44,7 @@ export default class Maze {
         return ((t ^ t >>> 14) >>> 0) / 4294967296;
       };
       return (max = 2) => Math.floor(rnd() * max);
-    })(seed);
+    })(usedSeed);
 
     this.width = width;
     this.height = height;

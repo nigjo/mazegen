@@ -5,62 +5,17 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="res/gh-fork-ribbon.css"/>
     <link rel="stylesheet" href="res/mazeviewer.css"/>
+    <script src="res/v_isometric.js" type="module"></script>
+    <script src="res/v_textview.js" type="module"></script>
+    <script src="res/v_topview.js" type="module"></script>
+    <script src="res/v_minecraft.js" type="module"></script>
     <script src="res/mazeviewer.js" type="module"></script>
-    <script id="mazeinfoInit">
-      window.mazeinfo = {
+    <script id="mazeDataInit">
+      window.mazedata = {
         seedtext: new Date().toLocaleString(),
         width: 6,
         height: 6
       };
-    </script>
-    <script>
-      function updateMaze(evt) {
-        console.debug(evt);
-        evt.preventDefault();
-        window.mazeinfo.seedtext = evt.target.seedText.value;
-        window.mazeinfo.width = Number(evt.target.width.value);
-        window.mazeinfo.height = Number(evt.target.height.value);
-        window.mazeinfo.update();
-        return false;
-      }
-    </script>
-    <script>
-      let alphabeth = "abcdefghijklmnopqrstuvwxyz";
-      alphabeth += alphabeth.toUpperCase();
-      alphabeth += "0123456789";
-      function createRandom() {
-        let form = document.forms.settings;
-        let seed = '';
-        for (let i = 0; i < 12; i++) {
-          seed += alphabeth.charAt(Math.random() * alphabeth.length);
-        }
-        form.seedText.value = seed;
-        form.requestSubmit();
-      }
-    </script>
-    <script>
-      document.addEventListener('readystatechange', (e) => {
-        if (document.readyState === 'interactive') {
-          console.debug('init query');
-          let q = new URLSearchParams(location.search);
-          let form = document.forms.settings;
-          if (q.has('seedText')) {
-            window.mazeinfo.seedtext
-                    = form.seedText.value
-                    = q.get('seedText');
-          }
-          if (q.has('width')) {
-            window.mazeinfo.width
-                    = form.width.value
-                    = Number(q.get('width'));
-          }
-          if (q.has('height')) {
-            window.mazeinfo.height
-                    = form.height.value
-                    = Number(q.get('height'));
-          }
-        }
-      });
     </script>
   </head>
   <body>
@@ -68,18 +23,21 @@
     <nav></nav>
     <main>
       <div>
-        <form id="settings" name="settings" onsubmit="updateMaze(event);return false;">
-          <label>Seed
-            <input name="seedText" placeholder="Text oder Zahlwert"
-                   size="15" required pattern="\d+|.+">
-          </label>
-          <label>Breite <input type="number" name="width" style="width:4em" min="2" value="6"></label>
-          <label>Höhe <input type="number" name="height" style="width:4em" min="2" value="6"></label>
-          <input type="submit" value="Update">
-          <input type="button" value="Random" onclick="createRandom()">
+        <form id="settings" name="settings">
+          <div>
+            <label>Seed
+              <input name="seedText" placeholder="Text oder Zahlwert"
+                     size="15" required pattern="\d+|.+">
+            </label>
+            <label>Breite <input type="number" name="width" style="width:4em" min="2" value="6"></label>
+            <label>Höhe <input type="number" name="height" style="width:4em" min="2" value="6"></label>
+            <input type="submit" value="Update">
+            <input type="button" value="Random">
+          </div><div id="viewSettings">
+          </div>
         </form>
       </div>
-      <div id="views"></div>
+      <div id="views"><p>Bitte warten...</p></div>
     </main>
     <footer>
       &copy; <a href="https://github.com/nigjo">Jens Hofschröer</a>

@@ -1,4 +1,5 @@
 import SVGGenerator from './m_svgview.js';
+import mazeinfo from './m_mazeinfo.js';
 
 export default class TopView extends SVGGenerator {
   constructor(m) {
@@ -72,3 +73,5 @@ export default class TopView extends SVGGenerator {
     svg.append(bg);
   }
 }
+
+mazeinfo.registerView(3000, m=>new TopView(m));

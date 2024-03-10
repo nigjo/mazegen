@@ -1,4 +1,5 @@
 import SVGGenerator from './m_svgview.js';
+import mazeinfo from './m_mazeinfo.js';
 
 export default class IsometricView extends SVGGenerator {
   constructor(maze) {
@@ -15,11 +16,11 @@ export default class IsometricView extends SVGGenerator {
     //console.log(diag);
     let walldisp = Math.sqrt(this.wallHeight * this.wallHeight
             + this.wallHeight * this.wallHeight);
-    console.debug(walldisp);
+    //console.debug(walldisp);
 
     this.canvasWidth = hyp * diag * this.scaleX;
     this.canvasHeight = (hyp * diag + walldisp) * this.scaleY;
-    console.debug(this.canvasHeight);
+    //console.debug(this.canvasHeight);
 
     this.offsetX = this.canvasWidth / 2;
     this.offsetY = this.canvasHeight / 2 + (walldisp / 2 * this.scaleY);
@@ -69,4 +70,4 @@ export default class IsometricView extends SVGGenerator {
   }
 }
 
-
+mazeinfo.registerView(1000, m=>new IsometricView(m));

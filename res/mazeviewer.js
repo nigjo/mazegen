@@ -1,47 +1,66 @@
-function add(parent, view) {
-  let w = document.createElement('div');
-  w.classList.add('view');
-  w.classList.add(view.constructor.name);
-  let shadow = w.attachShadow({
-    mode: 'closed'
-  });
-  shadow.append(view.create());
-  parent.append(w);
+import mazeinfo from './m_mazeinfo.js';
+
+function updateMaze(evt) {
+  //console.debug(evt);
+  evt.preventDefault();
+  window.mazedata.seedtext = evt.target.seedText.value;
+  window.mazedata.width = Number(evt.target.width.value);
+  window.mazedata.height = Number(evt.target.height.value);
+  mazeinfo.update();
+  return false;
+}
+document.forms.settings.onsubmit = updateMaze;
+
+let alphabeth = "abcdefghijklmnopqrstuvwxyz";
+alphabeth += alphabeth.toUpperCase();
+alphabeth += "0123456789";
+function createRandom() {
+  let form = document.forms.settings;
+  let seed = '';
+  for (let i = 0; i < 12; i++) {
+    seed += alphabeth.charAt(Math.random() * alphabeth.length);
+  }
+  form.seedText.value = seed;
+  form.requestSubmit();
+}
+function initRandomButton() {
+  document.querySelector("#settings input[value='Random']")
+          .onclick = createRandom;
 }
 
-import RandomKruskal from './RandomKruskal.js';
+function initQuery() {
+  //console.debug('init query');
+  let q = new URLSearchParams(location.search);
+  let form = document.forms.settings;
+  if (q.has('seedText')) {
+    window.mazedata.seedtext
+            = form.seedText.value
+            = q.get('seedText');
+  }
+  if (q.has('width')) {
+    window.mazedata.width
+            = form.width.value
+            = Number(q.get('width'));
+  }
+  if (q.has('height')) {
+    window.mazedata.height
+            = form.height.value
+            = Number(q.get('height'));
+  }
+}
 
-import IsometricView from './v_isometric.js';
-import TextView from './v_textview.js';
-import TopView from './v_topview.js';
-import MincraftView from './v_minecraft.js';
-
-window.mazeinfo.update = () => {
-  console.debug('update mazes');
-  //create a daily maze
-  const m = new RandomKruskal(
-          window.mazeinfo.width,
-          window.mazeinfo.height,
-          window.mazeinfo.seedtext);
-  document.querySelector('#seedtext')
-          .textContent = ' "' + window.mazeinfo.seedtext + '"';
-
-  let parent = document.createDocumentFragment();
-
-  add(parent, new IsometricView(m));
-  add(parent, new TextView(m));
-  let box = new TextView(m);
-  box.boxView = true;
-  add(parent, box);
-  add(parent, new TopView(m));
-  add(parent, new MincraftView(m));
-
-  document.querySelector('#views').replaceChildren(parent);
-};
-
+console.debug('base', document.readyState);
 if (document.readyState === 'loading') {
   console.debug('wait for page');
-  document.addEventListener('DOMContentLoaded', window.mazeinfo.update);
+  document.addEventListener('readystatechange', (e) => {
+    if (document.readyState === 'interactive') {
+      initRandomButton();
+      initQuery();
+    }
+  });
+  document.addEventListener('DOMContentLoaded', mazeinfo.update);
 } else {
-  window.mazeinfo.update();
+  initRandomButton();
+  initQuery();
+  mazeinfo.update();
 }
