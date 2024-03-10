@@ -1,0 +1,18 @@
+main .view{
+  display:inline-block;
+  vertical-align:top;
+  margin:.5em;
+}
+body{
+  font-family:Arial,sans-serif;
+}
+pre{
+  font-family:Consolas,monospace;
+}
+.github-fork-ribbon:before {
+  background-color: #CCC;
+}
+.github-fork-ribbon:after {
+  color: #333;
+  text-shadow:0.08em .08em rgba(255, 255, 255, 0.5)
+}

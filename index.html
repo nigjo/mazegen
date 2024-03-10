@@ -4,23 +4,16 @@
     <title>Dungeon Walls</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="res/gh-fork-ribbon.css"/>
-    <style>main .view{
-        display:inline-block;
-        vertical-align:top;
-        margin:.5em;
-      }body{font-family:Arial,sans-serif;}
-      pre{font-family:Consolas,monospace;}
-      .github-fork-ribbon:before { background-color: #CCC; }
-      /*.github-fork-ribbon { color: #DDD; }*/
-      .github-fork-ribbon:after { color: #333;text-shadow:0.08em .08em rgba(255, 255, 255, 0.5) }
-    </style>
+    <link rel="stylesheet" href="res/mazeviewer.css"/>
     <script src="res/mazeviewer.js" type="module"></script>
-    <script>
+    <script id="mazeinfoInit">
       window.mazeinfo = {
         seedtext: new Date().toLocaleString(),
         width: 6,
         height: 6
       };
+    </script>
+    <script>
       function updateMaze(evt) {
         console.debug(evt);
         evt.preventDefault();
@@ -30,6 +23,8 @@
         window.mazeinfo.update();
         return false;
       }
+    </script>
+    <script>
       let alphabeth = "abcdefghijklmnopqrstuvwxyz";
       alphabeth += alphabeth.toUpperCase();
       alphabeth += "0123456789";
@@ -42,6 +37,8 @@
         form.seedText.value = seed;
         form.requestSubmit();
       }
+    </script>
+    <script>
       document.addEventListener('readystatechange', (e) => {
         if (document.readyState === 'interactive') {
           console.debug('init query');
