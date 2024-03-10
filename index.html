@@ -14,7 +14,9 @@
       /*.github-fork-ribbon { color: #DDD; }*/
       .github-fork-ribbon:after { color: #333;text-shadow:0.08em .08em rgba(255, 255, 255, 0.5) }
     </style>
-    <script>window.mazeinfo = {
+    <script src="res/mazeviewer.js" type="module"></script>
+    <script>
+      window.mazeinfo = {
         seedtext: new Date().toLocaleString(),
         width: 6,
         height: 6
@@ -39,7 +41,30 @@
         }
         form.seedText.value = seed;
         form.requestSubmit();
-      }</script>
+      }
+      document.addEventListener('readystatechange', (e) => {
+        if (document.readyState === 'interactive') {
+          console.debug('init query');
+          let q = new URLSearchParams(location.search);
+          let form = document.forms.settings;
+          if (q.has('seedText')) {
+            window.mazeinfo.seedtext
+                    = form.seedText.value
+                    = q.get('seedText');
+          }
+          if (q.has('width')) {
+            window.mazeinfo.width
+                    = form.width.value
+                    = Number(q.get('width'));
+          }
+          if (q.has('height')) {
+            window.mazeinfo.height
+                    = form.height.value
+                    = Number(q.get('height'));
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <header><h1>Irrgarten<span id="seedtext"></span></h1></header>
@@ -59,48 +84,6 @@
       </div>
       <div id="views"></div>
     </main>
-    <script type="module">
-      import RandomKruskal from './res/RandomKruskal.js';
-
-      import IsometricView from './res/v_isometric.js';
-      import TextView from './res/v_textview.js';
-      import TopView from './res/v_topview.js';
-      import MincraftView from './res/v_minecraft.js';
-
-      function add(parent, view) {
-        let w = document.createElement('div');
-        w.classList.add('view');
-        w.classList.add(view.constructor.name);
-        let shadow = w.attachShadow({
-          mode:'closed'
-        });
-        shadow.append(view.create());
-        parent.append(w);
-      }
-
-      window.mazeinfo.update = () => {
-        //create a daily maze
-        const m = new RandomKruskal(
-                window.mazeinfo.width,
-                window.mazeinfo.height,
-                window.mazeinfo.seedtext);
-        document.querySelector('#seedtext')
-                .textContent = ' "' + window.mazeinfo.seedtext + '"';
-
-        let parent = document.createDocumentFragment();
-
-        add(parent, new IsometricView(m));
-        add(parent, new TextView(m));
-        let box = new TextView(m);
-        box.boxView = true;
-        add(parent, box);
-        add(parent, new TopView(m));
-        add(parent, new MincraftView(m));
-
-        document.querySelector('#views').replaceChildren(parent);
-      };
-      window.mazeinfo.update();
-    </script>
     <footer>
       &copy; <a href="https://github.com/nigjo">Jens Hofschröer</a>
       <a class="github-fork-ribbon" href="https://github.com/nigjo/mazegen" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
