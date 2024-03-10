@@ -1,4 +1,4 @@
-:root{
+svg{
   --wand:gray;
   --boden:Sienna;
 }
@@ -21,4 +21,3 @@ text{
   fill:var(--boden);
   stroke:black;
 }
-
