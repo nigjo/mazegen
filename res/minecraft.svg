@@ -1,0 +1,113 @@
+<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="boden">
+      <rect id="boden" class="boden" style="stroke:none"
+            x="0" y="0" width="64" height="64"/>
+      <rect id="boden" class="boden" style="fill:none"
+            x="16" y="16" width="32" height="32"/>
+    </g>
+    <g id="wallTop">
+      <rect class="wand" x="0" y="0" width="16" height="16"/>
+      <rect class="wand" x="48" y="0" width="16" height="16"/>
+      <rect class="wand" x="16" y="0" width="32" height="16"/>
+      <path class="wand" d="M0,16l16,0,0,-16"/>
+      <path class="wand" d="M48,0l0,16,16,0"/>
+      <path class="wand" d="M16,0l0,16,32,0,0,-16"/>
+    </g>
+    <g id="doorTop">
+      <rect class="wand" x="0" y="0" width="16" height="16"/>
+      <rect class="wand" x="48" y="0" width="16" height="16"/>
+      <path class="wand" d="M0,16l16,0,0,-16"/>
+      <path class="wand" d="M48,0l0,16,16,0"/>
+    </g>
+    <g id="wallBottom">
+      <rect class="wand" x="0" y="48" width="16" height="16"/>
+      <rect class="wand" x="48" y="48" width="16" height="16"/>
+      <rect class="wand" x="16" y="48" width="32" height="16"/>
+      <path class="wand" d="M0,48l16,0,0,16"/>
+      <path class="wand" d="M48,64l0,-16,16,0"/>
+      <path class="wand" d="M16,64l0,-16,32,0,0,16"/>
+    </g>
+    <g id="doorBottom">
+      <rect class="wand" x="0" y="48" width="16" height="16"/>
+      <rect class="wand" x="48" y="48" width="16" height="16"/>
+      <path class="wand" d="M0,48l16,0,0,16"/>
+      <path class="wand" d="M48,64l0,-16,16,0"/>
+    </g>
+    <g id="wallLeft">
+      <rect class="wand" x="0" y="0" width="16" height="16"/>
+      <rect class="wand" x="0" y="48" width="16" height="16"/>
+      <rect class="wand" x="0" y="16" width="16" height="32"/>
+      <path class="wand" d="M0,16l16,0,0,-16"/>
+      <path class="wand" d="M0,48l16,0,0,16"/>
+      <path class="wand" d="M0,16l16,0,0,32,-16,0"/>
+    </g>
+    <g id="doorLeft">
+      <rect class="wand" x="0" y="0" width="16" height="16"/>
+      <rect class="wand" x="0" y="48" width="16" height="16"/>
+      <!--<rect class="wand" x="0" y="16" width="16" height="32"/>-->
+      <path class="wand" d="M0,16l16,0,0,-16"/>
+      <path class="wand" d="M0,48l16,0,0,16"/>
+      <!--<path class="wand" d="M0,16l16,0,0,32,-16,0"/>-->
+    </g>
+    <g id="wallRight">
+      <rect class="wand" x="48" y="0" width="16" height="16"/>
+      <rect class="wand" x="48" y="48" width="16" height="16"/>
+      <rect class="wand" x="48" y="16" width="16" height="32"/>
+      <path class="wand" d="M48,0l0,16,16,0"/>
+      <path class="wand" d="M64,48l-16,0,0,16"/>
+      <path class="wand" d="M64,16l-16,0,0,32,16,0"/>
+    </g>
+    <g id="doorRight">
+      <rect class="wand" x="48" y="0" width="16" height="16"/>
+      <rect class="wand" x="48" y="48" width="16" height="16"/>
+      <!--<rect class="wand" x="0" y="16" width="16" height="32"/>-->
+      <path class="wand" d="M48,0l0,16,16,0"/>
+      <path class="wand" d="M64,48l-16,0,0,16"/>
+      <!--<path class="wand" d="M0,16l16,0,0,32,-16,0"/>-->
+    </g>
+    <style>
+      .boden{fill:green;stroke:none;}
+      rect.wand{fill:Sienna;stroke:none;}
+      path.wand{fill:none;stroke:SaddleBrown;}
+    </style>
+  </defs>
+
+  <g transform="translate(0,0)">
+    <g transform="translate(0,0)">
+      <use href="#boden"/>
+      <use href="#wallBottom"/>
+      <use href="#wallRight"/>
+    </g>
+    <g transform="translate(0,64)">
+      <use href="#boden"/>
+    </g>
+    <g transform="translate(0,128)">
+      <use href="#boden"/>
+      <use href="#wallTop"/>
+      <use href="#wallLeft"/>
+    </g>
+    <g transform="translate(64,0)">
+      <use href="#boden"/>
+    </g>
+    <g transform="translate(64,64)">
+      <use href="#boden"/>
+    </g>
+    <g transform="translate(64,128)">
+      <use href="#boden"/>
+    </g>
+    <g transform="translate(128,0)">
+      <use href="#boden"/>
+      <use href="#doorBottom"/>
+      <use href="#doorRight"/>
+    </g>
+    <g transform="translate(128,64)">
+      <use href="#boden"/>
+    </g>
+    <g transform="translate(128,128)">
+      <use href="#boden"/>
+      <use href="#doorTop"/>
+      <use href="#doorLeft"/>
+    </g>
+  </g>
+</svg>

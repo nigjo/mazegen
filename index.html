@@ -65,6 +65,7 @@
       import IsometricView from './res/v_isometric.js';
       import TextView from './res/v_textview.js';
       import TopView from './res/v_topview.js';
+      import MincraftView from './res/v_minecraft.js';
 
       function add(parent, view) {
         let w = document.createElement('div');
@@ -94,6 +95,7 @@
         box.boxView = true;
         add(parent, box);
         add(parent, new TopView(m));
+        add(parent, new MincraftView(m));
 
         document.querySelector('#views').replaceChildren(parent);
       };
