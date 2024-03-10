@@ -62,15 +62,18 @@
     <script type="module">
       import RandomKruskal from './res/RandomKruskal.js';
 
-      import IsometricView from './res/isometric.js';
-      import TextView from './res/textview.js';
-      import TopView from './res/topview.js';
+      import IsometricView from './res/v_isometric.js';
+      import TextView from './res/v_textview.js';
+      import TopView from './res/v_topview.js';
 
       function add(parent, view) {
         let w = document.createElement('div');
         w.classList.add('view');
         w.classList.add(view.constructor.name);
-        w.append(view.create());
+        let shadow = w.attachShadow({
+          mode:'closed'
+        });
+        shadow.append(view.create());
         parent.append(w);
       }
 
