@@ -87,6 +87,9 @@
 
         add(parent, new IsometricView(m));
         add(parent, new TextView(m));
+        let box = new TextView(m);
+        box.boxView = true;
+        add(parent, box);
         add(parent, new TopView(m));
 
         document.querySelector('#views').replaceChildren(parent);
