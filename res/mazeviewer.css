@@ -3,9 +3,18 @@ main .view{
   vertical-align:top;
   margin:.5em;
 }
-header>*{display:inline-block;vertical-align:middle;}
-body{  
+header>*{
+  display:inline-block;
+  vertical-align:middle;
+}
+body{
   font-family:Arial,sans-serif;
+}
+#viewSettings>label{
+  margin:.5em;
+}
+#views .view[data-enabled='false']{
+  display:none;
 }
 pre{
   font-family:Consolas,monospace;
