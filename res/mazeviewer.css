@@ -3,7 +3,8 @@ main .view{
   vertical-align:top;
   margin:.5em;
 }
-body{
+header>*{display:inline-block;vertical-align:middle;}
+body{  
   font-family:Arial,sans-serif;
 }
 pre{
