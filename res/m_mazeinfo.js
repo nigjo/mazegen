@@ -55,7 +55,7 @@ mazeinfo.registerView = (pos, viewInfo) => {
     let callFkt = caller.substring(0, caller.indexOf('@'));
     //console.debug(callFkt);
     if (callFkt.length === 0) {
-      let name = caller.substring(caller.lastIndexOf('/') + 1, caller.indexOf('.'));
+      let name = caller.substring(caller.lastIndexOf('/') + 1, caller.lastIndexOf('.'));
       window.mazedata.views[Number(pos)] = {
         displayName: name,
         generator: viewInfo
