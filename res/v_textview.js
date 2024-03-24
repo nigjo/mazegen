@@ -1,5 +1,4 @@
 import Maze from './m_maze.js';
-import mazeinfo from './m_mazeinfo.js';
 
 export default class TextView {
 
@@ -88,10 +87,22 @@ export default class TextView {
   }
 
 }
-
-mazeinfo.registerView(2000, m=>new TextView(m));
-mazeinfo.registerView(2100, m=>{
+function boxed(m) {
   let box = new TextView(m);
   box.boxView = true;
   return box;
-});
+}
+
+if (window.mazedata) {
+  import("./m_mazeinfo.js").then(mod => {
+    let mazeinfo = mod.default;
+    mazeinfo.registerView(2200, {
+      displayName: "Asciitext",
+      generator: m => new TextView(m)
+    });
+    mazeinfo.registerView(2100, {
+      displayName: "Textansicht",
+      generator: boxed
+    });
+  });
+}

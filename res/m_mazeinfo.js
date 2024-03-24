@@ -69,6 +69,9 @@ mazeinfo.registerView = (pos, viewInfo) => {
   }
 
   window.mazedata.views[Number(pos)].enabled = true;
+  console.log('registered view at', Number(pos));
+
+  window.dispatchEvent(new CustomEvent('mazedata.views'));
 };
 
 

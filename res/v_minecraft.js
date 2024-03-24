@@ -1,5 +1,4 @@
 import SVGGenerator from './m_svgview.js';
-import mazeinfo from './m_mazeinfo.js';
 
 export default class MincraftView extends SVGGenerator {
   constructor(maze) {
@@ -27,4 +26,9 @@ export default class MincraftView extends SVGGenerator {
   }
 }
 
-mazeinfo.registerView(4000, m=>new MincraftView(m));
+if (window.mazedata) {
+  import("./m_mazeinfo.js").then(mod => {
+    let mazeinfo = mod.default;
+    mazeinfo.registerView(4000, m => new MincraftView(m));
+  });
+}

@@ -1,5 +1,4 @@
 import SVGGenerator from './m_svgview.js';
-import mazeinfo from './m_mazeinfo.js';
 
 export default class TopView extends SVGGenerator {
   constructor(m) {
@@ -46,7 +45,7 @@ export default class TopView extends SVGGenerator {
     wall.setAttribute('x', 0);
     wall.setAttribute('y', this.cellHeight / 4);
     wall.setAttribute('width', this.cellWidth * 3 / 4);
-    wall.setAttribute('height', this.cellHeight /2);
+    wall.setAttribute('height', this.cellHeight / 2);
     wall.setAttribute('fill', 'dimgray');
     wall.setAttribute('stroke', 'none');
     defs.append(wall);
@@ -56,7 +55,7 @@ export default class TopView extends SVGGenerator {
     wall.setAttribute('x', this.cellWidth / 4);
     wall.setAttribute('y', this.cellHeight / 4);
     wall.setAttribute('width', this.cellWidth * 3 / 4);
-    wall.setAttribute('height', this.cellHeight /2);
+    wall.setAttribute('height', this.cellHeight / 2);
     wall.setAttribute('fill', 'dimgray');
     wall.setAttribute('stroke', 'none');
     defs.append(wall);
@@ -74,4 +73,9 @@ export default class TopView extends SVGGenerator {
   }
 }
 
-mazeinfo.registerView(3000, m=>new TopView(m));
+if (window.mazedata) {
+  import("./m_mazeinfo.js").then(mod => {
+    let mazeinfo = mod.default;
+    mazeinfo.registerView(3000, m => new TopView(m));
+  });
+}

@@ -1,5 +1,4 @@
 import SVGGenerator from './m_svgview.js';
-import mazeinfo from './m_mazeinfo.js';
 
 export default class IsometricView extends SVGGenerator {
   constructor(maze) {
@@ -70,4 +69,12 @@ export default class IsometricView extends SVGGenerator {
   }
 }
 
-mazeinfo.registerView(1000, m=>new IsometricView(m));
+if (window.mazedata) {
+  import("./m_mazeinfo.js").then(mod => {
+    let mazeinfo = mod.default;
+    mazeinfo.registerView(1000, {
+      displayName: "Isometrisch",
+      generator: m => new IsometricView(m)
+    });
+  });
+}

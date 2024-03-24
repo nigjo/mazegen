@@ -56,9 +56,10 @@ function initQuery() {
   }
 }
 
+
 function initSettings() {
   //console.group('settings');
-
+  let settingsBlock = document.createDocumentFragment();
   for (let pos in window.mazedata.views) {
     let view = window.mazedata.views[pos];
     if ("displayName" in view) {
@@ -76,21 +77,36 @@ function initSettings() {
       entry.append(cb);
       entry.append(view.displayName);
 
-      document.querySelector("#viewSettings").append(entry);
+      settingsBlock.append(entry);
       cb.checked = view.enabled;
     }
   }
+  document.querySelector("#viewSettings").replaceChildren(settingsBlock);
   //console.groupEnd();
 }
 
 function initPageContent() {
+  console.debug('init page content');
   initRandomButton();
   initQuery();
   initSettings();
+  console.debug('init done');
 }
 function initPageLoaded() {
   mazeinfo.update();
 }
+
+var viewTimer;
+window.addEventListener('mazedata.views', evt => {
+  if (viewTimer) {
+    clearTimeout(viewTimer);
+  }
+  viewTimer = setTimeout(() => {
+    console.debug("update page content");
+    initSettings();
+    initPageLoaded();
+  }, 0);
+});
 
 console.debug('base', document.readyState);
 if (document.readyState === 'loading') {
