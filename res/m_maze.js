@@ -6,14 +6,23 @@ class Cell {
 }
 
 
+/**
+ * @class Ein Irrgarten
+ */
 export default class Maze {
   static NORTH = 1;
   static EAST = 2;
   static SOUTH = 4;
   static WEST = 8;
 
+  /**
+   * @argument {number} width 
+   * @argument {number} height
+   * @argument {string|number} seed
+   */
   constructor(width, height, seed = null) {
-    let usedSeed=null;
+    /**@type number */
+    let usedSeed = null;
     if (typeof (seed) === 'string')
     {
       if (seed.match(/^\d+$/)) {
@@ -32,6 +41,8 @@ export default class Maze {
           return hash;
         })(seed);
       }
+    } else if (typeof (seed) === 'number') {
+      usedSeed = seed;
     }
     usedSeed = usedSeed !== null ? usedSeed : (width * height * 51);
     console.debug('width:', width, 'height:', height, 'seed:', seed, usedSeed);
@@ -75,7 +86,7 @@ export default class Maze {
           return undefined;
         return this.cells[cell.row - 1][cell.col];
       case Maze.SOUTH:
-        if (cell.row + 1 < this.height)
+        if (cell.row + 1 >= this.height)
           return undefined;
         return this.cells[cell.row + 1][cell.col];
       case Maze.WEST:
@@ -83,13 +94,17 @@ export default class Maze {
           return undefined;
         return this.cells[cell.row][cell.col - 1];
       case Maze.EAST:
-        if (cell.col + 1 < this.width)
+        if (cell.col + 1 >= this.width)
           return undefined;
         return this.cells[cell.row][cell.col + 1];
     }
     return undefined;
   }
 
+  /**
+   * @return {boolean|undefined} Bei Nachbarn wird true oder false geliefert.
+   * Sind die Zellen keine Nachbarn gibt es "undefined"
+   */
   hasWall(cell1, cell2) {
     if (cell1.row === cell2.row) {
       //gleiche Zeile
