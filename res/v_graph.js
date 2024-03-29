@@ -173,6 +173,15 @@ export default class GraphInfo {
     return svg;
   }
 
+  #addRoom(svg, roomDef, dotsize) {
+    let room = document.createElementNS(SVGNS, 'circle');
+    room.setAttribute('cx', roomDef.x);
+    room.setAttribute('cy', roomDef.y);
+    room.setAttribute('r', dotsize * 1.33);
+    room.setAttribute('class', 'knot');
+    svg.append(room);
+  }
+
   #addVisualContent(svg, graph) {
     let minX = 0;
     let minY = 0;
@@ -280,12 +289,7 @@ export default class GraphInfo {
       entrance.setAttribute('y2', minY);
       svg.append(entrance);
       if (start.doors.length > 1) {
-        let room = document.createElementNS(SVGNS, 'circle');
-        room.setAttribute('cx', start.x);
-        room.setAttribute('cy', start.y);
-        room.setAttribute('r', dotsize * 1.33);
-        room.setAttribute('class', 'knot');
-        svg.append(room);
+        this.#addRoom(svg, start, dotsize);
       }
 
       let ende = graph.get(this.maze.exit);
@@ -296,29 +300,12 @@ export default class GraphInfo {
       exit.setAttribute('y2', maxY);
       svg.append(exit);
       if (ende.doors.length > 1) {
-        let room = document.createElementNS(SVGNS, 'circle');
-        room.setAttribute('cx', ende.x);
-        room.setAttribute('cy', ende.y);
-        room.setAttribute('r', dotsize * 1.33);
-        room.setAttribute('class', 'knot');
-        svg.append(room);
+        this.#addRoom(svg, ende, dotsize);
       }
 
       [...graph.values()].forEach(current => {
         if (current.x && current.doors.length > 2) {
-          //  let room = document.createElementNS(SVGNS, 'rect');
-          //  room.setAttribute('x', current.x - half);
-          //  room.setAttribute('y', current.y - half);
-          //  room.setAttribute('width', dotsize);
-          //  room.setAttribute('height', dotsize);
-          let room = document.createElementNS(SVGNS, 'circle');
-
-          room.setAttribute('cx', current.x);
-          room.setAttribute('cy', current.y);
-          room.setAttribute('r', dotsize * 1.33);
-
-          room.setAttribute('class', 'knot');
-          svg.append(room);
+          this.#addRoom(svg, current, dotsize);
         }
       });
     }
