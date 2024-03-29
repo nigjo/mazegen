@@ -279,6 +279,14 @@ export default class GraphInfo {
       entrance.setAttribute('x2', start.x);
       entrance.setAttribute('y2', minY);
       svg.append(entrance);
+      if (start.doors.length > 1) {
+        let room = document.createElementNS(SVGNS, 'circle');
+        room.setAttribute('cx', start.x);
+        room.setAttribute('cy', start.y);
+        room.setAttribute('r', dotsize * 1.33);
+        room.setAttribute('class', 'knot');
+        svg.append(room);
+      }
 
       let ende = graph.get(this.maze.exit);
       let exit = document.createElementNS(SVGNS, 'line');
@@ -287,6 +295,14 @@ export default class GraphInfo {
       exit.setAttribute('x2', ende.x);
       exit.setAttribute('y2', maxY);
       svg.append(exit);
+      if (ende.doors.length > 1) {
+        let room = document.createElementNS(SVGNS, 'circle');
+        room.setAttribute('cx', ende.x);
+        room.setAttribute('cy', ende.y);
+        room.setAttribute('r', dotsize * 1.33);
+        room.setAttribute('class', 'knot');
+        svg.append(room);
+      }
 
       [...graph.values()].forEach(current => {
         if (current.x && current.doors.length > 2) {
