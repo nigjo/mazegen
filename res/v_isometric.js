@@ -6,6 +6,7 @@ export default class IsometricView extends SVGGenerator {
 
     this.scaleX = 1.;
     this.scaleY = .9;
+    this.allSides = false;
 
     let hyp = Math.sqrt(this.cellHeight * this.cellHeight
             + this.cellWidth * this.cellWidth);
