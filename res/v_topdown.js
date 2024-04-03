@@ -4,6 +4,9 @@ export default class TopDownView extends SVGGenerator {
   constructor(m) {
     super(m);
     this.allSides = true;
+    this.offsetX=0;
+    this.offsetY=0;
+    this.scaleSvg=1.5;
   }
 
   initOutput(svg) {
@@ -19,10 +22,6 @@ export default class TopDownView extends SVGGenerator {
        .walldark{fill:rgba(0,0,0,.1);stroke:none;}
     `;
     svg.append(style);
-    
-    let viewBox = svg.getAttribute('viewBox').split(' ');
-    svg.setAttribute('width', Number(viewBox[2])*1.5);
-    svg.setAttribute('height', Number(viewBox[3])*1.5);
   }
 
   tile(tile) {
