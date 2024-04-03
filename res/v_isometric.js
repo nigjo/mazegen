@@ -25,6 +25,9 @@ export default class IsometricView extends SVGGenerator {
     this.offsetY = this.canvasHeight / 2 + (walldisp / 2 * this.scaleY);
   }
 
+  updateCanvasSize() {
+  }
+
   initOutput(svg) {
     //<link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="isometric.css" type="text/css"/>
     let css = document.createElementNS("http://www.w3.org/1999/xhtml", 'link');
