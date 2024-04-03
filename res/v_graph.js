@@ -163,6 +163,7 @@ export default class GraphInfo {
     styles.append('.way{stroke:red;}');
     if (this.dungeon) {
       styles.append('svg{background-color:SaddleBrown;}');
+      styles.append('.bg{fill:url("res/v_graph_defs.svg#cracked");fill-opacity:.05}');
       styles.append('path.edge,line{stroke:Peru;stroke-width:14px;stroke-linecap:round;}');
       styles.append('.knot{fill:Peru;}');
     }
@@ -170,14 +171,27 @@ export default class GraphInfo {
 
     this.#addVisualContent(svg, graph);
 
+    if (this.dungeon) {
+      let viewBox = svg.getAttribute('viewBox').split(' ');
+      console.log(viewBox);
+      let bg = document.createElementNS(SVGNS, 'rect');
+      bg.setAttribute('class', 'bg');
+      bg.setAttribute('x', viewBox[0]);
+      bg.setAttribute('y', viewBox[1]);
+      bg.setAttribute('width', viewBox[2]);
+      bg.setAttribute('height', viewBox[3]);
+      svg.insertBefore(bg, styles.nextElementSibling);
+    }
+
     return svg;
   }
 
   #addRoom(svg, roomDef, dotsize) {
-    let room = document.createElementNS(SVGNS, 'circle');
-    room.setAttribute('cx', roomDef.x);
-    room.setAttribute('cy', roomDef.y);
-    room.setAttribute('r', dotsize * 1.33);
+    let room = document.createElementNS(SVGNS, 'use');
+    room.setAttribute('href', 'res/v_graph_defs.svg#room');
+    room.setAttribute('transform',
+            'translate(' + (roomDef.x) + ',' + roomDef.y + ')'
+            + 'scale(' + (dotsize / 16) + ')');
     room.setAttribute('class', 'knot');
     svg.append(room);
   }
@@ -189,7 +203,7 @@ export default class GraphInfo {
     let maxY = 0;
 
     const delta = 28;
-    const dotsize = 10;
+    const dotsize = 13;
     const half = dotsize / 2 + 1;
 
     function updateCanvas(room) {
@@ -321,17 +335,18 @@ export default class GraphInfo {
       }
     }
 
-    for (let cell of [this.maze.entrance, this.maze.exit]) {
-      let current = graph.get(cell);
-      let room = document.createElementNS(SVGNS, 'rect');
-      room.setAttribute('x', current.x - half);
-      room.setAttribute('y', current.y - half);
-      room.setAttribute('width', dotsize);
-      room.setAttribute('height', dotsize);
-      room.setAttribute('class', 'knot');
-      svg.append(room);
+    if (!this.dungeon) {
+      for (let cell of [this.maze.entrance, this.maze.exit]) {
+        let current = graph.get(cell);
+        let room = document.createElementNS(SVGNS, 'rect');
+        room.setAttribute('x', current.x - half);
+        room.setAttribute('y', current.y - half);
+        room.setAttribute('width', dotsize);
+        room.setAttribute('height', dotsize);
+        room.setAttribute('class', 'knot');
+        svg.append(room);
+      }
     }
-
 
     let canvasWidth = Math.floor((maxX - minX + 2) * 100) / 100;
     let canvasHeight = Math.floor((maxY - minY + 2) * 100) / 100;
