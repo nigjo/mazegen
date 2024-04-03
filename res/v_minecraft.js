@@ -9,11 +9,6 @@ export default class MincraftView extends SVGGenerator {
   initOutput(svg) {
     let style = document.createElementNS(MincraftView.SVGNS, 'style');
     style.textContent = `
-       .boden{fill:Gray;stroke:Dimgray;}
-       rect.wand{fill:Sienna;stroke:none;}
-       path.wand{fill:none;stroke:SaddleBrown;}
-    `;
-    style.textContent = `
        .boden{fill:Sienna;stroke:SaddleBrown;}
        rect.wand{fill:green;stroke:none;}
        path.wand{fill:none;stroke:darkgreen;}
