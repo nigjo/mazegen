@@ -17,14 +17,20 @@ export default class SVGGenerator {
 
     this.scaleX = 1.0;
     this.scaleY = 1.0;
+    this.scaleSvg = 0.75;
 
     this.offsetX = this.cellWidth / 2;
     this.offsetY = this.cellHeight / 2;
 
-    this.canvasWidth = this.cellWidth * (this.maze.width + 1);
-    this.canvasHeight = this.cellHeight * (this.maze.height + 1);
-    
+    //initial size. may be modified by child class
+    this.updateCanvasSize();
+
     this.allSides = false;
+  }
+
+  updateCanvasSize() {
+    this.canvasWidth = this.cellWidth * this.maze.width + 2 * this.offsetX;
+    this.canvasHeight = this.cellHeight * this.maze.height + 2 * this.offsetY;
   }
 
   tile(tile) {
@@ -35,10 +41,13 @@ export default class SVGGenerator {
   }
 
   create() {
+    //calcuate actual size.
+    this.updateCanvasSize();
+
     //<svg width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
     let svg = document.createElementNS(SVGGenerator.SVGNS, 'svg');
-    svg.setAttribute('width', Math.floor(this.canvasWidth * .75));
-    svg.setAttribute('height', Math.floor(this.canvasHeight * .75));
+    svg.setAttribute('width', Math.floor(this.canvasWidth * this.scaleSvg));
+    svg.setAttribute('height', Math.floor(this.canvasHeight * this.scaleSvg));
     svg.setAttribute('viewBox', "0 0 " + this.canvasWidth + " " + this.canvasHeight);
     svg.setAttribute('preserveAspectRatio', 'xMidYMid');
     svg.setAttribute('xmlns', SVGGenerator.SVGNS);
@@ -49,10 +58,23 @@ export default class SVGGenerator {
     //20=cellHeight/16*5;
     let labyrith = document.createElementNS(SVGGenerator.SVGNS, 'g');
     labyrith.setAttribute('class', 'maze');
-    labyrith.setAttribute('transform',
-            'translate(' + this.offsetX + ',' + this.offsetY + ')'
-            + ' scale(' + this.scaleX + ',' + this.scaleY + ')'
-            );
+    if (this.offsetX > 0) {
+      if (this.scaleX !== 1 || this.scaleY !== 1) {
+        labyrith.setAttribute('transform',
+                'translate(' + this.offsetX + ',' + this.offsetY + ')'
+                + ' scale(' + this.scaleX + ',' + this.scaleY + ')'
+                );
+      } else {
+        labyrith.setAttribute('transform',
+                'translate(' + this.offsetX + ',' + this.offsetY + ')'
+                );
+      }
+    } else if (this.scaleX !== 1 || this.scaleY !== 1) {
+      labyrith.setAttribute('transform',
+              ' scale(' + this.scaleX + ',' + this.scaleY + ')'
+              );
+
+    }
     for (let row = 0; row < this.maze.height; row++) {
       //<g transform="translate(0,-128)">
       let rowGroup = document.createElementNS(SVGGenerator.SVGNS, 'g');
