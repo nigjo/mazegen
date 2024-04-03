@@ -55,7 +55,7 @@
     <g id="doorBottom">
       <rect x="20" y="20" width="24" height="44" class="way"/>
       <path d="M20,44l0,8,-4,0,0,-4z" class="walldark"/>
-      <rect x="12" y="52" width="8" height="20" class="walldark"/>
+      <rect x="12" y="52" width="8" height="12" class="walldark"/>
     </g>
   </defs>
 </svg>
