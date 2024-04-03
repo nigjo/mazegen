@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Höhlensystem</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="res/2x2maze_256.png" sizes="256x256" type="image/png">
+    <link rel="icon" href="res/2x2maze.svg" sizes="any" type="image/svg+xml">
+    <script type="module">
+      import RandomKruskal from './res/RandomKruskal.js';
+      let args = new URLSearchParams(location.search);
+      let viewName = args.get('view') || 'isometric';
+
+      import('./res/v_' + viewName + '.js').then(mod => {
+        let MazeView = mod.default;
+        //Bei 8:5
+        //RGtRTIk2NHkp (4er fehlt)
+        //czx95c9bh30k (alle Elemente)
+        const m = new RandomKruskal(8, 5, "czx95c9bh30k");
+
+        let view = new MazeView(m);
+
+        args.delete('view');
+        //view.keepSingleDeadends = false;
+        //view.showPath = false;
+        //view.dungeon = true;
+        console.debug(args);
+        for (const [key, value] of args.entries()) {
+          if (key in view) {
+            if (typeof (view[key]) === 'boolean') {
+              if (value === '')
+                view[key] = true;
+              else
+                view[key] = value !== 'false' && value !== '0';
+            } else if (typeof (view[key]) === 'number') {
+              view[key] = Number(value);
+            } else {
+              view[key] = value;
+            }
+          }
+        }
+
+        let w = document.createElement('div');
+        let shadow = w.attachShadow({
+          mode: 'closed'
+        });
+        let img = view.create();
+        shadow.append(img);
+        if (img.hasAttribute('width'))
+          w.style.width = Number(img.getAttribute('width')) + 'px';
+        if (img.hasAttribute('height'))
+          w.style.height = Number(img.getAttribute('height')) + 'px';
+
+        
+        document.querySelector('main').append(w);
+
+        let paramList = document.createElement('dl');
+        console.debug(Object.keys(view));
+        function addItem(k, v) {
+          let dt = document.createElement('dt');
+          dt.textContent = k;
+          paramList.append(dt);
+          let dd = document.createElement('dd');
+          dd.textContent = v;
+          paramList.append(dd);
+        }
+        addItem('view', viewName);
+        for (const c of Object.keys(view)) {
+          if (typeof (view[c]) === 'boolean') {
+            addItem(c, view[c]);
+          } else if (typeof (view[c]) === 'number') {
+            addItem(c, view[c]);
+          } else if (typeof (view[c]) === 'string') {
+            addItem(c, view[c]);
+          }
+        }
+
+        document.querySelector('main').append(paramList);
+      });
+    </script>
+    <style>
+      body{
+        background-color:#EEE;
+      }
+      svg{
+        background-color:#FFF;
+      }
+      dl {
+        font-family: monospace;
+        display: inline-grid;
+        grid-template-columns: 1fr 2fr;
+
+        dt{
+          font-weight: bold;
+          overflow: hidden;
+          position: relative;
+          padding-right: 2.25ch;
+        }
+        dt:after{
+          position: absolute;
+          content: '······························';
+          color:lightgray;
+          text-align: left;
+          padding-left: .1ch;
+        }
+
+        dd{
+          margin-left: 0px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header><h1>Dungeon Debug Page</h1></header>
+    <main></main>
+    <footer>&copy; Jens Hofschröer</footer>
+  </body>
+</html>
