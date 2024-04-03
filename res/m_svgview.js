@@ -25,7 +25,7 @@ export default class SVGGenerator {
     //initial size. may be modified by child class
     this.updateCanvasSize();
 
-    this.allSides = false;
+    this.allSides = true;
   }
 
   updateCanvasSize() {
