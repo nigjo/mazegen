@@ -6,7 +6,6 @@ export default class IsometricView extends SVGGenerator {
 
     this.scaleX = 1.;
     this.scaleY = .9;
-    this.allSides = false;
 
     let hyp = Math.sqrt(this.cellHeight * this.cellHeight
             + this.cellWidth * this.cellWidth);
@@ -49,8 +48,19 @@ export default class IsometricView extends SVGGenerator {
     svg.append(bg);
   }
 
-  tile(tile) {
-    return 'res/isometric.svg#' + tile;
+  tile(tile, cell) {
+    if (tile === 'boden') {
+      return 'res/isometric.svg#boden';
+    } else if (tile.startsWith('door') || tile.startsWith('wall')) {
+      if (tile.endsWith('Top') && cell.row > 0) {
+        return;
+      }
+      if (tile.endsWith('Left') && cell.col > 0) {
+        return;
+      }
+      return 'res/isometric.svg#' + tile;
+    }
+    return;
   }
 
   create() {
