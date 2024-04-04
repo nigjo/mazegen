@@ -13,7 +13,7 @@
     </pattern>
     <pattern id="bricks" viewBox="0,0,16,16" width="8" height="8" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="16" height="16" class="wallbg"/>
-      <g class="walldarkline">
+      <g class="shadowline">
         <line x1="0" y1="8" x2="16" y2="8"/>
         <line x1="0" y1="4" x2="16" y2="4"/>
         <line x1="0" y1="12" x2="16" y2="12"/>
@@ -35,13 +35,14 @@
       <!-- <circle cx="32" cy="32" r="20" class="way"/> -->
     </g>
     <g id="wallLeft">
-      <rect x="8" y="20" width="8" height="32" class="walldark"/>
+      <rect x="8" y="20" width="8" height="32" class="shadow"/>
+      <use href="#pilonShadow" transform="translate(10,22)"/>
     </g>
     <g id="doorLeft">
       <rect x="0" y="16" width="20" height="24" class="way"/>
       <rect x="0" y="40" width="16" height="8" class="wall"/>
-      <path d="M16,40l0,8,-8,0z" class="walldark"/>
-      <rect x="8" y="48" width="8" height="4" class="walldark"/>
+      <path d="M16,40l0,8,-8,0z" class="shadow"/>
+      <rect x="8" y="48" width="8" height="4" class="shadow"/>
     </g>
     <g id="doorRight">
       <rect x="44" y="16" width="20" height="24" class="way"/>
@@ -49,13 +50,36 @@
     </g>
     <g id="doorTop">
       <rect x="20" y="0" width="24" height="40" class="way"/>
-      <rect x="12" y="0" width="8" height="12" class="walldark"/>
-      <rect x="12" y="12" width="4" height="8" class="walldark"/>
+      <rect x="12" y="0" width="8" height="12" class="shadow"/>
+      <rect x="12" y="12" width="4" height="8" class="shadow"/>
     </g>
     <g id="doorBottom">
       <rect x="20" y="20" width="24" height="44" class="way"/>
-      <path d="M20,44l0,8,-4,0,0,-4z" class="walldark"/>
-      <rect x="12" y="52" width="8" height="12" class="walldark"/>
+      <path d="M20,44l0,8,-4,0,0,-4z" class="shadow"/>
+      <rect x="12" y="52" width="8" height="12" class="shadow"/>
+    </g>
+    <g id="decke">
+      <g transform="translate(18,14)">
+        <g id="pilon">
+          <rect x="-2" y="-1.5" width="2" height="3" class="shadow"/>
+          <circle cx="0" cy="0" r="1.75" class="pilon" transform="scale(1,.75)"/>
+          <rect x="-1.75" y="-4" width="3.5" height="4" class="pilon"/>
+          <circle cx="0" cy="0" r="1.75" class="pilon" transform="translate(0,-4) scale(1,.75)"/>
+          <circle cx="0" cy="0" r="1.75" class="shadow" transform="translate(0,-4) scale(1,.75)"/>
+        </g>
+      </g>
+      <g transform="translate(18,42)">
+        <use href="#pilon"/>
+        <use href="#pilonShadow" transform="translate(-8,8)"/>
+      </g>
+      <g transform="translate(46,14)" class="shadow">
+        <path d="M-2,-1.5l0,3,-3,0a1,1.5,180,1,1,0,-3z" class="shadow" id="pilonShadow"/>
+        <use href="#pilon"/>
+      </g>
+      <g transform="translate(46,42)">
+        <use href="#pilon"/>
+        <use href="#pilonShadow"/>
+      </g>
     </g>
     <style id="colors">
       svg{--waybg-col:green;}
@@ -68,8 +92,9 @@
       .waytile{fill:rgba(255,255,255,.05);}
       .wallbg{fill:Sienna;stroke:none;}
       .wall{fill:url(#bricks);}
-      .walldarkline{stroke:rgba(0,0,0,.2);stroke-width:1}
-      .walldark{fill:rgba(0,0,0,.1);stroke:none;}
+      .pilon{fill:Olive;}
+      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:1}
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
     </style>
   </defs>
 </svg>
