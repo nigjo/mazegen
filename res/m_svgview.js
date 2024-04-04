@@ -33,7 +33,7 @@ export default class SVGGenerator {
     this.canvasHeight = this.cellHeight * this.maze.height + 2 * this.offsetY;
   }
 
-  tile(tile) {
+  tile(tile, cell) {
     return '#' + tile;
   }
 
@@ -75,6 +75,14 @@ export default class SVGGenerator {
               );
 
     }
+    let addTile = (parent, tile, cell) => {
+      let link = this.tile(tile, cell);
+      if (link){
+        let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
+        u.setAttribute('href', link);
+        parent.append(u);
+      }
+    };
     for (let row = 0; row < this.maze.height; row++) {
       //<g transform="translate(0,-128)">
       let rowGroup = document.createElementNS(SVGGenerator.SVGNS, 'g');
@@ -85,50 +93,42 @@ export default class SVGGenerator {
         let colGroup = document.createElementNS(SVGGenerator.SVGNS, 'g');
         colGroup.setAttribute('transform', 'translate('
                 + (col * this.cellWidth) + ',0)');
+        let cell = this.maze.cells[row][col];
 
         //<use href="isometric.svg#boden"/>
-        let boden = document.createElementNS(SVGGenerator.SVGNS, 'use');
-        boden.setAttribute('href', this.tile('boden'));
-        colGroup.append(boden);
+        addTile(colGroup, 'boden', cell);
         //<text text-anchor="middle">(1,1)</text>
         let loc = document.createElementNS(SVGGenerator.SVGNS, 'text');
         loc.setAttribute('text-anchor', 'middle');
         loc.textContent = '(' + (col + 1) + ',' + (row + 1) + ')';
         //colGroup.append(loc);
 
-        let cell = this.maze.cells[row][col];
-        let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         if (this.allSides || row === 0) {
           if (cell.walls & Maze.NORTH) {
-            u.setAttribute('href', this.tile('wallTop'));
+            addTile(colGroup, 'wallTop', cell);
           } else {
-            u.setAttribute('href', this.tile('doorTop'));
+            addTile(colGroup, 'doorTop', cell);
           }
-          colGroup.append(u);
         }
         if (this.allSides || col === 0) {
-          u = document.createElementNS(SVGGenerator.SVGNS, 'use');
           if (cell.walls & Maze.WEST) {
-            u.setAttribute('href', this.tile('wallLeft'));
+            addTile(colGroup, 'wallLeft', cell);
           } else {
-            u.setAttribute('href', this.tile('doorLeft'));
+            addTile(colGroup, 'doorLeft', cell);
           }
-          colGroup.append(u);
         }
-        u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         if (cell.walls & Maze.SOUTH) {
-          u.setAttribute('href', this.tile('wallBottom'));
+          addTile(colGroup, 'wallBottom', cell);
         } else {
-          u.setAttribute('href', this.tile('doorBottom'));
+          addTile(colGroup, 'doorBottom', cell);
         }
-        colGroup.append(u);
-        u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         if (cell.walls & Maze.EAST) {
-          u.setAttribute('href', this.tile('wallRight'));
+          addTile(colGroup, 'wallRight', cell);
         } else {
-          u.setAttribute('href', this.tile('doorRight'));
+          addTile(colGroup, 'doorRight', cell);
         }
-        colGroup.append(u);
+
+        addTile(colGroup, 'decke', cell);
 
         rowGroup.append(colGroup);
       }
