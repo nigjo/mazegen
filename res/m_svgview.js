@@ -111,15 +111,15 @@ export default class SVGGenerator {
         } else {
           addTile(colGroup, 'doorLeft', cell);
         }
-        if (cell.walls & Maze.SOUTH) {
-          addTile(colGroup, 'wallBottom', cell);
-        } else {
-          addTile(colGroup, 'doorBottom', cell);
-        }
         if (cell.walls & Maze.EAST) {
           addTile(colGroup, 'wallRight', cell);
         } else {
           addTile(colGroup, 'doorRight', cell);
+        }
+        if (cell.walls & Maze.SOUTH) {
+          addTile(colGroup, 'wallBottom', cell);
+        } else {
+          addTile(colGroup, 'doorBottom', cell);
         }
 
         addTile(colGroup, 'decke', cell);
