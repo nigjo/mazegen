@@ -11,19 +11,29 @@
       let args = new URLSearchParams(location.search);
       let viewName = args.get('view') || 'isometric';
 
-      import('./res/v_' + viewName + '.js').then(mod => {
+      Promise.all([
+        import('./res/v_' + viewName + '.js'),
+        new Promise(ok => {
+          //Bei 8:5
+          //RGtRTIk2NHkp (4er fehlt)
+          //czx95c9bh30k (alle Elemente)
+          ok(new RandomKruskal(8, 5, "czx95c9bh30k"));
+        })
+      ]).then(data => {
+        let maze, mod;
+        [mod, maze] = data;
         let MazeView = mod.default;
-        //Bei 8:5
-        //RGtRTIk2NHkp (4er fehlt)
-        //czx95c9bh30k (alle Elemente)
-        const m = new RandomKruskal(8, 5, "czx95c9bh30k");
+        return new MazeView(maze);
+      }).then(view => {
+        return initParameters(view);
+      }).then(view => {
+        return generateViewContent(view);
+      }).then(view => {
+        createParameterList(view);
+      });
 
-        let view = new MazeView(m);
-
+      function initParameters(view) {
         args.delete('view');
-        //view.keepSingleDeadends = false;
-        //view.showPath = false;
-        //view.dungeon = true;
         console.debug(args);
         for (const [key, value] of args.entries()) {
           if (key in view) {
@@ -39,7 +49,10 @@
             }
           }
         }
+        return view;
+      }
 
+      function generateViewContent(view) {
         let w = document.createElement('div');
         let shadow = w.attachShadow({
           mode: 'closed'
@@ -51,9 +64,13 @@
         if (img.hasAttribute('height'))
           w.style.height = Number(img.getAttribute('height')) + 'px';
 
-        
+
         document.querySelector('main').append(w);
 
+        return view;
+      }
+
+      function createParameterList(view) {
         let paramList = document.createElement('dl');
         console.debug(Object.keys(view));
         function addItem(k, v) {
@@ -76,7 +93,7 @@
         }
 
         document.querySelector('main').append(paramList);
-      });
+      }
     </script>
     <style>
       body{
