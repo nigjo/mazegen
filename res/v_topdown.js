@@ -22,23 +22,6 @@ export default class TopDownView extends SVGGenerator {
   }
 
   initOutput(svg) {
-    let style = document.createElementNS(TopDownView.SVGNS, 'style');
-    style.textContent = `
-       svg{--waybg-col:green;}
-       .boden{fill:url(#water);stroke:none;}
-       .waterbg{fill:blue;}
-       .waterwaves{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2;}
-       .bodenc{fill:blue;stroke:none;}
-       .way{fill:url(#tiles);stroke:none;}
-       .waybg{fill:peru;stroke:none;}
-       .waytile{fill:rgba(255,255,255,.05);}
-       .wallbg{fill:Sienna;stroke:none;}
-       .wall{fill:url(#bricks);}
-       .walldarkline{stroke:rgba(0,0,0,.2);stroke-width:1}
-       .walldark{fill:rgba(0,0,0,.1);stroke:none;}
-    `;
-    svg.append(style);
-
     let defs = document.createElementNS(TopDownView.SVGNS, 'defs');
     for (let def of svgDefs.values()) {
       defs.append(def.cloneNode(true));
