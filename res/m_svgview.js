@@ -24,8 +24,6 @@ export default class SVGGenerator {
 
     //initial size. may be modified by child class
     this.updateCanvasSize();
-
-    this.allSides = true;
   }
 
   updateCanvasSize() {
@@ -77,7 +75,7 @@ export default class SVGGenerator {
     }
     let addTile = (parent, tile, cell) => {
       let link = this.tile(tile, cell);
-      if (link){
+      if (link) {
         let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         u.setAttribute('href', link);
         parent.append(u);
@@ -103,19 +101,15 @@ export default class SVGGenerator {
         loc.textContent = '(' + (col + 1) + ',' + (row + 1) + ')';
         //colGroup.append(loc);
 
-        if (this.allSides || row === 0) {
-          if (cell.walls & Maze.NORTH) {
-            addTile(colGroup, 'wallTop', cell);
-          } else {
-            addTile(colGroup, 'doorTop', cell);
-          }
+        if (cell.walls & Maze.NORTH) {
+          addTile(colGroup, 'wallTop', cell);
+        } else {
+          addTile(colGroup, 'doorTop', cell);
         }
-        if (this.allSides || col === 0) {
-          if (cell.walls & Maze.WEST) {
-            addTile(colGroup, 'wallLeft', cell);
-          } else {
-            addTile(colGroup, 'doorLeft', cell);
-          }
+        if (cell.walls & Maze.WEST) {
+          addTile(colGroup, 'wallLeft', cell);
+        } else {
+          addTile(colGroup, 'doorLeft', cell);
         }
         if (cell.walls & Maze.SOUTH) {
           addTile(colGroup, 'wallBottom', cell);
