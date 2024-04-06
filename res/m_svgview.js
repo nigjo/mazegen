@@ -75,9 +75,23 @@ export default class SVGGenerator {
     }
     let addTile = (parent, tile, cell) => {
       let link = this.tile(tile, cell);
-      if (link) {
+      if (typeof (link) === 'string') {
         let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         u.setAttribute('href', link);
+        parent.append(u);
+      } else if (typeof (link) === 'object' && "tile" in link) {
+        let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
+        u.setAttribute('href', link.tile);
+        if ("className" in link) {
+          u.setAttribute('class', link.className);
+        }
+        let style = Object.keys(link)
+                .filter(k => k !== 'tile')
+                .filter(k => k !== 'className')
+                .map(k => k + ':' + link[k] + ';')
+                .join('');
+        if (style && style.length > 0)
+          u.setAttribute('style', style);
         parent.append(u);
       }
     };
