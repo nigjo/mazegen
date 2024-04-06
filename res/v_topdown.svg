@@ -85,6 +85,12 @@
           <circle cx="0" cy="0" r="1.75" class="pilon" transform="translate(0,-4) scale(1,.75)"/>
           <circle cx="0" cy="0" r="1.75" class="shadow" transform="translate(0,-4) scale(1,.75)"/>
         </g>
+        <g transform="translate(0,-2.5)" class="ropeLeft">
+          <g id="ropeSide">
+            <line x1="0" y1="0" x2="0" y2="27" class="rope"/>
+            <line x1="0" y1="0" x2="0" y2="27" class="ropemark"/>
+          </g>
+        </g>
       </g>
       <g transform="translate(18,42)">
         <use href="#pilon"/>
@@ -93,6 +99,7 @@
       <g transform="translate(46,14)" class="shadow">
         <path d="M-2,-1.5l0,3,-3,0a1,1.5,180,1,1,0,-3z" class="shadow" id="pilonShadow"/>
         <use href="#pilon"/>
+        <use href="#ropeSide" transform="translate(0,-2.5)" class="ropeRight"/>
       </g>
       <g transform="translate(46,42)">
         <use href="#pilon"/>
@@ -100,7 +107,7 @@
       </g>
     </g>
     <style id="colors">
-      svg{--waybg-col:green;}
+      svg{--waybg-col:green;--ropeLeft:hidden;--ropeRight:visible;}
       .boden{fill:url(#water);stroke:none;}
       .waterbg{fill:blue;}
       .waterwaves{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2;}
@@ -110,9 +117,13 @@
       .waytile{fill:rgba(255,255,255,.05);}
       .wallbg{fill:Sienna;stroke:none;}
       .wall{fill:url(#bricks);}
-      .pilon{fill:Olive;}
-      .rope{stroke:Goldenrod;stroke-width:1.25;fill:none;}
-      .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2;}
+      .pilon{fill:Olive;z-index=1;}
+      .ropeLeft{visibility:var(--ropeLeft);}
+      .ropeRight{visibility:var(--ropeRight);}
+      .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}      
+      .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
+      .wallLeft~.decke{--ropeLeft:visible;}
+      .doorRight~.decke{--ropeRight:hidden;}
       .shadowline{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;}
       .shadow{fill:rgba(0,0,0,.1);stroke:none;}
     </style>
