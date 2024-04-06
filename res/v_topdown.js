@@ -1,5 +1,4 @@
 import SVGGenerator from './m_svgview.js';
-
 const svgDefs = await fetch('res/v_topdown.svg').then(r => {
   if (r.ok) {
     return r.text();
@@ -29,9 +28,10 @@ export default class TopDownView extends SVGGenerator {
     svg.append(defs);
   }
 
-  tile(tile) {
-    if (svgDefs.has(tile))
-      return '#' + tile;
+  tile(tile, cell) {
+    if (svgDefs.has(tile)){
+      return {tile: '#' + tile, ["className"]: tile};
+    }
     return;
   }
 }
