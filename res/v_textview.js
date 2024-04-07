@@ -1,6 +1,8 @@
 import Maze from './m_maze.js';
 
 export default class TextView {
+    
+  static viewProps = ['boxView'];
 
   constructor(maze) {
     this.maze = maze;

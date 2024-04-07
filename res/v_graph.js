@@ -12,6 +12,9 @@ class Room {
 }
 
 export default class GraphInfo {
+
+  static viewProps = ['keepSingleDeadends', 'showPath', 'dungeon'];
+
   /**
    * @param {Maze} maze Irrgarten
    */
