@@ -140,7 +140,7 @@ export default class GraphInfo {
         if (k == this.maze.entrance || k == this.maze.exit)
           return;
         let deadEnd = graph.get(k);
-        console.debug(deadEnd);
+        //console.debug(deadEnd);
         deadEnd.parentRoom.doors =
                 deadEnd.parentRoom.doors.filter(d => d.next != k)
         //graph.delete(k);
