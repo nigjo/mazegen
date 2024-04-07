@@ -85,9 +85,15 @@ export default class SVGGenerator {
         if ("className" in link) {
           u.setAttribute('class', link.className);
         }
+        if ("data" in link && typeof (link.data) === 'object') {
+          Object.keys(link.data).forEach(k => {
+            u.setAttribute('data-' + k, link.data[k]);
+          });
+        }
         let style = Object.keys(link)
                 .filter(k => k !== 'tile')
                 .filter(k => k !== 'className')
+                .filter(k => k !== 'data')
                 .map(k => k + ':' + link[k] + ';')
                 .join('');
         if (style && style.length > 0)
