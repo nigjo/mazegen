@@ -29,7 +29,7 @@ export default class TopDownView extends SVGGenerator {
   }
 
   tile(tile, cell) {
-    if (svgDefs.has(tile)){
+    if (svgDefs.has(tile)) {
       return {tile: '#' + tile, ["className"]: tile};
     }
     return;
@@ -39,7 +39,7 @@ export default class TopDownView extends SVGGenerator {
 if (window.mazedata) {
   import("./m_mazeinfo.js").then(mod => {
     let mazeinfo = mod.default;
-    mazeinfo.registerView(3100, m => new TopDownView(m));
+    mazeinfo.registerView(5000, m => new TopDownView(m));
   });
 }
 
