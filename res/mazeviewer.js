@@ -1,11 +1,12 @@
 import mazeinfo from './m_mazeinfo.js';
+
 function updateMaze(evt) {
   //console.debug(evt);
   evt.preventDefault();
   window.mazedata.seedtext = evt.target.seedText.value;
   window.mazedata.width = Number(evt.target.width.value);
   window.mazedata.height = Number(evt.target.height.value);
-  mazeinfo.update();
+  mazeinfo.update(false);
   return false;
 }
 document.forms.settings.onsubmit = updateMaze;
@@ -93,7 +94,7 @@ function initPageContent() {
   console.debug('init done');
 }
 function initPageLoaded() {
-  mazeinfo.update();
+  mazeinfo.update(true);
 }
 
 var viewTimer;

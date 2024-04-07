@@ -19,6 +19,22 @@ body{
 pre{
   font-family:Consolas,monospace;
 }
+.placeholder{
+  background-color:goldenrod;
+  border-radius:50%;
+  position:relative;
+}
+.placeholder:after{
+  position: absolute;
+  content:'---';
+  padding-left:calc(32px - 0.5em);
+  padding-top:calc(32px - .66em);
+  margin:0;
+  font-size:32px;
+  color:white;
+}
+
+/*Github-Marker: Farben anpassen:*/
 .github-fork-ribbon:before {
   background-color: #CCC;
 }

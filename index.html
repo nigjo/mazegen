@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dungeon Walls</title>
+    <title>Irrgarten Generator</title>
     <meta charset="UTF-8">
     <link rel="icon" href="res/2x2maze_256.png" sizes="256x256" type="image/png">
     <link rel="icon" href="res/2x2maze.svg" sizes="any" type="image/svg+xml">
     <link rel="stylesheet" href="res/gh-fork-ribbon.css"/>
     <link rel="stylesheet" href="res/mazeviewer.css"/>
+    <!-- Liste der Views - Start -->
+    <!-- Reihenfolge an dieser Stelle unerheblich.
+         Die Views definieren ihre Position selbst. -->
     <script src="res/v_isometric.js" type="module"></script>
     <script src="res/v_textview.js" type="module"></script>
     <script src="res/v_topview.js" type="module"></script>
     <script src="res/v_minecraft.js" type="module"></script>
     <script src="res/v_topdown.js" type="module"></script>
     <script src="res/v_graph.js" type="module"></script>
+    <!-- Liste der Views - Ende -->
     <script src="res/mazeviewer.js" type="module"></script>
     <script id="mazeDataInit">
       window.mazedata = {
@@ -48,6 +52,7 @@
         </form>
       </div>
       <div id="views"><p>Bitte warten...</p></div>
+      <div id="mainview"></div>
     </main>
     <footer>
       &copy; <a href="https://github.com/nigjo">Jens Hofschröer</a>
