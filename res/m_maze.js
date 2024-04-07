@@ -15,6 +15,17 @@ export default class Maze {
   static SOUTH = 4;
   static WEST = 8;
 
+  static randomGenerator(seed) {
+    let a = seed;
+    let rnd = function () {
+      var t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ t >>> 15, t | 1);
+      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+    return (max = 2) => Math.floor(rnd() * max);
+  }
+
   /**
    * @argument {number} width 
    * @argument {number} height
@@ -45,18 +56,10 @@ export default class Maze {
       usedSeed = seed;
     }
     usedSeed = usedSeed !== null ? usedSeed : (width * height * 51);
-    console.debug('width:', width, 'height:', height, 'seed:', seed, usedSeed);
+    this.seed = usedSeed;
+    //console.debug('width:', width, 'height:', height, 'seed:', seed, usedSeed);
 
-    let rng = ((a) => {
-      let rnd = function () {
-        var t = a += 0x6D2B79F5;
-        t = Math.imul(t ^ t >>> 15, t | 1);
-        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-        return ((t ^ t >>> 14) >>> 0) / 4294967296;
-      };
-      return (max = 2) => Math.floor(rnd() * max);
-    })(usedSeed);
-
+    let rng = Maze.randomGenerator(usedSeed);
     this.width = width;
     this.height = height;
     this.cells = Array(height);
