@@ -10,7 +10,7 @@ const svgDefs = await fetch('res/v_topdown.svg').then(r => {
   return new DOMParser().parseFromString(str, "image/svg+xml");
 }).then(svg => {
   let defs = [...svg.querySelectorAll('defs>[id]')];
-  console.debug('defs', defs);
+  //console.debug('defs', defs);
   return new Map(defs.map(e => [e.id, e]));
 });
 
@@ -40,7 +40,7 @@ export default class TopDownView extends SVGGenerator {
           'puddle1', 'puddle2', 'puddle3', 'puddle4'
         ];
         data.item = items[this.rnd(items.length)];
-        console.debug('TD', cell.col, cell.row, tile, data.item);
+        //console.debug('TD', cell.col, cell.row, tile, data.item);
       }
       return {
         tile: '#' + tile,
@@ -55,7 +55,7 @@ export default class TopDownView extends SVGGenerator {
     let svg = super.create();
     let items = svg.querySelectorAll('[data-item]');
     items.forEach(tile => {
-      console.debug('TD', tile);
+      //console.debug('TD', tile);
       if (!tile.getAttribute('class').startsWith('wall')) {
         let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         let item = tile.getAttribute('data-item');
