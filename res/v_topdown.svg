@@ -1,10 +1,11 @@
 <svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <pattern id="water" viewBox="0,0,16,16" width="8" height="8" patternUnits="userSpaceOnUse">
+    <pattern id="water" viewBox="0,0,16,16" width="8" height="8"
+        x="0" y="2" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="16" height="16" class="waterbg"/>
       <g class="waterwaves">
-        <path d="M0,12s2,4,4,4,2,0,4,-4,2,-4,4,-4,2,0,4,4"/>
-        <path d="M0,4s2,4,4,4,2,0,4,-4,2,-4,4,-4,2,0,4,4"/>
+        <path d="M0,7s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
+        <path d="M0,15s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
       </g>
     </pattern>
     <pattern id="tiles" viewBox="0,0,8,8" width="4" height="4" patternUnits="userSpaceOnUse">
