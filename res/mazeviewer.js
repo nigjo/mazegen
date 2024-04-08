@@ -36,6 +36,8 @@ function initQuery() {
     window.mazedata.seedtext
             = form.seedText.value
             = q.get('seedText');
+  } else {
+    form.seedText.value = window.mazedata.seedtext;
   }
   if (q.has('width')) {
     window.mazedata.width
@@ -57,40 +59,10 @@ function initQuery() {
   }
 }
 
-
-function initSettings() {
-  //console.group('settings');
-  let settingsBlock = document.createDocumentFragment();
-  for (let pos in window.mazedata.views) {
-    let view = window.mazedata.views[pos];
-    if ("displayName" in view) {
-      //console.debug("view", view.displayName);
-      let entry = document.createElement('label');
-      let cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.name = 'view[]';
-      cb.value = view.displayName;
-      cb.onchange = (e) => {
-        view.enabled = e.target.checked;
-        document.getElementById('view' + pos)
-                .dataset.enabled = view.enabled;
-      };
-      entry.append(cb);
-      entry.append(view.displayName);
-
-      settingsBlock.append(entry);
-      cb.checked = view.enabled;
-    }
-  }
-  document.querySelector("#viewSettings").replaceChildren(settingsBlock);
-  //console.groupEnd();
-}
-
 function initPageContent() {
   console.debug('init page content');
   initRandomButton();
   initQuery();
-  initSettings();
   console.debug('init done');
 }
 function initPageLoaded() {
@@ -104,7 +76,6 @@ window.addEventListener('mazedata.views', evt => {
   }
   viewTimer = setTimeout(() => {
     console.debug("update page content");
-    initSettings();
     initPageLoaded();
   }, 0);
 });
