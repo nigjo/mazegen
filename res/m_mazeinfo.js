@@ -26,8 +26,11 @@ function setMainView(viewThumb) {
   let generator = views.get(viewId);
   if (generator) {
     let content = generator.create();
-    document.getElementById('mainview')
-            .replaceChildren(content);
+    let mainView = document.getElementById('mainview');
+    let subView = document.createElement('div');
+    let shadow = subView.attachShadow({mode: 'closed'});
+    shadow.append(content);
+    mainView.replaceChildren(subView);
 
     let currentThumb = document.getElementById(viewId);
     let lastSel = document.querySelector('#views>[data-selected]');
