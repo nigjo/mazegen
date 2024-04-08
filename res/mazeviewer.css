@@ -3,6 +3,18 @@ main .view{
   vertical-align:top;
   margin:.5em;
 }
+#views>div{
+  position:relative;
+}
+#views>div[data-view]:after{
+  position:absolute;
+  top:0px;left:0px;
+  content:attr(data-view);
+  font-size:8pt;
+  padding:.15em .25em;
+  background-color:rgba(255,255,255,.75);
+  text-shadow:.05em .05em white;
+}
 header>*{
   display:inline-block;
   vertical-align:middle;

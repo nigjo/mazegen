@@ -28,6 +28,29 @@ function initRandomButton() {
           .onclick = createRandom;
 }
 
+let historyLoop = false;
+function updateHistory(evt) {
+  if (historyLoop)
+    return;
+  //console.debug('updating history', evt);
+  let q = new URLSearchParams();
+  let form = document.forms.settings;
+  q.set('seedText', form.seedText.value);
+  q.set('width', Number(form.width.value));
+  q.set('height', Number(form.height.value));
+  let viewId = document.querySelector('#views>[data-selected]').id;
+  q.set('view', viewId);
+  history.pushState({}, null, './?' + q);
+}
+document.addEventListener('mazeinfo.viewChanged', updateHistory);
+window.addEventListener('popstate', () => {
+  console.log('POP');
+  historyLoop = true;
+  initQuery();
+  document.forms.settings.requestSubmit();
+  historyLoop = false;
+});
+
 function initQuery() {
   //console.debug('init query');
   let q = new URLSearchParams(location.search);
@@ -50,7 +73,13 @@ function initQuery() {
             = Number(q.get('height'));
   }
   if (q.has('view')) {
-
+    let thumbView = document.getElementById(q.get('view'));
+    if (thumbView) {
+      thumbView.click();
+    } else {
+      console.warn('thumbView', 'unable to find view', q.get('view'));
+      console.debug('thumbView', document.querySelectorAll('#views[data-view]'));
+    }
   } else {
 //    for (let cb of document.querySelectorAll(
 //            '#viewSettings input[type="checkbox"]')) {
@@ -66,7 +95,9 @@ function initPageContent() {
   console.debug('init done');
 }
 function initPageLoaded() {
+  historyLoop = true;
   mazeinfo.update(true);
+  historyLoop = false;
 }
 
 var viewTimer;

@@ -20,10 +20,31 @@ const mazeinfo = {};
 
 const views = new Map();
 
+function setMainView(viewThumb) {
+  //console.debug('main', viewThumb);
+  let viewId = typeof (viewThumb) === 'string' ? viewThumb : viewThumb.id;
+  let generator = views.get(viewId);
+  if (generator) {
+    let content = generator.create();
+    document.getElementById('mainview')
+            .replaceChildren(content);
+
+    let currentThumb = document.getElementById(viewId);
+    let lastSel = document.querySelector('#views>[data-selected]');
+    if (lastSel !== currentThumb) {
+      delete lastSel.dataset.selected;
+      currentThumb.dataset.selected = 'true';
+    }
+    document.dispatchEvent(new CustomEvent('mazeinfo.viewChanged'));
+  } else {
+    console.warn('unable to find generator', views);
+  }
+}
+
 function addThumb(parent, view, pos) {
   let w = document.createElement('div');
   w.classList.add('view');
-  w.dataset['view'] = view.constructor.name;
+  w.dataset['view'] = view.displayName || view.constructor.name;
   let shadow = w.attachShadow({
     mode: 'closed'
   });
@@ -75,24 +96,6 @@ function addThumb(parent, view, pos) {
   return w;
 }
 
-function setMainView(viewThumb) {
-  console.debug('main', viewThumb);
-  let generator = views.get(viewThumb.id);
-  if (generator) {
-    let content = generator.create();
-    document.getElementById('mainview')
-            .replaceChildren(content);
-
-    let lastSel = document.querySelector('#views>[data-selected]');
-    if (lastSel !== viewThumb) {
-      delete lastSel.dataset.selected;
-      viewThumb.dataset.selected = 'true';
-    }
-  } else {
-    console.warn('unable to find generator', views);
-  }
-}
-
 mazeinfo.update = (withThumbs = false) => {
   //console.debug('update mazes');
   //create a daily maze
@@ -102,9 +105,10 @@ mazeinfo.update = (withThumbs = false) => {
           window.mazedata.seedtext);
   document.querySelector('#seedtext')
           .textContent = ' "' + window.mazedata.seedtext + '"';
+  document.title = document.querySelector('#pagetitle').textContent;
 
   if ("views" in window.mazedata) {
-
+    let q = new URLSearchParams(location.search);
     let thumbViews = document.querySelector('#views');
     if (withThumbs || thumbViews.firstElementChild.tagName === 'P') {
       let parent = document.createDocumentFragment();
@@ -113,13 +117,24 @@ mazeinfo.update = (withThumbs = false) => {
         let info = window.mazedata.views[pos];
         let generator = "generator" in info ? info.generator : info;
         let view = generator(m);
+        view.displayName = info.displayName;
+        //console.debug('VIEW', info, view);
         let w = addThumb(parent, view, pos);
         views.set(w.id, view);
         w.dataset.enabled = info.enabled;
       }
 
       thumbViews.replaceChildren(parent);
-      thumbViews.firstElementChild.dataset.selected = 'true';
+      if (q.has('view')) {
+        let thumb = thumbViews.querySelector('#' + q.get('view'));
+        if (thumb) {
+          thumb.dataset.selected = true;
+        } else {
+          console.warn('unable to select', q.get('view'));
+        }
+      } else {
+        thumbViews.firstElementChild.dataset.selected = 'true';
+      }
       //console.log('first', thumbViews.firstElementChild);
     } else {
       for (let pos of
@@ -131,7 +146,7 @@ mazeinfo.update = (withThumbs = false) => {
     }
 
     let selected = thumbViews.querySelector('[data-selected]');
-    if (selected && !selected.classList.contains('placeholder')) {
+    if (selected) {
       setMainView(selected);
     }
 }
