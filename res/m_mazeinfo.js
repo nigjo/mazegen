@@ -28,6 +28,8 @@ function setMainView(viewThumb) {
     let content = generator.create();
     let mainView = document.getElementById('mainview');
     let subView = document.createElement('div');
+    subView.className = 'viewHost';
+    content.part='mazeview';
     let shadow = subView.attachShadow({mode: 'closed'});
     shadow.append(content);
     mainView.replaceChildren(subView);
