@@ -20,7 +20,6 @@ export default class TopDownView extends SVGGenerator {
     this.offsetX = 0;
     this.offsetY = 0;
     this.scaleSvg = 1.5;
-    this.rnd = m.constructor.randomGenerator(m.seed);
   }
 
   initOutput(svg) {
@@ -32,15 +31,32 @@ export default class TopDownView extends SVGGenerator {
   }
 
   tile(tile, cell) {
+    const puddles = [
+      'puddle1', 'puddle2', 'puddle3', 'puddle4'
+    ];
     if (svgDefs.has(tile)) {
       let classes = [tile];
+      let items = [];
       let data = {};
       if (this.rnd(4) === 1) {
-        const items = [
-          'puddle1', 'puddle2', 'puddle3', 'puddle4'
-        ];
-        data.item = items[this.rnd(items.length)];
-        //console.debug('TD', cell.col, cell.row, tile, data.item);
+        switch (tile) {
+          case 'boden':
+          case 'decke':
+          case 'doorLeft':
+          case 'doorRight':
+          case 'doorTop':
+          case 'doorBottom':
+            items = puddles;
+            break;
+          case 'wallTop':
+            if (cell.row > 0) {
+              items = ['boot', 'boot-1'];
+            }
+            break;
+        }
+        if (items.length > 0) {
+          data.item = items[this.rnd(items.length)];
+        }
       }
       return {
         tile: '#' + tile,
@@ -52,6 +68,8 @@ export default class TopDownView extends SVGGenerator {
   }
 
   create() {
+    this.rnd = this.maze.constructor.randomGenerator(this.maze.seed);
+    
     let svg = super.create();
     let items = svg.querySelectorAll('[data-item]');
     items.forEach(tile => {
@@ -81,6 +99,24 @@ export default class TopDownView extends SVGGenerator {
             u.setAttribute('transform', 'translate(24,48)');
             break;
         }
+        tile.parentNode.insertBefore(u, tile.nextSibling);
+      } else if (tile.getAttribute('class') === 'wallTop') {
+        let cell = tile.parentNode;
+        let row = cell.parentNode;
+        let offset = 10;
+        if (cell.previousElementSibling
+                && cell.previousElementSibling.querySelector('.doorTop')) {
+          offset -= 24;
+        } else if (cell.nextElementSibling
+                && cell.nextElementSibling.querySelector('.doorTop')) {
+          offset += 14;
+        }
+        let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
+        let item = tile.getAttribute('data-item');
+        console.debug(row, cell, tile, item.substring(0, item.length - 2));
+        tile.removeAttribute('data-item');
+        u.setAttribute('href', '#' + item);
+        u.setAttribute('transform', 'translate(' + (offset) + ',-22) scale(1.5,1.5)');
         tile.parentNode.insertBefore(u, tile.nextSibling);
       }
       //console.debug('TD', cell.col, cell.row, tile, data.item);
