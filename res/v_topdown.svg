@@ -155,7 +155,7 @@
       .way{fill:url(#tiles);stroke:none;}
       .waybg{fill:peru;stroke:none;}
       .waytile{fill:rgba(255,255,255,.05);}
-      .wallbg{fill:Sienna;stroke:none;}
+      .wallbg{fill:FireBrick;stroke:none;}
       .wall{fill:url(#bricks);}
       .pilon{fill:Olive;z-index=1;}
       .ropeLeft{visibility:var(--ropeLeft);}
