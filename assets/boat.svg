@@ -143,22 +143,23 @@
           <rect id="boot1AchtV" x="-10" y="0" width="4" height="4"/>
           <use href="#boot1AchtV" class="heller"/>
           <use href="#boot1AchtV" class="boatline"/>
+          <rect class="shadow" x="-12" y="-4" width="2" height="8"/>
         </g>
         <g class="boatrope">
-          <line x1=".9" y1="-13" x2="-6" y2="0"/>
-          <line x1=".9" y1="-13" x2="-6" y2="-8"/>
-          <line x1="3.1" y1="-13" x2="6" y2="0"/>
-          <line x1="3.1" y1="-13" x2="6" y2="-8"/>
+          <line x1="-1.1" y1="-13" x2="-6" y2="0"/>
+          <line x1="-1.1" y1="-13" x2="-6" y2="-8"/>
+          <line x1="1.1" y1="-13" x2="6" y2="0"/>
+          <line x1="1.1" y1="-13" x2="6" y2="-8"/>
         </g>
         <g class="boat">
           <!--Mast-->
           <!--<rect x="0" y="-14" width="2" height="12" fill="red"/>-->
-          <rect x="-6" y="-3" height="2" width="8" class="shadow"/>
-          <rect x="-9" y="-4" height="2" width="3" class="shadow"/>
-          <path id="boot1Mast" d="M1,-2a1,1,180,1,0,2,0v-12a1,1,180,1,0,-2,0z"/>
+          <rect x="-6" y="-3" height="2" width="6.5" class="shadow"/>
+          <rect x="-10" y="-4" height="2" width="4" class="shadow"/>
+          <path id="boot1Mast" d="M-1,-2a1,1,180,1,0,2,0v-12a1,1,180,1,0,-2,0z"/>
           <!--<polyline points="2,-1,-11,-1,1,-14" fill="none" stroke="green" stroke-linejoin="bevel" stroke-width=".1"/>-->
           <use href="#boot1Mast" class="boatgrad"/>
-          <circle id="boot1MastTop" cx="2" cy="-14" r="1"/>
+          <circle id="boot1MastTop" cx="0" cy="-14" r="1"/>
           <use href="#boot1MastTop" class="heller"/>
           <use href="#boot1Mast" class="boatline"/>
           <use href="#boot1MastTop" class="boatline"/>
