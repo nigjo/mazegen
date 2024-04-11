@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 32 32" width="512" height="512">
+  <defs>
+    <pattern class="boat" id="boatWood" viewBox="0,0,16,16" width="2" height="2" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="16" height="16"/>
+      <!--<rect x="0" y="0" width="16" height="16" class="boat" transform="rotate(90)"/>-->
+      <!--<rect x="0" y="0" width="8" height="16" class="shadowline"/>-->
+      <g class="shadowline">
+        <line x1="0" y1="0" x2="0" y2="16"/>
+        <line x1="0" y1="4" x2="8" y2="4"/>
+        <line x1="8" y1="0" x2="8" y2="16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+      </g>
+    </pattern>
+    <linearGradient id="boat-bugschatten">
+      <stop offset="0%" style="stop-color:rgba(0,0,0,.05)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,.1)"/>
+    </linearGradient>
+    <style id="boat-data">
+      .boat{
+        fill:#8c4827;
+        stroke:none;
+        .wood{fill:url(#boatWood);stroke:none;}
+        .boatline{fill:none;stroke:SaddleBrown;stroke-width:.25px;stroke-linejoin:bevel;}
+        .boatgrad{fill:url(#boat-bugschatten);stroke:none;}
+        .boatrope{fill:none;stroke:tan;stroke-width:.2px;stroke-linecap:round;}
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        .shadowline{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;}
+        .heller{fill:rgba(255,255,255,.05);stroke:none;}
+      }
+    </style>
+    <g id="boot" class="boat">
+      <g transform="translate(14,16)">
+        <g class="boat">
+          <!--Bug-->
+          <!--wand hinten-->
+          <path id="bootBugH" d="M-4,-8a8,12,90,0,0,-8,4v4a8,12,90,0,1,8,-4z"/>
+          <use href="#bootBugH" class="heller"/>
+          <use href="#bootBugH" class="boatline"/>
+          <!--boden-->
+          <g class="wood">
+            <path id="bootBugM" d="M-4,2a8,12,90,0,1,-8,-4a8,12,90,0,1,8,-4z"/>
+          </g>
+          <use href="#bootBugM" class="boatline"/>
+          <!--wand vorne-->
+          <path id="bootBugV" d="M-4,4a8,12,90,0,1,-8,-4v-4a8,12,90,0,0,8,4z"/>
+          <use href="#bootBugV" class="boatgrad"/>
+          <use href="#bootBugV" class="boatline"/>
+        </g>
+        <g class="boat">
+          <!-- Mittelteile-->
+          <rect id="bootMidH" x="-4" y="-7" width="12" height="4"/>
+          <use href="#bootMidH" class="heller"/>
+          <use href="#bootMidH" class="boatline"/>
+          <rect id="bootMidM" x="-4" y="-5" width="12" height="8" class="wood"/>
+          <use href="#bootMidM" class="boatline"/>
+          <path d="M8,-6l-1,1,0,8,1,0z" class="shadow"/>
+          <rect id="bootMidV" x="-4" y="1" width="12" height="3"/>
+          <use href="#bootMidV" class="heller"/>
+          <use href="#bootMidV" class="boatline"/>
+        </g>
+        <g class="boat">
+          <!--Achtern-->
+          <rect id="bootAchtH" x="8" y="-8" width="4" height="4"/>
+          <use href="#bootAchtH" class="heller"/>
+          <use href="#bootAchtH" class="boatline"/>
+          <g class="wood">
+            <rect id="bootAchtM" x="8" y="-6" width="4" height="8"/>
+          </g>
+          <use href="#bootAchtM" class="boatline"/>
+          <path d="M12,-8l-2,2,0,8,2,0z" class="shadow"/>
+          <rect id="bootAchtV" x="8" y="0" width="4" height="4"/>
+          <use href="#bootAchtV" class="heller"/>
+          <use href="#bootAchtV" class="boatline"/>
+        </g>
+        <g class="boatrope">
+          <line x1=".9" y1="-13" x2="-4" y2="0"/>
+          <line x1=".9" y1="-13" x2="-4" y2="-8"/>
+          <line x1="3.1" y1="-13" x2="8" y2="0"/>
+          <line x1="3.1" y1="-13" x2="8" y2="-8"/>
+        </g>
+        <g class="boat">
+          <!--Mast-->
+          <!--<rect x="0" y="-14" width="2" height="12" fill="red"/>-->
+          <rect x="-4" y="-3" height="2" width="6" class="shadow"/>
+          <rect x="-9" y="-4" height="2" width="5" class="shadow"/>
+          <path id="bootMast" d="M1,-2a1,1,180,1,0,2,0v-12a1,1,180,1,0,-2,0z"/>
+          <!--<polyline points="2,-1,-11,-1,1,-14" fill="none" stroke="green" stroke-linejoin="bevel" stroke-width=".1"/>-->
+          <use href="#bootMast" class="boatgrad"/>
+          <circle id="bootMastTop" cx="2" cy="-14" r="1"/>
+          <use href="#bootMastTop" class="heller"/>
+          <use href="#bootMast" class="boatline"/>
+          <use href="#bootMastTop" class="boatline"/>
+        </g>
+      </g>
+    </g>
+  </defs>
+  <use href="#boot"/>
+</svg>
