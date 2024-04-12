@@ -32,17 +32,19 @@ await assetFetcher.then(list => {
       return mod.asset;
     }).then(a => {
       if ("view" in a) {
-        console.log("loading", a.view);
+        console.log("asset", a.view, "loading...");
         return fetch('assets/' + a.view)
                 .then(r => r.text())
                 .then(t => new DOMParser().parseFromString(t, "image/svg+xml"))
                 .then(svg => {
                   a.tileMap = new Map();
-                  [...svg.querySelectorAll('defs>[id]')].forEach(def => {
+                  const defs = [...svg.querySelectorAll('defs>[id]')];
+                  defs.forEach(def => {
                     svgDefs.set(def.id, def);
                     if (def.tagName === 'g')
                       assets[def.id] = a;
                   });
+                  console.log("asset", a.view, defs.map(d=>d.id));
                   return a;
                 });
 
@@ -111,7 +113,7 @@ export default class TopDownView extends SVGGenerator {
       //console.debug('TD', tile);
       let item = tile.getAttribute('data-item');
       let tileName = tile.getAttribute('class');
-      console.debug(tile, item, tileName);
+      //console.debug(tile, item, tileName);
       if (item in assets && tileName in assets[item].tiles) {
         let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         tile.removeAttribute('data-item');
