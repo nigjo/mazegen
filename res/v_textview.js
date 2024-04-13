@@ -1,15 +1,17 @@
 import Maze from './m_maze.js';
 
 export default class TextView {
-    
-  static viewProps = ['boxView'];
+
+  static viewProps = ['boxView', 'showWay'];
 
   constructor(maze) {
     this.maze = maze;
     this.boxView = false;
+    this.showWay = false;
   }
 
   create() {
+    this.showWay = this.showWay === undefined ? this.boxView : this.showWay
     if (this.boxView) {
       return this.createBoxed();
     } else {
@@ -28,18 +30,18 @@ export default class TextView {
       let line = '+';
       for (let c = 0; c < m.width; c++) {
         let cell = m.cells[r][c];
-        cells += "   ";
+        cells += this.showWay ? " · " : "   ";
         if ((cell.walls & Maze.EAST) !== 0) {
           cells += "|";
         } else {
-          cells += " ";
+          cells += this.showWay ? "·" : " ";
         }
         if ((cell.walls & Maze.SOUTH) !== 0) {
           line += "---+";
         } else if (cell === m.exit) {
           line += "-v-+";
         } else {
-          line += "   +";
+          line += (this.showWay ? " · " : "   ")+"+";
         }
       }
       pre.append(cells + "\n");
@@ -64,11 +66,11 @@ export default class TextView {
       for (let c = 0; c < m.width; c++) {
         let lastCol = c + 1 == m.width;
         let cell = m.cells[r][c];
-        cells += " · ";
+        cells += this.showWay ? " · " : "   ";
         if ((cell.walls & Maze.EAST) !== 0) {
           cells += lastCol ? "\u2551" : "\u2502";
         } else {
-          cells += "·";
+          cells += this.showWay ? "·" : " ";
         }
         if ((cell.walls & Maze.SOUTH) !== 0) {
           if (lastRow) {
@@ -79,7 +81,8 @@ export default class TextView {
         } else if (cell === m.exit) {
           line += "\u2550\u2193\u2550\u2567";
         } else {
-          line += " · " + (lastCol ? "\u2562" : "\u253c");
+          line += this.showWay ? " · " : "   ";
+          line += (lastCol ? "\u2562" : "\u253c");
         }
       }
       pre.append(cells + "\n");
@@ -92,6 +95,7 @@ export default class TextView {
 function boxed(m) {
   let box = new TextView(m);
   box.boxView = true;
+  box.showWay = true;
   return box;
 }
 
