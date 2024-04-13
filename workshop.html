@@ -9,15 +9,24 @@
     <script type="module">
       import RandomKruskal from './res/RandomKruskal.js';
       let args = new URLSearchParams(location.search);
-      let viewName = args.get('view') || 'isometric';
+      const workshop = {
+        View: 'isometric',
+        Width: '8',
+        Height: '5',
+        Seed: 'czx95c9bh30k'
+      };
+      for (let name of Object.keys(workshop)) {
+        let key = 'workshop' + name;
+        workshop[name] = args.get(key) || workshop[name];
+      }
 
       Promise.all([
-        import('./res/v_' + viewName + '.js'),
+        import('./res/v_' + workshop.View + '.js'),
         new Promise(ok => {
           //Bei 8:5
           //RGtRTIk2NHkp (4er fehlt)
           //czx95c9bh30k (alle Elemente)
-          ok(new RandomKruskal(8, 5, "czx95c9bh30k"));
+          ok(new RandomKruskal(Number(workshop.Width), Number(workshop.Height), workshop.Seed));
         })
       ]).then(data => {
         let maze, mod;
@@ -30,11 +39,21 @@
         return generateViewContent(view);
       }).then(view => {
         createParameterList(view);
+      }).catch(error => {
+        console.warn(error);
+        let warn = document.createElement('p');
+        warn.style.backgroundColor = 'lightsalmon';
+        warn.style.color = 'darkred';
+        warn.style.padding = '.5em 1em';
+        warn.textContent = error;
+        document.querySelector('main').append(warn);
+        createParameterList({});
       });
 
       function initParameters(view) {
-        args.delete('view');
+        //args.delete('view');
         console.debug(args);
+        let legacyKeys = [];
         for (const [key, value] of args.entries()) {
           if (key in view) {
             if (typeof (view[key]) === 'boolean') {
@@ -47,8 +66,11 @@
             } else {
               view[key] = value;
             }
+          } else if (!key.startsWith('workshop')) {
+            legacyKeys.push(key);
           }
         }
+        legacyKeys.forEach(lk => args.delete(lk));
         return view;
       }
 
@@ -70,6 +92,18 @@
         return view;
       }
 
+      function editParameter(key, value) {
+        let r = prompt(key, value);
+        if (r !== null) {
+          if (r === '')
+            args.delete(key);
+          else
+            args.set(key, r);
+          console.log(location.pathname, args);
+          location = location.pathname + '?' + args;
+        }
+      }
+
       function createParameterList(view) {
         let paramList = document.createElement('dl');
         console.debug(Object.keys(view));
@@ -78,10 +112,13 @@
           dt.textContent = k;
           paramList.append(dt);
           let dd = document.createElement('dd');
-          dd.textContent = v;
+          let val = document.createElement('span');
+          val.textContent = v;
+          val.onclick = () => editParameter(k, v);
+          val.style.cursor = 'pointer';
+          dd.append(val);
           paramList.append(dd);
         }
-        addItem('view', viewName);
         for (const c of Object.keys(view)) {
           if (typeof (view[c]) === 'boolean') {
             addItem(c, view[c]);
@@ -90,6 +127,12 @@
           } else if (typeof (view[c]) === 'string') {
             addItem(c, view[c]);
           }
+        }
+
+        for (let name of Object.keys(workshop)) {
+          let key = 'workshop' + name;
+          if (!(key in view))
+            addItem(key, workshop[name]);
         }
 
         document.querySelector('main').append(paramList);
