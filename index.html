@@ -32,6 +32,34 @@
         height: 6
       };
     </script>
+    <script>
+      function getMainViewData() {
+        let host = document.querySelector('#mainview .viewHost');
+        let thumbId = host.dataset.thumb;
+        let thumb = document.getElementById(thumbId);
+        let filename = 'maze-' + thumb.dataset.view;
+        console.log("download", filename);
+        let filecontent = new Blob([
+          new XMLSerializer().serializeToString(host.shadowRoot.firstElementChild)
+        ], {
+          type: 'image/svg+xml;charset=utf-8'
+        });
+        const url = URL.createObjectURL(filecontent);
+        return [filename, url];
+      }
+      function dlBlob(filename, dataurl) {
+        let a = document.createElement('a');
+        a.href = dataurl;
+        a.download = filename;
+        document.body.append(a);
+        console.debug(a);
+        a.click();
+        setTimeout(() => {
+          URL.revokeObjectURL(dataurl);
+          a.remove();
+        });
+      }
+    </script>
   </head>
   <body>
     <header><a href="./"><img src="res/2x2maze.svg" style="width:3em;height:3em" alt="Logo"></a> <h1 id="pagetitle">Irrgarten Generator<span id="seedtext"></span></h1></header>
@@ -60,25 +88,30 @@
       <div id="mainview"></div>
       <div>
         <input id="svgDownloader" type="button" value="Download als SVG" title="Läd die aktuelle Ansicht als SVG herunter.">
-        <script>document.getElementById('svgDownloader').onclick = () => {
+        <script>
+          document.getElementById('svgDownloader').onclick = () => {
+            let filename, svgurl;
+            [filename, svgurl] = getMainViewData();
+            dlBlob(filename + ".svg ", svgurl);
+          };
+        </script>
+        <input id="pngDownloader" type="button" value="Download als PNG" title="Läd die aktuelle Ansicht als SVG herunter.">
+        <script>document.getElementById('pngDownloader').onclick = () => {
+            const canvas = document.createElement('canvas');
             let host = document.querySelector('#mainview .viewHost');
-            let thumbId = host.dataset.thumb;
-            let thumb = document.getElementById(thumbId);
-            let filename = 'maze-' + thumb.dataset.view + ".svg";
-            console.log("download", filename);
-            let filecontent = new Blob([host.shadowRoot.innerHTML], {
-              type: 'image/svg+xml;charset=utf-8'
-            });
-            const url = URL.createObjectURL(filecontent);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.append(a);
-            a.click();
-            setTimeout(() => {
-              URL.revokeObjectURL(url);
-              a.remove();
-            });
+            let svg = host.shadowRoot.firstElementChild;
+            canvas.width = svg.getAttribute('width');
+            canvas.height = svg.getAttribute('height');
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            let filename, svgurl;
+            [filename, svgurl] = getMainViewData();
+            img.onload = function () {
+              ctx.drawImage(img, 0, 0);
+              var png = canvas.toDataURL("image/png");
+              dlBlob(filename + ".png", png);
+            };
+            img.src = svgurl;
           };
         </script>
       </div>
