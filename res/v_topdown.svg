@@ -30,7 +30,7 @@
       </g>
     </pattern>
     <g id="boden" class="boden">
-      <rect x="0" y="0" width="64" height="64"/>
+      <rect x="0" y="0" width="64.5" height="64.5"/>
       <rect x="16" y="44" width="32" height="8" class="wall"/>
       <rect x="16" y="12" width="32" height="32" class="way"/>
       <!-- <circle cx="32" cy="32" r="20" class="way"/> -->
