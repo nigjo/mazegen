@@ -58,6 +58,30 @@
       </div>
       <div id="views"><p>Bitte warten...</p></div>
       <div id="mainview"></div>
+      <div>
+        <input id="svgDownloader" type="button" value="Download als SVG" title="Läd die aktuelle Ansicht als SVG herunter.">
+        <script>document.getElementById('svgDownloader').onclick = () => {
+            let host = document.querySelector('#mainview .viewHost');
+            let thumbId = host.dataset.thumb;
+            let thumb = document.getElementById(thumbId);
+            let filename = 'maze-' + thumb.dataset.view + ".svg";
+            console.log("download", filename);
+            let filecontent = new Blob([host.shadowRoot.innerHTML], {
+              type: 'image/svg+xml;charset=utf-8'
+            });
+            const url = URL.createObjectURL(filecontent);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.append(a);
+            a.click();
+            setTimeout(() => {
+              URL.revokeObjectURL(url);
+              a.remove();
+            });
+          };
+        </script>
+      </div>
     </main>
     <footer>
       &copy; <a href="https://github.com/nigjo">Jens Hofschröer</a>
