@@ -22,6 +22,8 @@ main .view{
 }
 .viewHost::part(mazeview){
   line-height:initial;
+  max-width:100%;
+  height:auto;
 }
 header>*{
   display:inline-block;
