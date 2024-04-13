@@ -1,5 +1,6 @@
 import Maze from './m_maze.js';
 import TextView from './v_textview.js';
+import defloader from './m_defloader.js';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 
@@ -26,6 +27,7 @@ export default class GraphInfo {
     this.showDungeon = true;
     this.showPath = true;
     this.keepSingleDeadends = true;
+    this.dungeon = false;
   }
 
   create() {
@@ -159,18 +161,27 @@ export default class GraphInfo {
     svg.setAttribute('preserveAspectRatio', 'xMidYMid');
     svg.setAttribute('xmlns', SVGNS);
 
+    let defs = document.createElementNS(SVGNS, 'defs');
     let styles = document.createElementNS(SVGNS, 'style');
-    styles.append('.knot{fill:blue;stroke:none;}');
-    styles.append('.edge1{fill:none;stroke:red;stroke-width:2}');
-    styles.append('.edge{fill:none;stroke:gray;stroke-width:2}');
-    styles.append('.way{stroke:red;}');
+    let css = '';
+    css+=('.knot{fill:blue;stroke:none;}');
+    css+=('.edge1{fill:none;stroke:red;stroke-width:2}');
+    css+=('.edge{fill:none;stroke:gray;stroke-width:2}');
+    css+=('.way{stroke:red;}');
     if (this.dungeon) {
-      styles.append('svg{background-color:SaddleBrown;}');
-      styles.append('.bg{fill:url("res/v_graph_defs.svg#cracked");fill-opacity:.05}');
-      styles.append('path.edge,line{stroke:Peru;stroke-width:14px;stroke-linecap:round;}');
-      styles.append('.knot{fill:Peru;}');
+      css+=('svg{background-color:SaddleBrown;}');
+      css+=('.bg{fill:url(#cracked);fill-opacity:.05}');
+      css+=('path.edge,line{stroke:Peru;stroke-width:14px;stroke-linecap:round;}');
+      css+=('.knot{fill:Peru;}');
+      css+=('.cracked line{stroke:white;stroke-width: 2px;}');
     }
-    svg.append(styles);
+    styles.textContent = css;
+    defs.append(styles);
+    for (let def of svgDefs.values()) {
+      defs.append(def.cloneNode(true));
+    }
+    svg.append(defs);
+
 
     this.#addVisualContent(svg, graph);
 
@@ -178,12 +189,12 @@ export default class GraphInfo {
       let viewBox = svg.getAttribute('viewBox').split(' ');
       console.log(viewBox);
       let bg = document.createElementNS(SVGNS, 'rect');
-      bg.setAttribute('class', 'bg');
+      bg.setAttribute('class', 'dungeon bg');
       bg.setAttribute('x', viewBox[0]);
       bg.setAttribute('y', viewBox[1]);
       bg.setAttribute('width', viewBox[2]);
       bg.setAttribute('height', viewBox[3]);
-      svg.insertBefore(bg, styles.nextElementSibling);
+      svg.insertBefore(bg, defs.nextElementSibling);
     }
 
     return svg;
@@ -191,7 +202,7 @@ export default class GraphInfo {
 
   #addRoom(svg, roomDef, dotsize) {
     let room = document.createElementNS(SVGNS, 'use');
-    room.setAttribute('href', 'res/v_graph_defs.svg#room');
+    room.setAttribute('href', '#room');
     room.setAttribute('transform',
             'translate(' + (roomDef.x) + ',' + roomDef.y + ')'
             + 'scale(' + (dotsize / 16) + ')');
@@ -239,48 +250,40 @@ export default class GraphInfo {
           edge.setAttribute('class', 'edge1');
 
           let tunnel = document.createElementNS(SVGNS, 'path');
-          tunnel.setAttribute('d',
-                  'M' + current.x + ',' + current.y + 'C');
+          let tunnelPath = 'M' + current.x + ',' + current.y + 'C';
           switch (door.direction) {
             case Maze.NORTH:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + current.x + "," + (current.y - delta));
+              tunnelPath += current.x + "," + (current.y - delta);
               break;
             case Maze.SOUTH:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + current.x + "," + (current.y + delta));
+              tunnelPath += current.x + "," + (current.y + delta);
               break;
             case Maze.EAST:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + (current.x + delta) + "," + current.y);
+              tunnelPath += (current.x + delta) + "," + current.y;
               break;
             case Maze.WEST:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + (current.x - delta) + "," + current.y);
+              tunnelPath += (current.x - delta) + "," + current.y;
               break;
           }
           let targetDoor = current.parentRoom.doors.filter(d => d.next == current.cell);
           switch (targetDoor[0].direction) {
             case Maze.NORTH:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + ',' + nextRoom.x + "," + (nextRoom.y - delta));
+              tunnelPath += ',' + nextRoom.x + "," + (nextRoom.y - delta);
               break;
             case Maze.SOUTH:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + ',' + nextRoom.x + "," + (nextRoom.y + delta));
+              tunnelPath += ',' + nextRoom.x + "," + (nextRoom.y + delta);
               break;
             case Maze.EAST:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + ',' + (nextRoom.x + delta) + "," + nextRoom.y);
+              tunnelPath += ',' + (nextRoom.x + delta) + "," + nextRoom.y;
               break;
             case Maze.WEST:
-              tunnel.setAttribute('d', tunnel.getAttribute('d')
-                      + ',' + (nextRoom.x - delta) + "," + nextRoom.y);
+              tunnelPath += ',' + (nextRoom.x - delta) + "," + nextRoom.y;
               break;
           }
 
-          tunnel.setAttribute('d', tunnel.getAttribute('d')
-                  + ',' + nextRoom.x + "," + nextRoom.y);
+          tunnelPath += ',' + nextRoom.x + "," + nextRoom.y;
+          tunnel.setAttribute('d', tunnelPath);
+
           tunnel.setAttribute('class', 'edge');
           svg.append(tunnel);
 
@@ -359,6 +362,8 @@ export default class GraphInfo {
             + canvasWidth + " " + canvasHeight);
   }
 }
+
+const svgDefs = await defloader('res/v_graph_defs.svg');
 
 if (window.mazedata) {
   import("./m_mazeinfo.js").then(mod => {
