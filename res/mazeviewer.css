@@ -1,3 +1,4 @@
+@font-face{font-family: "Mononoki";src:url(./mononoki-Regular.otf) format("opentype");}
 main .view{
   display:inline-block;
   vertical-align:top;

@@ -52,7 +52,16 @@ export default class TextView {
 
   createBoxed() {
     let m = this.maze;
+    let block = document.createElement('div');
+    let style = document.createElement('style');
+    style.textContent = `
+  .textmaze{margin:0px;font-family:Consolas, Mononoki, "Courier New", monospace;}
+`;
+
     let pre = document.createElement('pre');
+    block.append(pre);
+    block.append(style);
+    pre.className = 'textmaze';
     let sep = '\u2554'
             + '\u2550\u2550\u2550\u2564'.repeat(m.width - 1)
             + '\u2550\u2550\u2550\u2557\n';
@@ -88,7 +97,7 @@ export default class TextView {
       pre.append(cells + "\n");
       pre.append(line + "\n");
     }
-    return pre;
+    return block;
   }
 
 }
