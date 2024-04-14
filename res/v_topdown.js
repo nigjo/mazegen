@@ -34,7 +34,7 @@ await assetFetcher.then(list => {
       return mod.asset;
     }).then(a => {
       if ("view" in a) {
-        console.log("asset", a.view, "loading...");
+        console.debug("asset", a.view, "loading...");
         return fetch('assets/' + a.view)
                 .then(r => r.text())
                 .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
@@ -43,7 +43,7 @@ await assetFetcher.then(list => {
     }));
   }
   return Promise.all(assetFetcher).then(assetList => {
-    console.log('ASSETS', assetList.map(i=>i[0].position+'/'+i[0].name));
+    console.debug('ASSETS', assetList.map(i=>i[0].position+'/'+i[0].name));
     let a,svg;
     for([a,svg] of assetList){
     //const add = svg => {
@@ -53,7 +53,7 @@ await assetFetcher.then(list => {
         if (def.tagName === 'g' || def.tagName === 'symbol')
           assets[def.id] = a;
       });
-      console.log("asset", a.view, defs.map(d => d.id));
+      console.debug("asset", a.view, defs.map(d => d.id));
     }
   });
 });
