@@ -1,5 +1,4 @@
 import Maze from './m_maze.js';
-import TextView from './v_textview.js';
 import defloader from './m_defloader.js';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -22,9 +21,6 @@ export default class GraphInfo {
   constructor(maze) {
     /**@type {Maze} */
     this.maze = maze;
-    this.showMaze = false;
-    this.showData = false;
-    this.showDungeon = true;
     this.showPath = true;
     this.keepSingleDeadends = true;
     this.dungeon = false;
@@ -35,30 +31,7 @@ export default class GraphInfo {
 
     let graph = this.#createGraph();
 
-    if (this.showDungeon) {
-      content.append(this.#createVisual(graph));
-    }
-
-    if (this.showMaze) {
-      let textView = new TextView(this.maze).create();
-      content.append(textView);
-    }
-
-    if (this.showData) {
-      const rowLength = this.maze.width * 4 + 2;
-      graph.forEach((v, k) => {
-        let row = document.createElement('pre');
-        row.className = "row";
-        row.append('cell ' + k.col + ',' + k.row + '\n');
-        for (let door of v.doors) {
-          row.append('  -> ' + door.next.col
-                  + ',' + door.next.row
-                  + ' (' + door.length + ')'
-                  + '\n');
-        }
-        content.append(row);
-      });
-    }
+    content.append(this.#createVisual(graph));
 
     let wrapper = document.createElement('div');
     wrapper.classList.add('maze');
