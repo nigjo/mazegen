@@ -29,30 +29,33 @@ await assetFetcher.then(list => {
   for (let name of list) {
     assetFetcher.push(
     import('../assets/' + name + '.js').then(mod => {
+      mod.asset.name = name;
+      mod.asset.position = list.indexOf(name);
       return mod.asset;
     }).then(a => {
       if ("view" in a) {
         console.log("asset", a.view, "loading...");
         return fetch('assets/' + a.view)
                 .then(r => r.text())
-                .then(t => new DOMParser().parseFromString(t, "image/svg+xml"))
-                .then(svg => {
-                  a.tileMap = new Map();
-                  const defs = [...svg.querySelectorAll('defs>[id]')];
-                  defs.forEach(def => {
-                    svgDefs.set(def.id, def);
-                    if (def.tagName === 'g' || def.tagName === 'symbol')
-                      assets[def.id] = a;
-                  });
-                  console.log("asset", a.view, defs.map(d => d.id));
-                  return a;
-                });
-
+                .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
       }
-      return a;
+      return [a,null];
     }));
   }
-  return Promise.all(assetFetcher);
+  return Promise.all(assetFetcher).then(assetList => {
+    console.log('ASSETS', assetList.map(i=>i[0].position+'/'+i[0].name));
+    let a,svg;
+    for([a,svg] of assetList){
+    //const add = svg => {
+      const defs = [...svg.querySelectorAll('defs>[id]')];
+      defs.forEach(def => {
+        svgDefs.set(def.id, def);
+        if (def.tagName === 'g' || def.tagName === 'symbol')
+          assets[def.id] = a;
+      });
+      console.log("asset", a.view, defs.map(d => d.id));
+    }
+  });
 });
 
 export default class TopDownView extends SVGGenerator {
