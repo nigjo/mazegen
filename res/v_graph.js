@@ -138,7 +138,7 @@ export default class GraphInfo {
     }
 
     if (!this.keepSingleDeadends) {
-      let singles = [...graph.keys()].filter(k => {
+      [...graph.keys()].filter(k => {
         return graph.get(k).doors.length == 1
                 && graph.get(k).doors[0].length == 1;
       }).forEach(k => {
@@ -160,23 +160,11 @@ export default class GraphInfo {
     let svg = document.createElementNS(SVGNS, 'svg');
     svg.setAttribute('preserveAspectRatio', 'xMidYMid');
     svg.setAttribute('xmlns', SVGNS);
+    if (this.dungeon) {
+      svg.setAttribute('class', "dungeon");
+    }
 
     let defs = document.createElementNS(SVGNS, 'defs');
-    let styles = document.createElementNS(SVGNS, 'style');
-    let css = '';
-    css+=('.knot{fill:blue;stroke:none;}');
-    css+=('.edge1{fill:none;stroke:red;stroke-width:2}');
-    css+=('.edge{fill:none;stroke:gray;stroke-width:2}');
-    css+=('.way{stroke:red;}');
-    if (this.dungeon) {
-      css+=('svg{background-color:SaddleBrown;}');
-      css+=('.bg{fill:url(#cracked);fill-opacity:.05}');
-      css+=('path.edge,line{stroke:Peru;stroke-width:14px;stroke-linecap:round;}');
-      css+=('.knot{fill:Peru;}');
-      css+=('.cracked line{stroke:white;stroke-width: 2px;}');
-    }
-    styles.textContent = css;
-    defs.append(styles);
     for (let def of svgDefs.values()) {
       defs.append(def.cloneNode(true));
     }
@@ -185,17 +173,15 @@ export default class GraphInfo {
 
     this.#addVisualContent(svg, graph);
 
-    if (this.dungeon) {
-      let viewBox = svg.getAttribute('viewBox').split(' ');
-      console.log(viewBox);
-      let bg = document.createElementNS(SVGNS, 'rect');
-      bg.setAttribute('class', 'dungeon bg');
-      bg.setAttribute('x', viewBox[0]);
-      bg.setAttribute('y', viewBox[1]);
-      bg.setAttribute('width', viewBox[2]);
-      bg.setAttribute('height', viewBox[3]);
-      svg.insertBefore(bg, defs.nextElementSibling);
-    }
+    let viewBox = svg.getAttribute('viewBox').split(' ');
+    console.log(viewBox);
+    let bg = document.createElementNS(SVGNS, 'rect');
+    bg.setAttribute('class', 'bg');
+    bg.setAttribute('x', viewBox[0]);
+    bg.setAttribute('y', viewBox[1]);
+    bg.setAttribute('width', viewBox[2]);
+    bg.setAttribute('height', viewBox[3]);
+    svg.insertBefore(bg, defs.nextElementSibling);
 
     return svg;
   }
