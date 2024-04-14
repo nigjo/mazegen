@@ -41,10 +41,10 @@ await assetFetcher.then(list => {
                   const defs = [...svg.querySelectorAll('defs>[id]')];
                   defs.forEach(def => {
                     svgDefs.set(def.id, def);
-                    if (def.tagName === 'g')
+                    if (def.tagName === 'g' || def.tagName === 'symbol')
                       assets[def.id] = a;
                   });
-                  console.log("asset", a.view, defs.map(d=>d.id));
+                  console.log("asset", a.view, defs.map(d => d.id));
                   return a;
                 });
 
