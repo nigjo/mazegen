@@ -59,6 +59,8 @@
       <path d="M46,11q9,1,18,1" class="rope"/>
       <path d="M46,11q9,1,18,1" class="ropemark"/>
     </g>
+    <g id="wallRight">
+    </g>
     <g id="doorTop">
       <rect x="20" y="0" width="24" height="12" class="way"/>
       <rect x="12" y="0" width="8" height="12" class="shadow"/>
