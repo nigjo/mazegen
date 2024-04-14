@@ -287,27 +287,27 @@ export default class GraphInfo {
 
     if (this.dungeon) {
 
+      const addLine = (cell, toY) => {
+        let entrance = document.createElementNS(SVGNS, 'line');
+        entrance.setAttribute('x1', cell.x);
+        entrance.setAttribute('y1', cell.y);
+        entrance.setAttribute('x2', cell.x);
+        entrance.setAttribute('y2', toY);
+        if (this.showPath) {
+          entrance.setAttribute('class', 'edge way');
+        } else {
+          entrance.setAttribute('class', 'edge');
+        }
+        svg.append(entrance);
+        if (cell.doors.length > 1) {
+          this.#addRoom(svg, cell, dotsize);
+        }
+      };
       let start = graph.get(this.maze.entrance);
-      let entrance = document.createElementNS(SVGNS, 'line');
-      entrance.setAttribute('x1', start.x);
-      entrance.setAttribute('y1', start.y);
-      entrance.setAttribute('x2', start.x);
-      entrance.setAttribute('y2', minY);
-      svg.append(entrance);
-      if (start.doors.length > 1) {
-        this.#addRoom(svg, start, dotsize);
-      }
+      addLine(start, minY);
 
       let ende = graph.get(this.maze.exit);
-      let exit = document.createElementNS(SVGNS, 'line');
-      exit.setAttribute('x1', ende.x);
-      exit.setAttribute('y1', ende.y);
-      exit.setAttribute('x2', ende.x);
-      exit.setAttribute('y2', maxY);
-      svg.append(exit);
-      if (ende.doors.length > 1) {
-        this.#addRoom(svg, ende, dotsize);
-      }
+      addLine(ende, maxY);
 
       [...graph.values()].forEach(current => {
         if (current.x && current.doors.length > 2) {
@@ -315,8 +315,6 @@ export default class GraphInfo {
         }
       });
     }
-
-
 
     if (this.showPath) {
       let solution = graph.get(this.maze.exit);
@@ -338,6 +336,10 @@ export default class GraphInfo {
         room.setAttribute('class', 'knot');
         svg.append(room);
       }
+    } else if (this.showPath) {
+      let ways = [...svg.querySelectorAll('.edge.way')]
+      console.debug('PATH', ways);
+      ways.forEach(w => svg.append(w));
     }
 
     let canvasWidth = Math.floor((maxX - minX + 2) * 100) / 100;
