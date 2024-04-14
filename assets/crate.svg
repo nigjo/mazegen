@@ -1,0 +1,71 @@
+<svg width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="crate-styles">
+      .crates{
+        fill:sienna;
+        .line{fill:none;stroke:rgba(0,0,0,.1);stroke-width:.1px;}
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        .front{fill:Chocolate}
+      }
+    </style>
+    <symbol id="grate1" viewBox="-4 -1 8 8" width="16" height="8" class="crates">
+      <rect x="-1" y="2" width="1" height="4" class="shadow"/>
+      <rect x="0" y="0" width="5" height="4" class="front"/>
+      <line x1="0" y1="1" x2="5" y2="1" class="line"/>
+      <line x1="0" y1="2" x2="5" y2="2" class="line"/>
+      <line x1="0" y1="3" x2="5" y2="3" class="line"/>
+      
+      <rect x=".75" y="0" width=".25" height="4" class="shadow"/>
+      <rect x="1" y="-.1" width=".75" height="4.1"/>
+      <rect x="1" y="3.9" width=".75" height=".1" class="shadow"/>
+      
+      <rect x="3.1" y="0" width=".25" height="4" class="shadow"/>
+      <rect x="3.35" y="-.1" width=".75" height="4.1"/>
+      <rect x="3.35" y="3.9" width=".75" height=".1" class="shadow"/>
+      
+      <rect x="0" y="4" width="5" height="2"/>
+      <line x1="0" y1="4.66" x2="5" y2="4.66" class="line"/>
+      <line x1="0" y1="5.33" x2="5" y2="5.33" class="line"/>
+    </symbol>
+    <style>
+      /*only for display this asset*/
+      <style>
+        #boden{
+        fill:url(../res/v_topdown.svg#water);stroke:none;
+        }
+        #boden,#doorBottom{
+        .way{fill:url(../res/v_topdown.svg#tiles);stroke:none;}
+        .wall{fill:url(../res/v_topdown.svg#bricks);}
+        }
+        #wallBottom,#wallTop,#decke,#ropeSide{
+        .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}
+        .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
+        }
+        #wallLeft,#pilon,#doorBottom,#decke{
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        }
+        #pilonShadow.shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        #pilon{
+        .pilon{fill:Olive;z-index=1;}
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        }
+        #decke{
+        .ropeBottom{visibility:hidden;}
+        }
+      </style>
+    </style>
+  </defs>
+  <g>
+    <g transform="translate(0,0)" class="background">
+      <use href="../res/v_topdown.svg#boden"/>
+      <use href="../res/v_topdown.svg#wallTop"/>
+      <use href="../res/v_topdown.svg#wallLeft"/>
+      <use href="../res/v_topdown.svg#wallRight"/>
+      <use href="../res/v_topdown.svg#doorBottom"/>
+      <use href="../res/v_topdown.svg#decke"/>
+    </g>
+    <g id="usage">
+      <use href="#grate1" transform="translate(30,20)"/>
+    </g>
+  </g>
+</svg>
