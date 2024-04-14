@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html>
+  <head>
+    <title>Dock Runner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module">
+      import MazeGen from './res/RandomKruskal.js';
+      import TopDown from './res/v_topdown.js';
+      const docrunner = {
+        Width: '6',
+        Height: '10',
+        Seed: (() => {
+          let timestamp = new Date();
+          timestamp.setMinutes(0);
+          return timestamp
+                  .toISOString()
+                  .substring(0, 16).replace('T', ' ') + 'z';
+        })()
+      };
+      console.log(docrunner);
+      const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
+      const view = new TopDown(maze);
+
+      const startCell = maze.exit;
+      const targetCell = maze.entrance;
+
+      console.debug('GAME', startCell, targetCell);
+
+      let wrapper = document.createElement('div');
+      let shadow = wrapper.attachShadow({
+        mode: 'open'
+      });
+      let img = view.create();
+      shadow.append(img);
+      if (img.hasAttribute('width'))
+        wrapper.dataset.width = Number(img.getAttribute('width')) + 'px';
+      if (img.hasAttribute('height'))
+        wrapper.dataset.height = Number(img.getAttribute('height')) + 'px';
+
+      let w = Number(view.cellWidth);
+      let h = Number(view.cellHeight);
+      img.setAttribute('width', w * 4);
+      img.setAttribute('height', h * 4);
+      img.setAttribute('viewBox',
+              (w * startCell.col) + ' ' + (h * startCell.row) + ' ' + w + ' ' + h);
+
+      document.querySelector('main .game').append(wrapper);
+
+      let currentCell = startCell;
+      let moving = false;
+      let timer = null;
+      let startTime = null;
+      function startTimer() {
+        if (timer)
+          return;
+        startTime = Date.now();
+        timer = setTimeout(updateTimer, 0);
+      }
+      function updateTimer() {
+        let currentTime = Date.now();
+        let delta = currentTime - startTime;
+        const ui = document.getElementById('timer');
+        ui.textContent = 'timer: ' + Math.floor(delta / 1000) + 's';
+        if (timer)
+          timer = setTimeout(updateTimer, 150);
+        else
+          ui.textContent = ui.textContent + " / done";
+      }
+      function stopTimer() {
+        timer = null;
+      }
+
+      document.addEventListener('keydown', (evt) => {
+        if (event.isComposing || event.keyCode === 229) {
+          //from mdn docs
+          return;
+        }
+        if (moving) {
+          switch (event.key) {
+            case 'ArrowUp':
+            case 'ArrowLeft':
+            case 'ArrowDown':
+            case 'ArrowRight':
+              event.preventDefault();
+              return;
+          }
+        }
+        let nextCell = null;
+        switch (event.key) {
+          case 'ArrowUp':
+            //if(currentCell.wall)
+            if ((currentCell.walls & MazeGen.NORTH) === 0) {
+              nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
+            }
+            break;
+          case 'ArrowLeft':
+            if ((currentCell.walls & MazeGen.WEST) === 0) {
+              nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
+            }
+            break;
+          case 'ArrowDown':
+            if ((currentCell.walls & MazeGen.SOUTH) === 0) {
+              nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
+            }
+            break;
+          case 'ArrowRight':
+            if ((currentCell.walls & MazeGen.EAST) === 0) {
+              nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
+            }
+            break;
+          default:
+            return;
+        }
+        startTimer();
+        event.preventDefault();
+        console.debug(currentCell);
+        if (nextCell) {
+          const currentX = w * currentCell.col;
+          const currentY = h * currentCell.row;
+          const targetX = w * nextCell.col;
+          const targetY = h * nextCell.row;
+          const deltaX = (currentX - targetX) / 8;
+          const deltaY = (currentY - targetY) / 8;
+          let step = 0;
+          moving = true;
+
+          function move() {
+            ++step;
+            let nextX = currentX - step * deltaX;
+            let nextY = currentY - step * deltaY;
+            if (Math.abs(nextX - targetX) < 0.1
+                    && (Math.abs(nextY - targetY) < 0.1)) {
+              currentCell = nextCell;
+              img.setAttribute('viewBox',
+                      (targetX) + ' ' + (targetY) + ' ' + w + ' ' + h);
+              moving = false;
+              console.log("move", "done");
+              if (nextCell === targetCell) {
+                moving = true; // verhindert weitere Bewegung
+                stopTimer();
+              }
+            } else {
+              console.log("move", "next");
+              img.setAttribute('viewBox',
+                      (nextX) + ' ' + (nextY) + ' ' + w + ' ' + h);
+              setTimeout(move, 66);
+            }
+          }
+          setTimeout(move, 0);
+        }
+      });
+    </script>
+    <style>
+      body{
+        font-family: sans-serif;
+      }
+      .game{
+        display:inline-block;
+        margin:0;
+        padding:1em;
+        background-color:navy;
+      }
+      #timer{
+
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Dock Runner</h1>
+    </header>
+    <nav></nav>
+    <main>
+      <div class="game"></div>
+      <p id="timer">
+        Ready. Steady. GO!
+      </p>
+    </main>
+    <footer>
+      <a style="text-decoration:none;color:inherit;" href="index.html">&copy;</a> <a href="https://github.com/nigjo">Jens Hofschröer</a>
+    </footer>
+  </body>
+</html>
