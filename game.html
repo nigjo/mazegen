@@ -10,7 +10,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module">
       import MazeGen from './res/RandomKruskal.js';
-      import TopDown from './res/v_topdown.js';
+      import MazeView from './res/v_topdown.js';
+      //import DebugView from './res/v_textview.js';
       const docrunner = {
         Width: '6',
         Height: '10',
@@ -24,7 +25,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
       };
       console.log(docrunner);
       const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
-      const view = new TopDown(maze);
+      const view = new MazeView(maze);
 
       const startCell = maze.exit;
       const targetCell = maze.entrance;
@@ -44,12 +45,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
 
       let w = Number(view.cellWidth);
       let h = Number(view.cellHeight);
+      let oX = Number(view.offsetX);
+      let oY = Number(view.offsetY);
+
       img.setAttribute('width', w * 4);
       img.setAttribute('height', h * 4);
       img.setAttribute('viewBox',
-              (w * startCell.col) + ' ' + (h * startCell.row) + ' ' + w + ' ' + h);
+              (oX + w * startCell.col) + ' '
+              + (oY + h * startCell.row) + ' ' + w + ' ' + h);
 
       document.querySelector('main .game').append(wrapper);
+      //document.querySelector('main').append(new DebugView(maze).create());
 
       let currentCell = startCell;
       let moving = false;
@@ -120,10 +126,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
         event.preventDefault();
         console.debug(currentCell);
         if (nextCell) {
-          const currentX = w * currentCell.col;
-          const currentY = h * currentCell.row;
-          const targetX = w * nextCell.col;
-          const targetY = h * nextCell.row;
+          const currentX = oX + w * currentCell.col;
+          const currentY = oY + h * currentCell.row;
+          const targetX = oX + w * nextCell.col;
+          const targetY = oY + h * nextCell.row;
           const deltaX = (currentX - targetX) / 8;
           const deltaY = (currentY - targetY) / 8;
           let step = 0;
