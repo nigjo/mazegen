@@ -1,6 +1,6 @@
 <svg width="512" height="512" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <g id="vines1">
+    <symbol id="vines1">
       <!--<rect x="0" y="0" width="32" height="8"/>-->
       <g transform="translate(7,0)">
         <g id="vine-string1" class="vine">
@@ -28,23 +28,23 @@
       </g>
       <use href="#vine-string1" transform="translate(21,0)"/>
       <use href="#vine-string2" transform="translate(25,0)"/>
-    </g>
-    <g id="vines2">
+    </symbol>
+    <symbol id="vines2">
       <use href="#vine-string2" transform="translate(4,0)"/>
       <use href="#vine-string1" transform="translate(11,0)"/>
       <use href="#vine-string2" transform="translate(19,0)"/>
       <use href="#vine-string1" transform="translate(26,0)"/>
-    </g>
-    <g id="vines3">
+    </symbol>
+    <symbol id="vines3">
       <use href="#vine-string1" transform="translate(5,0)"/>
       <use href="#vine-string2" transform="translate(12,0)"/>
       <use href="#vine-string1" transform="translate(17,0)"/>
       <use href="#vine-string2" transform="translate(27,0)"/>
-    </g>
-    <g id="vinesSingle">
+    </symbol>
+    <symbol id="vinesSingle">
       <use href="#vine-string2" transform="translate(3,0)"/>
       <use href="#vine-string1" transform="translate(6,0)"/>
-    </g>
+    </symbol>
     <style>
       #boden{
       fill:url(../res/v_topdown.svg#water);stroke:none;
@@ -69,7 +69,6 @@
       .shadow{fill:rgba(0,0,0,.1);stroke:none;}
       .ropeBottom{visibility:hidden;}
       }
-      
     </style>
     <style id="vinestyles">
       .vine{
