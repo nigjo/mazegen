@@ -4,6 +4,11 @@
     <title>Dock Runner</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" sizes="16x16" href="res/dock_runner-16.png" type="image/png">
+    <link rel="icon" sizes="48x48" href="res/dock_runner-48.png" type="image/png">
+    <link rel="icon" sizes="192x192" href="res/dock_runner-192.png" type="image/png">
+    <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
     <script type="module">
       import MazeGen from './res/RandomKruskal.js';
       import MazeView from './res/v_topdown.js';
@@ -20,6 +25,7 @@
         })()
       };
       console.log('GAME', docrunner);
+      document.getElementById('seed').textContent = docrunner.Seed;
       const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
       const view = new MazeView(maze);
 
@@ -174,12 +180,14 @@
         margin:0;
         padding:1em;
         background-color:navy;
+        line-height:0px;
       }
     </style>
   </head>
   <body>
     <header>
       <h1>Dock Runner</h1>
+      <h2 id="seed">seed</h2>
     </header>
     <nav></nav>
     <main>
