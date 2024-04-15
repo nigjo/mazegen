@@ -51,6 +51,7 @@ img.setAttribute('part', 'mazeview');
 let playerOffsetX = 0;
 let playerOffsetY = 0;
 let direction = 'NORTH';
+let moving = false;
 
 if (view.hasPlayer) {
   console.debug(view.player);
@@ -63,9 +64,29 @@ if (view.hasPlayer) {
   player.setAttribute('id', 'playerCharacter');
   player.setAttribute('href', '#' + dir.still);
   player.setAttribute('x', startX + playerOffsetX + dir.offsetX);
-  player.setAttribute('y', startY + playerOffsetY + dir.offsetY);
+  player.setAttribute('y', startY+h + playerOffsetY + dir.offsetY);
   img.append(player);
+  let targetY = startY + playerOffsetY + dir.offsetY;
+  movePlayerOnly(player, targetY, true);
 }
+
+function movePlayerOnly(player, targetY, moveAfter){
+  let playerY = Number(player.getAttribute('y'));
+  moving = true;
+  const deltaY = (targetY - playerY) / 24;
+  function movePlayerToStart() {
+    playerY = playerY + deltaY;
+    if(Math.abs(playerY-targetY)<0.1){
+      player.setAttribute('y', targetY);
+      moving = !moveAfter;
+    }else{
+      player.setAttribute('y', playerY);
+      setTimeout(movePlayerToStart, 66);
+    }
+  }
+  setTimeout(movePlayerToStart, 0);
+}
+
 
 document.querySelector('main .game').append(wrapper);
 try {
@@ -75,7 +96,6 @@ try {
 }
 
 let currentCell = startCell;
-let moving = false;
 let timer = null;
 let startTime = null;
 function startTimer() {
@@ -228,7 +248,7 @@ function moveToNext(nextCell) {
     if (playerChar) {
       playerDir = direction in view.player.directions
               ? view.player.directions[direction]
-              : {offsetX: 0, offsetY: 0};
+              : {offsetX: 0, offsetY: 0,still:''};
       playerChar.setAttribute('href', '#' + playerDir.still);
     }
 
@@ -250,6 +270,13 @@ function moveToNext(nextCell) {
         if (nextCell === targetCell) {
           moving = true; // verhindert weitere Bewegung
           stopTimer();
+          playerDir = 'NORTH' in view.player.directions
+                  ? view.player.directions['NORTH']
+                  : {offsetX: 0, offsetY: 0,still:''};
+          playerChar.setAttribute('href', '#' + playerDir.still);
+
+          movePlayerOnly(playerChar,
+              targetY - h + playerOffsetY + playerDir.offsetY, false);
         }
       } else {
         //console.debug('GAME', "move", "next");
