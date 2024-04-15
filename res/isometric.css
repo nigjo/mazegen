@@ -8,7 +8,6 @@ text{
   font-size:20pt;
 }
 .vorne{
-  x-opacity: .66;
 }
 .wand{
   fill:var(--wand);
