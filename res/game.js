@@ -40,12 +40,32 @@ let h = Number(view.cellHeight);
 let oX = Number(view.offsetX);
 let oY = Number(view.offsetY);
 
+const startX = oX + w * startCell.col;
+const startY = oY + h * startCell.row;
 img.setAttribute('width', w * 4);
 img.setAttribute('height', h * 4);
 img.setAttribute('viewBox',
-        (oX + w * startCell.col) + ' '
-        + (oY + h * startCell.row) + ' ' + w + ' ' + h);
+        startX + ' ' + startY + ' ' + w + ' ' + h);
 img.setAttribute('part', 'mazeview');
+
+let playerOffsetX = 0;
+let playerOffsetY = 0;
+let direction = 'NORTH';
+
+if (view.hasPlayer) {
+  console.debug(view.player);
+  let dir = view.player.directions[direction];
+  playerOffsetX = "playerOffsetX" in view
+          ? view.playerOffsetX : (w / 2);
+  playerOffsetY = "playerOffsetY" in view
+          ? view.playerOffsetY : (h / 2);
+  let player = document.createElementNS(img.namespaceURI, 'use');
+  player.setAttribute('id', 'playerCharacter');
+  player.setAttribute('href', '#' + dir.still);
+  player.setAttribute('x', startX + playerOffsetX + dir.offsetX);
+  player.setAttribute('y', startY + playerOffsetY + dir.offsetY);
+  img.append(player);
+}
 
 document.querySelector('main .game').append(wrapper);
 try {
@@ -102,21 +122,25 @@ document.addEventListener('keydown', (evt) => {
     case 'ArrowUp':
       //if(currentCell.wall)
       if ((currentCell.walls & MazeGen.NORTH) === 0) {
+        direction = 'NORTH';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
       }
       break;
     case 'ArrowLeft':
       if ((currentCell.walls & MazeGen.WEST) === 0) {
+        direction = 'WEST';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
       }
       break;
     case 'ArrowDown':
       if ((currentCell.walls & MazeGen.SOUTH) === 0) {
+        direction = 'SOUTH';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
       }
       break;
     case 'ArrowRight':
       if ((currentCell.walls & MazeGen.EAST) === 0) {
+        direction = 'EAST';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
       }
       break;
@@ -140,10 +164,10 @@ function handleTouchMove(evt) {
 function handleTouchEnd(evt) {
   evt.preventDefault();
   if (startPoint && evt.changedTouches.length === 1) {
-    console.log("END", startPoint, evt.changedTouches[0]);
+    //console.log("END", startPoint, evt.changedTouches[0]);
     let deltaX = evt.changedTouches[0].pageX - startPoint.pageX;
     let deltaY = evt.changedTouches[0].pageY - startPoint.pageY;
-    console.log('DELTA', deltaX, deltaY);
+    //console.log('DELTA', deltaX, deltaY);
     if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
       return;
     }
@@ -151,20 +175,24 @@ function handleTouchEnd(evt) {
     if (Math.abs(deltaX) < Math.abs(deltaY)) {
       if (deltaY > 0) {
         if ((currentCell.walls & MazeGen.NORTH) === 0) {
+          direction = 'NORTH';
           nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
         }
       } else {
         if ((currentCell.walls & MazeGen.SOUTH) === 0) {
+          direction = 'SOUTH';
           nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
         }
       }
     } else {
       if (deltaX > 0) {
         if ((currentCell.walls & MazeGen.WEST) === 0) {
+          direction = 'WEST';
           nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
         }
       } else {
         if ((currentCell.walls & MazeGen.EAST) === 0) {
+          direction = 'EAST';
           nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
         }
       }
@@ -195,6 +223,14 @@ function moveToNext(nextCell) {
     const deltaY = (currentY - targetY) / 8;
     let step = 0;
     moving = true;
+    let playerChar = img.getElementById('playerCharacter');
+    let playerDir = null;
+    if (playerChar) {
+      playerDir = direction in view.player.directions
+              ? view.player.directions[direction]
+              : {offsetX: 0, offsetY: 0};
+      playerChar.setAttribute('href', '#' + playerDir.still);
+    }
 
     function move() {
       ++step;
@@ -205,6 +241,10 @@ function moveToNext(nextCell) {
         currentCell = nextCell;
         img.setAttribute('viewBox',
                 (targetX) + ' ' + (targetY) + ' ' + w + ' ' + h);
+        if (playerChar) {
+          playerChar.setAttribute('x', targetX + playerOffsetX + playerDir.offsetX);
+          playerChar.setAttribute('y', targetY + playerOffsetY + playerDir.offsetY);
+        }
         moving = false;
         //console.debug('GAME', "move", "done");
         if (nextCell === targetCell) {
@@ -215,6 +255,12 @@ function moveToNext(nextCell) {
         //console.debug('GAME', "move", "next");
         img.setAttribute('viewBox',
                 (nextX) + ' ' + (nextY) + ' ' + w + ' ' + h);
+        if (playerChar) {
+          let px = Number(playerChar.getAttribute('x'));
+          playerChar.setAttribute('x', px - deltaX);
+          let py = Number(playerChar.getAttribute('y'));
+          playerChar.setAttribute('y', py - deltaY);
+        }
         setTimeout(move, 66);
       }
     }

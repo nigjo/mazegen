@@ -1,0 +1,88 @@
+<svg width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="playerAdefs">
+      .playerA{
+        fill:red;
+        stroke:orange;
+        stroke-width:.5px;
+      }
+    </style>
+    <symbol id="playerA" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-nordM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M0,-4L2,0,-2,0z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-nordL" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M-1.5,-4L2,0,-2,0z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-nordR" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M1.5,-4L2,0,-2,0z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-suedM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M0,4L2,0,-2,0z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-nordL" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M-1.5,4L2,0,-2,0z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-nordR" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M1.5,4L2,0,-2,0z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-linksM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M-4,0L0,2,0,-2z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <symbol id="playerA-rechtsM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
+      <path d="M4,0L0,2,0,-2z"/>
+      <circle cx="0" cy="0" r="2.5"/>
+    </symbol>
+    <style>
+      /*only for display this asset*/
+      <style>
+        #boden{
+        fill:url(../res/v_topdown.svg#water);stroke:none;
+        }
+        #boden,#doorBottom{
+        .way{fill:url(../res/v_topdown.svg#tiles);stroke:none;}
+        .wall{fill:url(../res/v_topdown.svg#bricks);}
+        }
+        #wallBottom,#wallTop,#decke,#ropeSide{
+        .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}
+        .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
+        }
+        #wallLeft,#pilon,#doorBottom,#decke{
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        }
+        #pilonShadow.shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        #pilon{
+        .pilon{fill:Olive;z-index=1;}
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        }
+        #decke{
+        .ropeBottom{visibility:hidden;}
+        }
+      </style>
+    </style>
+  </defs>
+  <g>
+    <g transform="translate(0,0)" class="background">
+      <use href="../res/v_topdown.svg#boden"/>
+      <use href="../res/v_topdown.svg#wallTop"/>
+      <use href="../res/v_topdown.svg#wallLeft"/>
+      <use href="#rescue-stand" transform="translate(17,10)"/>
+      <use href="../res/v_topdown.svg#wallRight"/>
+      <use href="../res/v_topdown.svg#doorBottom"/>
+      <use href="../res/v_topdown.svg#decke"/>
+      <use href="#rescue-stand" transform="translate(35,10)"/>
+    </g>
+    <g id="usage">
+      <use href="#playerA-nordR" transform="translate(28,24)"/>
+    </g>
+  </g>
+</svg>
