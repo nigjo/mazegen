@@ -35,6 +35,7 @@
       //console.debug('GAME', startCell, targetCell);
 
       let wrapper = document.createElement('div');
+      wrapper.className = 'mazeview';
       let shadow = wrapper.attachShadow({
         mode: 'open'
       });
@@ -55,6 +56,7 @@
       img.setAttribute('viewBox',
               (oX + w * startCell.col) + ' '
               + (oY + h * startCell.row) + ' ' + w + ' ' + h);
+      img.setAttribute('part', 'mazeview');
 
       document.querySelector('main .game').append(wrapper);
       try {
@@ -181,6 +183,15 @@
         padding:1em;
         background-color:navy;
         line-height:0px;
+      }
+      @media screen and (max-width: 640px) {
+        .game{
+          width:calc(100% - 2em);
+        }
+        .mazeview::part(mazeview){
+          width: 100%;
+          height:auto;
+        }
       }
     </style>
   </head>
