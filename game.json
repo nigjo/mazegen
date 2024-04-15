@@ -1,0 +1,37 @@
+{
+  "name": "Docks Runner",
+  "short_name": "Docks Runner",
+  "start_url": "./game.html",
+  "display": "standalone",
+  "background_color": "#4169e1",
+  "description": "Find your way through the docks",
+  "icons": [
+    {
+      "src": "res/dock_runner-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "res/dock_runner-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "res/dock_runner-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "res/dock_runner-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "res/dock_runner.svg",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
