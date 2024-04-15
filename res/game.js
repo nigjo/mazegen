@@ -81,7 +81,7 @@ function movePlayerOnly(player, targetY, moveAfter){
       moving = !moveAfter;
     }else{
       player.setAttribute('y', playerY);
-      setTimeout(movePlayerToStart, 66);
+      setTimeout(movePlayerToStart, 75);
     }
   }
   setTimeout(movePlayerToStart, 0);
