@@ -39,14 +39,14 @@ await assetFetcher.then(list => {
                 .then(r => r.text())
                 .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
       }
-      return [a,null];
+      return [a, null];
     }));
   }
   return Promise.all(assetFetcher).then(assetList => {
-    console.debug('ASSETS', assetList.map(i=>i[0].position+'/'+i[0].name));
-    let a,svg;
-    for([a,svg] of assetList){
-    //const add = svg => {
+    console.debug('ASSETS', assetList.map(i => i[0].position + '/' + i[0].name));
+    let a, svg;
+    for ([a, svg] of assetList) {
+      //const add = svg => {
       const defs = [...svg.querySelectorAll('defs>[id]')];
       defs.forEach(def => {
         svgDefs.set(def.id, def);
@@ -67,6 +67,14 @@ export default class TopDownView extends SVGGenerator {
     //console.debug([...svgDefs.keys()].join(','));
     this.defCount = svgDefs.size;
     this.assetCount = Object.keys(assets).length;
+    let players = Object.values(assets).filter(a => a.player);
+    this.hasPlayer = players.length > 0;
+    if (this.hasPlayer) {
+      this.player = players[0];
+      this.playerOffsetX = this.cellWidth / 2;
+      this.playerOffsetY = this.cellHeight / 2 - 4;
+    }
+
     //console.debug("asset IDs:",[...Object.keys(assets)].join(','));
   }
 
