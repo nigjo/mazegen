@@ -130,7 +130,7 @@
       .waytile{fill:rgba(255,255,255,.05);}
       .wallbg{fill:FireBrick;stroke:none;}
       .wall{fill:url(#bricks);}
-      .pilon{fill:Olive;z-index=1;}
+      .pilon{fill:Olive;}
       .ropeLeft{visibility:var(--ropeLeft);}
       .ropeRight{visibility:var(--ropeRight);}
       .ropeBottom{visibility:var(--ropeBottom);}
