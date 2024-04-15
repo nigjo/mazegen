@@ -124,7 +124,66 @@ document.addEventListener('keydown', (evt) => {
       return;
   }
   event.preventDefault();
+  moveToNext(nextCell);
+});
 
+const el = document.querySelector('main .game');
+el.addEventListener("touchstart", handleTouchStart);
+el.addEventListener("touchend", handleTouchEnd);
+el.addEventListener("touchcancel", handleTouchEnd);
+el.addEventListener("touchmove", handleTouchMove);
+
+let startPoint;
+function handleTouchMove(evt) {
+  evt.preventDefault();
+}
+function handleTouchEnd(evt) {
+  evt.preventDefault();
+  if (startPoint && evt.changedTouches.length === 1) {
+    console.log("END", startPoint, evt.changedTouches[0]);
+    let deltaX = evt.changedTouches[0].pageX - startPoint.pageX;
+    let deltaY = evt.changedTouches[0].pageY - startPoint.pageY;
+    console.log('DELTA', deltaX, deltaY);
+    if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+      return;
+    }
+    let nextCell = null;
+    if (Math.abs(deltaX) < Math.abs(deltaY)) {
+      if (deltaY > 0) {
+        if ((currentCell.walls & MazeGen.NORTH) === 0) {
+          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
+        }
+      } else {
+        if ((currentCell.walls & MazeGen.SOUTH) === 0) {
+          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
+        }
+      }
+    } else {
+      if (deltaX > 0) {
+        if ((currentCell.walls & MazeGen.WEST) === 0) {
+          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
+        }
+      } else {
+        if ((currentCell.walls & MazeGen.EAST) === 0) {
+          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
+        }
+      }
+    }
+    moveToNext(nextCell);
+  }
+  startPoint = null;
+}
+function handleTouchStart(evt) {
+  console.log("START");
+  evt.preventDefault();
+  if (!moving && evt.touches.length === 1) {
+    startPoint = evt.touches[0];
+  } else {
+    startPoint = null;
+  }
+}
+
+function moveToNext(nextCell) {
   startTimer();
   //console.debug(currentCell);
   if (nextCell) {
@@ -161,4 +220,4 @@ document.addEventListener('keydown', (evt) => {
     }
     setTimeout(move, 0);
   }
-});
+}
