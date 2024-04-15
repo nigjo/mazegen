@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
--->
 <html>
   <head>
     <title>Dock Runner</title>
@@ -76,10 +72,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
         let delta = currentTime - startTime;
         const ui = document.getElementById('timer');
         ui.textContent = 'timer: ' + Math.floor(delta / 1000) + 's';
-        if (timer)
+        if (timer) {
           timer = setTimeout(updateTimer, 150);
-        else
-          ui.textContent = ui.textContent + " / done";
+        } else {
+          let a = document.createElement('a');
+          a.href = './index.html?width=6&height=10&view=view5000';
+          a.textContent = ui.textContent + " / done";
+          ui.replaceChildren(a);
+        }
       }
       function stopTimer() {
         timer = null;
@@ -189,7 +189,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
       </p>
     </main>
     <footer>
-      <a style="text-decoration:none;color:inherit;" href="index.html">&copy;</a> <a href="https://github.com/nigjo">Jens Hofschröer</a>
+      <a style="text-decoration:none;color:inherit;" href="index.html">&copy;</a> <a href="https://github.com/nigjo/mazegen/">Nigjo Iqn</a>
     </footer>
   </body>
 </html>
