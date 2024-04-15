@@ -2,45 +2,37 @@
   <defs>
     <style id="playerAdefs">
       .playerA{
-        fill:red;
-        stroke:orange;
+        fill:Wheat;
+        stroke:Tan;
         stroke-width:.5px;
+        .figure{
+          fill:navy;
+        }
       }
     </style>
     <symbol id="playerA" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <circle cx="0" cy="0" r="2.5"/>
-    </symbol>
-    <symbol id="playerA-nordM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
       <path d="M0,-4L2,0,-2,0z"/>
+      <circle cx="2.5" cy="0" r="1" class="figure"/>
+      <circle cx="-2.5" cy="0" r="1" class="figure"/>
       <circle cx="0" cy="0" r="2.5"/>
     </symbol>
-    <symbol id="playerA-nordL" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M-1.5,-4L2,0,-2,0z"/>
-      <circle cx="0" cy="0" r="2.5"/>
+    <symbol id="playerA-nordM" viewBox="0 0 8 8" width="8" height="8" class="playerA">
+      <use href="#playerA"/>
     </symbol>
-    <symbol id="playerA-nordR" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M1.5,-4L2,0,-2,0z"/>
-      <circle cx="0" cy="0" r="2.5"/>
+    <symbol id="playerA-nordL" viewBox="0 0 8 8" width="8" height="8" class="playerA">
+      <use href="#playerA" transform="rotate(-12.5,4,4)"/>
     </symbol>
-    <symbol id="playerA-suedM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M0,4L2,0,-2,0z"/>
-      <circle cx="0" cy="0" r="2.5"/>
+    <symbol id="playerA-nordR" viewBox="0 0 8 8" width="8" height="8" class="playerA">
+      <use href="#playerA" transform="rotate(12.5,4,4)"/>
     </symbol>
-    <symbol id="playerA-nordL" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M-1.5,4L2,0,-2,0z"/>
-      <circle cx="0" cy="0" r="2.5"/>
+    <symbol id="playerA-suedM" viewBox="0 0 8 8" width="8" height="8" class="playerA">
+      <use href="#playerA" transform="rotate(180,4,4)"/>
     </symbol>
-    <symbol id="playerA-nordR" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M1.5,4L2,0,-2,0z"/>
-      <circle cx="0" cy="0" r="2.5"/>
+    <symbol id="playerA-linksM" viewBox="0 0 8 8" width="8" height="8" class="playerA">
+      <use href="#playerA" transform="rotate(-90,4,4)"/>
     </symbol>
-    <symbol id="playerA-linksM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M-4,0L0,2,0,-2z"/>
-      <circle cx="0" cy="0" r="2.5"/>
-    </symbol>
-    <symbol id="playerA-rechtsM" viewBox="-4 -4 8 8" width="8" height="8" class="playerA">
-      <path d="M4,0L0,2,0,-2z"/>
-      <circle cx="0" cy="0" r="2.5"/>
+    <symbol id="playerA-rechtsM" viewBox="0 0 8 8" width="8" height="8" class="playerA">
+      <use href="#playerA" transform="rotate(90,4,4)"/>
     </symbol>
     <style>
       /*only for display this asset*/
@@ -82,7 +74,7 @@
       <use href="#rescue-stand" transform="translate(35,10)"/>
     </g>
     <g id="usage">
-      <use href="#playerA-nordR" transform="translate(28,24)"/>
+      <use href="#playerA-nordL" transform="translate(28,24)"/>
     </g>
   </g>
 </svg>
