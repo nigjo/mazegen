@@ -12,7 +12,14 @@ const docrunner = {
             .substring(0, 16).replace('T', ' ') + 'z';
   })()
 };
-console.log('GAME', docrunner);
+const q = new URLSearchParams(location.search);
+if (q.has('seed'))
+  docrunner.Seed = q.get('seed');
+if (q.has('w'))
+  docrunner.Width = q.get('w');
+if (q.has('h'))
+  docrunner.Height = q.get('h');
+console.log('GAME', docrunner, q);
 
 document.getElementById('seed').textContent = docrunner.Seed;
 const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
@@ -113,7 +120,20 @@ function updateTimer() {
     timer = setTimeout(updateTimer, 150);
   } else {
     let a = document.createElement('a');
-    a.href = './index.html?width=6&height=10&view=view5000';
+    let alphabeth = "abcdefghijklmnopqrstuvwxyz";
+    alphabeth += alphabeth.toUpperCase();
+    alphabeth += " +-._#~!";
+    alphabeth += "0123456789";
+    let seed = '';
+    for (let i = 0; i < 16; i++) {
+      seed += alphabeth.charAt(Math.random() * alphabeth.length);
+    }
+    let next = {seed: seed};
+    if (q.has('w'))
+      next.w = docrunner.Width;
+    if (q.has('h'))
+      next.h = docrunner.Height;
+    a.href = './?' + new URLSearchParams(next);
     a.textContent = ui.textContent + " / done";
     ui.replaceChildren(a);
   }
