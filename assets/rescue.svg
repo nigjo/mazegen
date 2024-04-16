@@ -43,46 +43,13 @@
         </g>
       </g>
     </symbol>
-    <style>
-      /*only for display this asset*/
-      <style>
-        #boden{
-        fill:url(../res/v_topdown.svg#water);stroke:none;
-        }
-        #boden,#doorBottom{
-        .way{fill:url(../res/v_topdown.svg#tiles);stroke:none;}
-        .wall{fill:url(../res/v_topdown.svg#bricks);}
-        }
-        #wallBottom,#wallTop,#decke,#ropeSide{
-        .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}
-        .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
-        }
-        #wallLeft,#pilon,#doorBottom,#decke{
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        }
-        #pilonShadow.shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        #pilon{
-        .pilon{fill:Olive;z-index=1;}
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        }
-        #decke{
-        .ropeBottom{visibility:hidden;}
-        }
-      </style>
-    </style>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
   <g>
-    <g transform="translate(0,0)" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#wallTop"/>
-      <use href="../res/v_topdown.svg#wallLeft"/>
-      <use href="#rescue-stand" transform="translate(17,10)"/>
-      <use href="../res/v_topdown.svg#wallRight"/>
-      <use href="../res/v_topdown.svg#doorBottom"/>
-      <use href="../res/v_topdown.svg#decke"/>
-      <use href="#rescue-stand" transform="translate(35,10)"/>
-    </g>
+    <use href="assetbase.svg#assetbase"/>
     <g id="usage">
+      <use href="#rescue-stand" transform="translate(17,10)"/>
+      <use href="#rescue-stand" transform="translate(35,10)"/>
       <use href="#rescue-ringOnly" transform="translate(19,32)"/>
       <use href="#rescue-ringOnly" transform="translate(36,32)"/>
     </g>

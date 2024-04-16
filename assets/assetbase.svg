@@ -1,0 +1,25 @@
+<svg
+  width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+    <symbol id="assetbase" width="64" height="64" viewBox="0 0 64 64" class="background">
+      <use href="../res/v_topdown.svg#boden"/>
+      <use href="../res/v_topdown.svg#wallTop"/>
+      <use href="../res/v_topdown.svg#wallLeft"/>
+      <use href="../res/v_topdown.svg#wallRight"/>
+      <use href="../res/v_topdown.svg#doorBottom"/>
+      <use href="../res/v_topdown.svg#decke" style="--doorB:visible;"/>
+    </symbol>
+    <symbol id="assetbaseR" width="64" height="64" viewBox="0 0 64 64" class="background">
+      <use href="../res/v_topdown.svg#boden"/>
+      <use href="../res/v_topdown.svg#wallTop"/>
+      <use href="../res/v_topdown.svg#wallLeft"/>
+      <use href="../res/v_topdown.svg#doorRight"/>
+      <use href="../res/v_topdown.svg#wallBottom"/>
+      <use href="../res/v_topdown.svg#decke" style="--doorR:hidden;"/>
+    </symbol>
+  </defs>
+  <g>
+    <use href="#assetbase"/>
+  </g>
+</svg>

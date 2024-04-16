@@ -2,10 +2,10 @@
   <defs>
     <style id="crate-styles">
       .crates{
-        fill:sienna;
-        .line{fill:none;stroke:rgba(0,0,0,.1);stroke-width:.1px;}
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        .front{fill:Chocolate}
+      fill:sienna;
+      .line{fill:none;stroke:rgba(0,0,0,.1);stroke-width:.1px;}
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      .front{fill:Chocolate}
       }
     </style>
     <symbol id="grate1" viewBox="-4 -1 8 8" width="16" height="8" class="crates">
@@ -27,43 +27,10 @@
       <line x1="0" y1="4.66" x2="5" y2="4.66" class="line"/>
       <line x1="0" y1="5.33" x2="5" y2="5.33" class="line"/>
     </symbol>
-    <style>
-      /*only for display this asset*/
-      <style>
-        #boden{
-        fill:url(../res/v_topdown.svg#water);stroke:none;
-        }
-        #boden,#doorBottom{
-        .way{fill:url(../res/v_topdown.svg#tiles);stroke:none;}
-        .wall{fill:url(../res/v_topdown.svg#bricks);}
-        }
-        #wallBottom,#wallTop,#decke,#ropeSide{
-        .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}
-        .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
-        }
-        #wallLeft,#pilon,#doorBottom,#decke{
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        }
-        #pilonShadow.shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        #pilon{
-        .pilon{fill:Olive;z-index=1;}
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        }
-        #decke{
-        .ropeBottom{visibility:hidden;}
-        }
-      </style>
-    </style>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
   <g>
-    <g transform="translate(0,0)" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#wallTop"/>
-      <use href="../res/v_topdown.svg#wallLeft"/>
-      <use href="../res/v_topdown.svg#wallRight"/>
-      <use href="../res/v_topdown.svg#doorBottom"/>
-      <use href="../res/v_topdown.svg#decke"/>
-    </g>
+    <use href="assetbase.svg#assetbase"/>
     <g id="usage">
       <use href="#grate1" transform="translate(30,20)"/>
     </g>

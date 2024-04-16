@@ -1,0 +1,59 @@
+/*only for display this asset*/
+#boden{
+  fill:url(../res/v_topdown.svg#water);
+  stroke:none;
+}
+#boden,#doorBottom,#doorRight{
+  .way{
+    fill:url(../res/v_topdown.svg#tiles);
+    stroke:none;
+  }
+  .wall{
+    fill:url(../res/v_topdown.svg#bricks);
+  }
+}
+#wallBottom,#wallTop,#decke,#ropeSide,#doorRight{
+  .rope{
+    stroke:Goldenrod;
+    stroke-width:1.25;
+    fill:none
+  }
+  .ropemark{
+    stroke:rgba(0,0,0,.2);
+    stroke-width:1;
+    fill:none;
+    stroke-dasharray:.25 2
+  }
+}
+#wallLeft,#pilon,#doorBottom,#decke{
+  .shadow{
+    fill:rgba(0,0,0,.1);
+    stroke:none;
+  }
+}
+#pilonShadow.shadow{
+  fill:rgba(0,0,0,.1);
+  stroke:none;
+}
+#pilon{
+  .pilon{
+    fill:Olive;
+    z-index=1;
+  }
+  .shadow{
+    fill:rgba(0,0,0,.1);
+    stroke:none;
+  }
+}
+svg{
+  --doorR:visible;
+  --doorB:hidden;
+}
+#decke{
+  .ropeRight{
+    visibility:var(--doorR);
+  }
+  .ropeBottom{
+    visibility:var(--doorB);
+  }
+}
