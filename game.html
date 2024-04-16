@@ -22,9 +22,31 @@
         background-color:navy;
         line-height:0px;
       }
+      header,nav,main {
+        display: inline-block;
+        vertical-align: top;
+      }
+      @media (orientation:landscape){
+        main{
+          width: calc(90vh - 2em);
+          p,footer{
+            max-height:2vh;
+          }
+        }
+        .game{
+          width:calc(100% - 2em);
+          .mazeview::part(mazeview){
+            width: 100%;
+            height:auto;
+          }
+        }
+      }
       @media screen and (max-width: 640px) {
         .game{
           width:calc(100% - 2em);
+        }
+        main{
+          width:100%;
         }
         .mazeview::part(mazeview){
           width: 100%;
