@@ -1,0 +1,14 @@
+<svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="tiles" viewBox="0,0,8,8" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="8" height="8" class="waybg"/>
+      <rect id="tile" x="1" y="1" width="6" height="6" rx="1" class="waytile"/>
+    </pattern>
+    <style>
+      .way{fill:url(#tiles);stroke:none;}
+      .waybg{fill:peru;stroke:none;}
+      .waytile{fill:rgba(255,255,255,.05);}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="32" height="32" class="way"/>
+</svg>
