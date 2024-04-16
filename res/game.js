@@ -76,6 +76,20 @@ if (view.hasPlayer) {
   let targetY = startY + playerOffsetY + dir.offsetY;
   movePlayerOnly(player, targetY, true);
 }
+(() => {
+  let rsg = ['Ready.', 'Steady.', 'GO!'];
+  const tick = (24 * 75) / rsg.length;
+  const ui = document.getElementById('timer');
+  function ticker() {
+    console.log('this', this);
+    let token = rsg.shift();
+    ui.textContent = ui.textContent + ' ' + token;
+    if (rsg.length > 0)
+      setTimeout(ticker, tick);
+  }
+
+  setTimeout(ticker, tick);
+})();
 
 function movePlayerOnly(player, targetY, moveAfter) {
   let playerY = Number(player.getAttribute('y'));
@@ -115,7 +129,8 @@ function updateTimer() {
   let currentTime = Date.now();
   let delta = currentTime - startTime;
   const ui = document.getElementById('timer');
-  ui.textContent = 'timer: ' + Math.floor(delta / 1000) + 's';
+  let sec = Math.floor(delta / 1000);
+  ui.textContent = 'Time: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
   if (timer) {
     timer = setTimeout(updateTimer, 150);
   } else {
