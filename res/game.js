@@ -158,22 +158,22 @@ function stopTimer() {
 }
 
 document.addEventListener('keydown', (evt) => {
-  if (event.isComposing || event.keyCode === 229) {
+  if (evt.isComposing || evt.keyCode === 229) {
     //from mdn docs
     return;
   }
   if (moving) {
-    switch (event.key) {
+    switch (evt.key) {
       case 'ArrowUp':
       case 'ArrowLeft':
       case 'ArrowDown':
       case 'ArrowRight':
-        event.preventDefault();
+        evt.preventDefault();
         return;
     }
   }
   let nextCell = null;
-  switch (event.key) {
+  switch (evt.key) {
     case 'ArrowUp':
       //if(currentCell.wall)
       if ((currentCell.walls & MazeGen.NORTH) === 0) {
@@ -202,7 +202,7 @@ document.addEventListener('keydown', (evt) => {
     default:
       return;
   }
-  event.preventDefault();
+  evt.preventDefault();
   moveToNext(nextCell);
 });
 
