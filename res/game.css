@@ -9,6 +9,9 @@ body{
 header{
   margin:.5em;
   border:2px solid dimgray;
+  a{
+    text-decoration: none;
+  }
 }
 header *{
   margin:0px;
