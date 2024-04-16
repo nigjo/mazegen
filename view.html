@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Docks Runner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" sizes="16x16" href="res/dock_runner-16.png" type="image/png">
+    <link rel="icon" sizes="48x48" href="res/dock_runner-48.png" type="image/png">
+    <link rel="icon" sizes="192x192" href="res/dock_runner-192.png" type="image/png">
+    <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
+    <script type="module">
+      import RandomKruskal from './res/RandomKruskal.js';
+      let args = new URLSearchParams(location.search);
+      const workshop = {
+        Width: '6',
+        Height: '10',
+        Seed: 'czx95c9bh30k'
+      };
+      for (let name of Object.keys(workshop)) {
+        let key = 'workshop' + name;
+        workshop[name] = args.get(key) || workshop[name];
+      }
+      let backArgs = new URLSearchParams();
+      const back = document.getElementById('thisLevel');
+      console.debug('back', back);
+      backArgs.set('seed', workshop.Seed);
+      if (args.has('workshopWidth'))
+        backArgs.set('w', workshop.Width);
+      if (args.has('workshopHeight'))
+        backArgs.set('w', workshop.Height);
+      back.href = './index.html?'+backArgs;
+      
+      Promise.all([
+        import('./res/v_topdown.js'),
+        new Promise(ok => {
+          //Bei 8:5
+          //RGtRTIk2NHkp (4er fehlt)
+          //czx95c9bh30k (alle Elemente)
+          ok(new RandomKruskal(Number(workshop.Width), Number(workshop.Height), workshop.Seed));
+        })
+      ]).then(data => {
+        let maze, mod;
+        [mod, maze] = data;
+        let MazeView = mod.default;
+        return new MazeView(maze);
+      }).then(view => {
+        return initParameters(view);
+      }).then(view => {
+        return generateViewContent(view);
+      }).catch(error => {
+        console.warn(error);
+        let warn = document.createElement('p');
+        warn.style.backgroundColor = 'lightsalmon';
+        warn.style.color = 'darkred';
+        warn.style.padding = '.5em 1em';
+        warn.textContent = error;
+        document.querySelector('main').append(warn);
+        createParameterList({});
+      });
+
+      function initParameters(view) {
+        //args.delete('view');
+        console.debug(args);
+        let legacyKeys = [];
+        for (const [key, value] of args.entries()) {
+          if (key in view) {
+            if (typeof (view[key]) === 'boolean') {
+              if (value === '')
+                view[key] = true;
+              else
+                view[key] = value !== 'false' && value !== '0';
+            } else if (typeof (view[key]) === 'number') {
+              view[key] = Number(value);
+            } else {
+              view[key] = value;
+            }
+          } else if (!key.startsWith('workshop')) {
+            legacyKeys.push(key);
+          }
+        }
+        legacyKeys.forEach(lk => args.delete(lk));
+        return view;
+      }
+
+      function generateViewContent(view) {
+        let w = document.createElement('div');
+        let shadow = w.attachShadow({
+          mode: 'closed'
+        });
+        let img = view.create();
+        shadow.append(img);
+        if (img.hasAttribute('width'))
+          w.style.width = Number(img.getAttribute('width')) + 'px';
+        if (img.hasAttribute('height'))
+          w.style.height = Number(img.getAttribute('height')) + 'px';
+
+        document.querySelector('main').append(w);
+
+        return view;
+      }
+
+    </script>
+    <style>
+      body{
+        background-color:#EEE;
+      }
+      svg{
+        background-color:#FFF;
+      }
+      dl {
+        font-family: monospace;
+        display: inline-grid;
+        grid-template-columns: 1fr 2fr;
+
+        dt{
+          font-weight: bold;
+          overflow: hidden;
+          position: relative;
+          padding-right: 2.25ch;
+        }
+        dt:after{
+          position: absolute;
+          content: '······························';
+          color:lightgray;
+          text-align: left;
+          padding-left: .1ch;
+        }
+
+        dd{
+          margin-left: 0px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main></main>
+    <footer>
+      <a id="thisLevel" href="./">replay</a> - <a id="nextLevel">next Level</a>
+    </footer>
+    <script>
+      (() => {
+        const a = document.getElementById('nextLevel');
+        console.log(a);
+        let q = new URLSearchParams(location.search);
+        let alphabeth = "abcdefghijklmnopqrstuvwxyz";
+        alphabeth += alphabeth.toUpperCase();
+        alphabeth += " +-._#~!";
+        alphabeth += "0123456789";
+        let seed = '';
+        for (let i = 0; i < 16; i++) {
+          seed += alphabeth.charAt(Math.random() * alphabeth.length);
+        }
+        let next = {seed: seed};
+        if (q.has('w'))
+          next.w = docrunner.Width;
+        if (q.has('h'))
+          next.h = docrunner.Height;
+        a.setAttribute('href', './index.html?' + new URLSearchParams(next));
+      })();
+    </script>
+  </body>
+</html>

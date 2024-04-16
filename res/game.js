@@ -135,20 +135,7 @@ function updateTimer() {
     timer = setTimeout(updateTimer, 150);
   } else {
     let a = document.createElement('a');
-    let alphabeth = "abcdefghijklmnopqrstuvwxyz";
-    alphabeth += alphabeth.toUpperCase();
-    alphabeth += " +-._#~!";
-    alphabeth += "0123456789";
-    let seed = '';
-    for (let i = 0; i < 16; i++) {
-      seed += alphabeth.charAt(Math.random() * alphabeth.length);
-    }
-    let next = {seed: seed};
-    if (q.has('w'))
-      next.w = docrunner.Width;
-    if (q.has('h'))
-      next.h = docrunner.Height;
-    a.href = './?' + new URLSearchParams(next);
+    a.href = './view.html?' + new URLSearchParams({workshopSeed:docrunner.Seed});
     a.textContent = ui.textContent + " / done";
     ui.replaceChildren(a);
   }
