@@ -20,13 +20,13 @@ header *{
 .bgWater{
   color:White;
   text-shadow:dimgray 2px 2px;
-  background: url('res/game_bg_water.svg');
+  background: url('game_bg_water.svg');
 }
 .bgWay{
-  background: url('res/game_bg_way.svg');
+  background: url('game_bg_way.svg');
 }
 .bgWall{
-  background: url('res/game_bg_wall.svg');
+  background: url('game_bg_wall.svg');
 }
 .game{
   display:inline-block;
