@@ -11,72 +11,7 @@
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
     <link rel="manifest" href="game.json" />
     <script src="res/game.js" type="module"></script>
-    <style>
-      body{
-        font-family: sans-serif;
-        a{color:inherit;}
-        margin:.5em;
-        font-size:min(2vh,3vw,12pt);
-      }
-      header{margin:.5em;
-      border:2px solid dimgray;}
-      header *{margin:0px;padding:.5em;}
-      #timer{
-        padding:.25em .5em;
-      }
-      .bgWater{
-        color:White;
-        text-shadow:dimgray 2px 2px;
-        background: url('res/game_bg_water.svg');
-      }
-      .bgWay{
-        background: url('res/game_bg_way.svg');
-      }
-      .bgWall{
-        background: url('res/game_bg_wall.svg');
-      }
-      .game{
-        display:inline-block;
-        margin:0;
-        padding:1em;
-        background-color:navy;
-        line-height:0px;
-      }
-      header,nav,main {
-        display: inline-block;
-        vertical-align: top;
-      }
-      @media (orientation:landscape){
-        main{
-          width: calc(100vh - 1em - 1.5em - 2em);
-          max-width:800px;
-        }
-        footer,main p{
-          max-height:1em;
-          line-height:1em;
-          margin:.25em 0px;
-        }
-        .game{
-          width:calc(100% - 2em);
-          .mazeview::part(mazeview){
-            width: 100%;
-            height:auto;
-          }
-        }
-      }
-      @media screen and (max-width: 640px) {
-        .game{
-          width:calc(100% - 2em);
-        }
-        main{
-          width:100%;
-        }
-        .mazeview::part(mazeview){
-          width: 100%;
-          height:auto;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="res/game.css"/>
   </head>
   <body class="bgWater">
     <header class="bgWay">
