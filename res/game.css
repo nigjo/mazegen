@@ -45,7 +45,7 @@ header,nav,main {
 @media (orientation:landscape){
   main{
     width: calc(100vh - 1em - 1.5em - 2em);
-    max-width:800px;
+    max-width:720px;
   }
   footer,main p{
     max-height:1em;
@@ -60,12 +60,13 @@ header,nav,main {
     }
   }
 }
-@media screen and (max-width: 640px) {
+@media screen and (orientation:portrait) {
   .game{
     width:calc(100% - 2em);
   }
   main{
     width:100%;
+    max-width:720px;
   }
   .mazeview::part(mazeview){
     width: 100%;
