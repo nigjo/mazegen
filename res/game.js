@@ -12,7 +12,14 @@ const docrunner = {
             .substring(0, 16).replace('T', ' ') + 'z';
   })()
 };
-console.log('GAME', docrunner);
+const q = new URLSearchParams(location.search);
+if (q.has('seed'))
+  docrunner.Seed = q.get('seed');
+if (q.has('w'))
+  docrunner.Width = q.get('w');
+if (q.has('h'))
+  docrunner.Height = q.get('h');
+console.log('GAME', docrunner, q);
 
 document.getElementById('seed').textContent = docrunner.Seed;
 const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
@@ -64,22 +71,36 @@ if (view.hasPlayer) {
   player.setAttribute('id', 'playerCharacter');
   player.setAttribute('href', '#' + dir.still);
   player.setAttribute('x', startX + playerOffsetX + dir.offsetX);
-  player.setAttribute('y', startY+h + playerOffsetY + dir.offsetY);
+  player.setAttribute('y', startY + h + playerOffsetY + dir.offsetY);
   img.append(player);
   let targetY = startY + playerOffsetY + dir.offsetY;
   movePlayerOnly(player, targetY, true);
 }
+(() => {
+  let rsg = ['Ready.', 'Steady.', 'GO!'];
+  const tick = (24 * 75) / rsg.length;
+  const ui = document.getElementById('timer');
+  function ticker() {
+    console.log('this', this);
+    let token = rsg.shift();
+    ui.textContent = ui.textContent + ' ' + token;
+    if (rsg.length > 0)
+      setTimeout(ticker, tick);
+  }
 
-function movePlayerOnly(player, targetY, moveAfter){
+  setTimeout(ticker, tick);
+})();
+
+function movePlayerOnly(player, targetY, moveAfter) {
   let playerY = Number(player.getAttribute('y'));
   moving = true;
   const deltaY = (targetY - playerY) / 24;
   function movePlayerToStart() {
     playerY = playerY + deltaY;
-    if(Math.abs(playerY-targetY)<0.1){
+    if (Math.abs(playerY - targetY) < 0.1) {
       player.setAttribute('y', targetY);
       moving = !moveAfter;
-    }else{
+    } else {
       player.setAttribute('y', playerY);
       setTimeout(movePlayerToStart, 75);
     }
@@ -108,12 +129,26 @@ function updateTimer() {
   let currentTime = Date.now();
   let delta = currentTime - startTime;
   const ui = document.getElementById('timer');
-  ui.textContent = 'timer: ' + Math.floor(delta / 1000) + 's';
+  let sec = Math.floor(delta / 1000);
+  ui.textContent = 'Time: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
   if (timer) {
     timer = setTimeout(updateTimer, 150);
   } else {
     let a = document.createElement('a');
-    a.href = './index.html?width=6&height=10&view=view5000';
+    let alphabeth = "abcdefghijklmnopqrstuvwxyz";
+    alphabeth += alphabeth.toUpperCase();
+    alphabeth += " +-._#~!";
+    alphabeth += "0123456789";
+    let seed = '';
+    for (let i = 0; i < 16; i++) {
+      seed += alphabeth.charAt(Math.random() * alphabeth.length);
+    }
+    let next = {seed: seed};
+    if (q.has('w'))
+      next.w = docrunner.Width;
+    if (q.has('h'))
+      next.h = docrunner.Height;
+    a.href = './?' + new URLSearchParams(next);
     a.textContent = ui.textContent + " / done";
     ui.replaceChildren(a);
   }
@@ -123,22 +158,22 @@ function stopTimer() {
 }
 
 document.addEventListener('keydown', (evt) => {
-  if (event.isComposing || event.keyCode === 229) {
+  if (evt.isComposing || evt.keyCode === 229) {
     //from mdn docs
     return;
   }
   if (moving) {
-    switch (event.key) {
+    switch (evt.key) {
       case 'ArrowUp':
       case 'ArrowLeft':
       case 'ArrowDown':
       case 'ArrowRight':
-        event.preventDefault();
+        evt.preventDefault();
         return;
     }
   }
   let nextCell = null;
-  switch (event.key) {
+  switch (evt.key) {
     case 'ArrowUp':
       //if(currentCell.wall)
       if ((currentCell.walls & MazeGen.NORTH) === 0) {
@@ -167,7 +202,7 @@ document.addEventListener('keydown', (evt) => {
     default:
       return;
   }
-  event.preventDefault();
+  evt.preventDefault();
   moveToNext(nextCell);
 });
 
@@ -248,7 +283,7 @@ function moveToNext(nextCell) {
     if (playerChar) {
       playerDir = direction in view.player.directions
               ? view.player.directions[direction]
-              : {offsetX: 0, offsetY: 0,still:''};
+              : {offsetX: 0, offsetY: 0, still: ''};
       playerChar.setAttribute('href', '#' + playerDir.still);
     }
 
@@ -272,11 +307,11 @@ function moveToNext(nextCell) {
           stopTimer();
           playerDir = 'NORTH' in view.player.directions
                   ? view.player.directions['NORTH']
-                  : {offsetX: 0, offsetY: 0,still:''};
+                  : {offsetX: 0, offsetY: 0, still: ''};
           playerChar.setAttribute('href', '#' + playerDir.still);
 
           movePlayerOnly(playerChar,
-              targetY - h + playerOffsetY + playerDir.offsetY, false);
+                  targetY - h + playerOffsetY + playerDir.offsetY, false);
         }
       } else {
         //console.debug('GAME', "move", "next");

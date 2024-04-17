@@ -1,74 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Irrgarten Generator</title>
+    <title>Docks Runner</title>
     <meta charset="UTF-8">
-    <link rel="icon" href="res/2x2maze_256.png" sizes="256x256" type="image/png">
-    <link rel="icon" href="res/2x2maze.svg" sizes="any" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="res/gh-fork-ribbon.css"/>
-    <link rel="stylesheet" href="res/mazeviewer.css"/>
-    <!-- Liste der Views - Start -->
-    <!-- Reihenfolge an dieser Stelle unerheblich.
-         Die Views definieren ihre Position selbst. -->
-    <script src="res/v_isometric.js" type="module"></script>
-    <script src="res/v_textview.js" type="module"></script>
-    <script src="res/v_topview.js" type="module"></script>
-    <script src="res/v_minecraft.js" type="module"></script>
-    <script src="res/v_topdown.js" type="module"></script>
-    <script src="res/v_graph.js" type="module"></script>
-    <!-- Liste der Views - Ende -->
-    <script src="res/mazeviewer.js" type="module"></script>
-    <script src="res/downloader.js"></script>
-    <script id="mazeDataInit">
-      window.mazedata = {
-        seedtext: (() => {
-          let timestamp = new Date();
-          timestamp.setMinutes(0);
-          return timestamp
-                  .toISOString()
-                  .substring(0, 16).replace('T', ' ') + 'z';
-        })(),
-        width: 6,
-        height: 6
-      };
-    </script>
+    <link rel="icon" sizes="16x16" href="res/dock_runner-16.png" type="image/png">
+    <link rel="icon" sizes="48x48" href="res/dock_runner-48.png" type="image/png">
+    <link rel="icon" sizes="192x192" href="res/dock_runner-192.png" type="image/png">
+    <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
+    <link rel="manifest" href="game.json" />
+    <script src="res/game.js" type="module"></script>
+    <link rel="stylesheet" href="res/game.css"/>
   </head>
-  <body>
-    <header><a href="./"><img src="res/2x2maze.svg" style="width:3em;height:3em" alt="Logo"></a> <h1 id="pagetitle">Irrgarten Generator<span id="seedtext"></span></h1></header>
-    <nav></nav>
+  <body class="bgWater">
+    <header class="bgWay">
+      <h1><a href="./">Docks Runner</a></h1>
+      <h2 class="bgWall" id="seed">loading...</h2>
+    </header>
     <main>
-      <div>
-        <form id="settings" name="settings">
-          <div>
-            <label>Seed
-              <input name="seedText" placeholder="Text oder Zahlwert"
-                     size="15" required pattern="\d+|.+">
-            </label>
-            <label>Breite <input type="number" name="width" style="width:4em" min="2" value="6"></label>
-            <label>Höhe <input type="number" name="height" style="width:4em" min="2" value="6"></label>
-            <input type="submit" value="Update">
-            <input type="button" value="Random">
-          </div>
-        </form><script>
-          //console.debug(document.forms);
-          window.mazedata.width = Number(document.forms['settings']['width'].value);
-          window.mazedata.height = Number(document.forms['settings']['height'].value);
-          console.debug(window.mazedata);
-        </script>
-      </div>
-      <div id="views"><p>Bitte warten...</p></div>
-      <div id="mainview"></div>
-      <div>
-        <input id="svgDownloader" type="button" onclick="svgDownloader()"
-               value="Download als SVG" title="Läd die aktuelle Ansicht als SVG herunter.">
-        <input id="pngDownloader" type="button" onclick="pngDownloader()"
-               value="Download als PNG" title="Läd die aktuelle Ansicht als SVG herunter.">
-      </div>
+      <div class="game"></div>
+      <p class="bgWay " id="timer">
+        Be prepared...
+      </p>
     </main>
     <footer>
-      <a style="text-decoration:none;color:inherit;" href="workshop.html">&copy;</a> <a href="https://github.com/nigjo">Jens Hofschröer</a>
-      <a class="github-fork-ribbon" href="https://github.com/nigjo/mazegen" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+      &copy; Nigjo Iqn - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
     </footer>
   </body>
 </html>

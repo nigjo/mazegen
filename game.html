@@ -1,94 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dock Runner</title>
+    <title>Docks Runner - Redirect</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" sizes="16x16" href="res/dock_runner-16.png" type="image/png">
-    <link rel="icon" sizes="48x48" href="res/dock_runner-48.png" type="image/png">
-    <link rel="icon" sizes="192x192" href="res/dock_runner-192.png" type="image/png">
-    <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
+    <meta http-equiv="refresh" content="0; url=index.html"/>
     <link rel="manifest" href="game.json" />
-    <script src="res/game.js" type="module"></script>
-    <style>
-      body{
-        font-family: sans-serif;
-        a{color:inherit;}
-        margin:.5em;
-      }
-      header{margin:.5em;
-      border:2px solid dimgray;}
-      header *{margin:0px;padding:.5em;}
-      #timer{
-        padding:.25em .5em;
-      }
-      .bgWater{
-        color:White;
-        text-shadow:dimgray 2px 2px;
-        background: url('res/game_bg_water.svg');
-      }
-      .bgWay{
-        background: url('res/game_bg_way.svg');
-      }
-      .bgWall{
-        background: url('res/game_bg_wall.svg');
-      }
-      .game{
-        display:inline-block;
-        margin:0;
-        padding:1em;
-        background-color:navy;
-        line-height:0px;
-      }
-      header,nav,main {
-        display: inline-block;
-        vertical-align: top;
-      }
-      @media (orientation:landscape){
-        main{
-          width: calc(100vh - 1em - 1.5em - 2em);
-        }
-        footer,main p{
-          max-height:1em;
-          line-height:1em;
-          margin:.25em 0px;
-        }
-        .game{
-          width:calc(100% - 2em);
-          .mazeview::part(mazeview){
-            width: 100%;
-            height:auto;
-          }
-        }
-      }
-      @media screen and (max-width: 640px) {
-        .game{
-          width:calc(100% - 2em);
-        }
-        main{
-          width:100%;
-        }
-        .mazeview::part(mazeview){
-          width: 100%;
-          height:auto;
-        }
-      }
-    </style>
   </head>
-  <body class="bgWater">
-    <header class="bgWay">
-      <h1>Dock Runner</h1>
-      <h2 class="bgWall" id="seed">init...</h2>
-    </header>
-    <main>
-      <div class="game"></div>
-      <p class="bgWay " id="timer">
-        Ready. Steady. GO!
-      </p>
-    </main>
-    <footer>
-      <a style="text-decoration:none;color:inherit;" href="index.html">&copy;</a> <a href="https://github.com/nigjo/mazegen/">Nigjo Iqn</a>
-    </footer>
+  <body>
+    <a href="index.html">Docks Runner - Redirect</a>
   </body>
 </html>
