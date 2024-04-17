@@ -45,31 +45,6 @@
       <use href="#vine-string2" transform="translate(3,0)"/>
       <use href="#vine-string1" transform="translate(6,0)"/>
     </symbol>
-    <style>
-      #boden{
-      fill:url(../res/v_topdown.svg#water);stroke:none;
-      .way{fill:url(../res/v_topdown.svg#tiles);stroke:none;}
-      .wall{fill:url(../res/v_topdown.svg#bricks);}
-      }
-      #wallBottom{
-      .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}
-      .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
-      }
-      #wallLeft{
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      }
-      #pilonShadow.shadow{
-      fill:rgba(0,0,0,.1);stroke:none;
-      }
-      #pilon{
-      .pilon{fill:Olive;z-index=1;}
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      }
-      #decke{
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      .ropeBottom{visibility:hidden;}
-      }
-    </style>
     <style id="vinestyles">
       .vine{
         fill:darkgreen;
@@ -82,19 +57,10 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
   <g>
-    <g transform="translate(0,0)" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#wallLeft"/>
-      <use href="../res/v_topdown.svg#wallBottom"/>
-      <use href="../res/v_topdown.svg#decke"/>
-      <g transform="translate(0,64)">
-        <use href="../res/v_topdown.svg#boden"/>
-        <use href="../res/v_topdown.svg#wallLeft"/>
-        <use href="../res/v_topdown.svg#decke"/>
-      </g>
-    </g>
+    <use href="assetbase.svg#assetbaseR"/>
     <g transform="translate(16,44)">
       <use href="#vines1"/>
     </g>

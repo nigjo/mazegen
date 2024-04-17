@@ -1,4 +1,4 @@
-<svg width="320" height="320" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+<svg width="320" height="320" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style id="puddle-styles">
       .puddle{fill:SteelBlue;stroke:DodgerBlue;opacity:.25;stroke-width:3}
@@ -32,5 +32,15 @@
         </path>              
       </svg>    
     </g>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
+  <g>
+    <use href="assetbase.svg#assetbase"/>
+    <g id="usage">
+      <use href="#puddle1" transform="translate(20,16)"/>
+      <use href="#puddle2" transform="translate(36,16)"/>
+      <use href="#puddle3" transform="translate(20,32)"/>
+      <use href="#puddle4" transform="translate(36,32)"/>
+    </g>
+  </g>
 </svg>
