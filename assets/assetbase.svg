@@ -18,6 +18,14 @@
       <use href="../res/v_topdown.svg#wallBottom"/>
       <use href="../res/v_topdown.svg#decke" style="--doorR:hidden;"/>
     </symbol>
+    <symbol id="assetbaseL" width="64" height="64" viewBox="0 0 64 64" class="background">
+      <use href="../res/v_topdown.svg#boden"/>
+      <use href="../res/v_topdown.svg#wallTop"/>
+      <use href="../res/v_topdown.svg#doorLeft"/>
+      <use href="../res/v_topdown.svg#wallRight"/>
+      <use href="../res/v_topdown.svg#wallBottom"/>
+      <use href="../res/v_topdown.svg#decke" style="--doorL:hidden;"/>
+    </symbol>
   </defs>
   <g>
     <use href="#assetbase"/>
