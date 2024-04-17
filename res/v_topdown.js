@@ -54,6 +54,9 @@ await assetFetcher.then(list => {
         if (def.tagName === 'g' || def.tagName === 'symbol')
           assets[def.id] = a;
       });
+      if ("init" in a) {
+        a.init();
+      }
       console.debug(LOGGER, "asset", a.view, defs.map(d => d.id));
     }
   });
@@ -118,6 +121,17 @@ export default class TopDownView extends SVGGenerator {
 
   create() {
     this.rnd = this.maze.constructor.randomGenerator(this.maze.seed);
+
+    const knownAssetDefs = new Set();
+    Object.values(assets).forEach(a=> {
+      if (!knownAssetDefs.has(a)) {
+        //console.debug(LOGGER, 'reset', a.view);
+        knownAssetDefs.add(a);
+        if ("reset" in a) {
+          a.reset();
+        }
+      }
+    });
 
     let svg = super.create();
     let items = svg.querySelectorAll('[data-item]');
