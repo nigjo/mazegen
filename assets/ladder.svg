@@ -1,0 +1,39 @@
+<svg width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="ladderDefs">
+      .ladder{
+      fill:slategray;
+      stroke:none;
+      stroke-width:.25px;
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      /*.shadow{fill:cyan;stroke:none;}*/
+      }
+    </style>
+    <symbol id="ladder" viewBox="-1 -1 8 10" width="8" height="10" class="ladder">
+      <clipPath id="laddererVisRect">
+        <rect x="0" y="0" width="5" height="7" />
+      </clipPath>
+      <g class="shadow" clip-path="url(#laddererVisRect)">
+        <use href="#ladderright" transform="translate(-.5,.5)"/>
+      </g>
+      <rect x="0" y="0" width=".75" height="8"/>
+      <g id="ladderright">
+        <rect x="4" y="0" width=".75" height="8"/>
+        <rect x="0" y="0.75" width="4" height=".75"/>
+        <rect x="0" y="2.75" width="4" height=".75"/>
+        <rect x="0" y="4.75" width="4" height=".75"/>
+        <rect x="0" y="6.75" width="4" height=".75"/>
+      </g>
+    </symbol>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseL"/>
+    <g id="usage">
+      <!--right-->
+      <!--<use href="#ladder" transform="translate(47,39)"/>-->
+      <!--left-->
+      <use href="#ladder" transform="translate(10.25,39)"/>
+    </g>
+  </g>
+</svg>
