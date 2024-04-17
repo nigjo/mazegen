@@ -110,11 +110,14 @@ export default class TopDownView extends SVGGenerator {
           data.item = items[this.rnd(items.length)];
         }
       }
-      return {
+
+      cell.topdownTile = cell.topdownTile || {};
+      cell.topdownTile[tile] = {
         tile: '#' + tile,
         className: classes.join(' '),
         data: data
       };
+      return cell.topdownTile[tile];
     }
     return;
   }
@@ -123,7 +126,7 @@ export default class TopDownView extends SVGGenerator {
     this.rnd = this.maze.constructor.randomGenerator(this.maze.seed);
 
     const knownAssetDefs = new Set();
-    Object.values(assets).forEach(a=> {
+    Object.values(assets).forEach(a => {
       if (!knownAssetDefs.has(a)) {
         //console.debug(LOGGER, 'reset', a.view);
         knownAssetDefs.add(a);
@@ -133,7 +136,14 @@ export default class TopDownView extends SVGGenerator {
       }
     });
 
+    for (let r of this.maze.cells) {
+      for (let c of r) {
+        delete c.topdownTile;
+      }
+    }
+
     let svg = super.create();
+
     let items = svg.querySelectorAll('[data-item]');
     console.debug(LOGGER, items.length, 'items');
     items.forEach(tile => {
