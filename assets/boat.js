@@ -7,7 +7,24 @@ export const asset = {
   tiles: {
     wallTop: {
       ids: ['boot'],
-      validator: (cell) => cell.row > 0,
+      validator: (cell) => {
+        if (cell.row > 0) {
+          let oben = cell.parent.getNeighbour(cell, cell.parent.constructor.NORTH);
+          let obenItem = oben.topdownTile.wallTop?.data.item;
+          console.debug('BOAT', cell, obenItem);
+          if (obenItem && obenItem.startsWith('boot'))
+            return false;
+          if (cell.col > 0) {
+            let links = cell.parent.getNeighbour(cell, cell.parent.constructor.WEST);
+            let linksItem = links.topdownTile.wallTop?.data.item;
+            console.debug('BOAT', cell, linksItem);
+            if (linksItem && linksItem.startsWith('boot'))
+              return false;
+          }
+          return true;
+        }
+        return false;
+      },
       transform: modifySvgPlacement
     }
   },
