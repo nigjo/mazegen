@@ -92,7 +92,7 @@ export default class TopDownView extends SVGGenerator {
       let classes = [tile];
       let items = [];
       let data = {};
-      if (this.rnd(4) === 1) {
+      if (this.rnd(3) === 1) {
         for (let id of Object.keys(assets)) {
           if ("tiles" in assets[id] && tile in assets[id].tiles) {
             if ("validator" in assets[id].tiles[tile]) {
