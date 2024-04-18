@@ -125,32 +125,41 @@ export default class TopDownView extends SVGGenerator {
   create() {
     this.rnd = this.maze.constructor.randomGenerator(this.maze.seed);
 
-    const knownAssetDefs = new Set();
-    Object.values(assets).forEach(a => {
-      if (!knownAssetDefs.has(a)) {
-        //console.debug(LOGGER, 'reset', a.view);
-        knownAssetDefs.add(a);
-        if ("reset" in a) {
-          a.reset();
-        }
-      }
-    });
-
+    //reset tile storage
     for (let r of this.maze.cells) {
       for (let c of r) {
         delete c.topdownTile;
       }
     }
 
+    // reset all assets
+    const knownAssetDefs = new Set();
+    Object.values(assets).forEach(a => {
+      if (!knownAssetDefs.has(a)) {
+        //console.debug(LOGGER, 'reset', a.view);
+        knownAssetDefs.add(a);
+        if ("reset" in a) {
+          a.reset(this.maze);
+        }
+      }
+    });
+
     let svg = super.create();
+
+    //console.debug(LOGGER, 'TAILS', knownAssetDefs);
+    for (let a of knownAssetDefs) {
+      if ("tail" in a) {
+        a.tail(svg, this.maze);
+      }
+    }
 
     let items = svg.querySelectorAll('[data-item]');
     console.debug(LOGGER, items.length, 'items');
     items.forEach(tile => {
-      //console.debug('TD', tile);
+      //console.debug(LOGGER, 'TD', tile);
       let item = tile.getAttribute('data-item');
       let tileName = tile.getAttribute('class');
-      //console.debug(tile, item, tileName);
+      //console.debug(LOGGER, tile, item, tileName);
       if (item in assets && tileName in assets[item].tiles) {
         let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
         tile.removeAttribute('data-item');
@@ -160,6 +169,8 @@ export default class TopDownView extends SVGGenerator {
           u.setAttribute('transform', transform(tile));
         }
         tile.parentNode.insertBefore(u, tile.nextSibling);
+      } else {
+        console.debug(LOGGER, 'failed', item in assets);
       }
     });
     return svg;
