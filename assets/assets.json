@@ -1,9 +1,10 @@
 [
+  "banner",
   "boat",
   "crate",
-  "puddles",
-  "vine",
-  "rescue",
   "ladder",
-  "playerA"
+  "playerA",
+  "puddles",
+  "rescue",
+  "vine"
 ]

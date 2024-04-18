@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+    <style id="bannerDefs">
+      .banner{
+        rect{fill:white;stroke:none;}
+        .stick{fill:saddlebrown;}
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        text{
+          fill:black;
+          font-family:sans-serif;
+          text-anchor:middle;
+          font-size:1.25px;
+        }
+      }
+    </style>
+    <symbol id="bannersExit" viewBox="-2 0 24 12" width="24" height="12" class="banner">
+      <g id="bannerExit" class="banner">
+        <use xlink:href="#bannerBase"/>
+        <text x="1" y="2.5"><tspan x="1">E</tspan
+          ><tspan x="1" dy="1em">X</tspan
+          ><tspan x="1" dy="1em">I</tspan
+          ><tspan x="1" dy="1em">T</tspan
+          ></text>
+      </g>
+      <use xlink:href="#bannerExit" transform="translate(18,0)"/>
+    </symbol>
+    <symbol id="bannersStart" viewBox="-2 0 24 12" width="24" height="12" class="banner">
+      <rect x="-2" y="9" width="3" height="1" class="shadow"/>
+      <g id="bannerStart" class="banner">
+        <g id="bannerBase" class="banner">
+          <rect x="0.5" y="7" width="1" height="3" class="stick"/>
+          <rect x="0" y="0" width="2" height="8"/>
+        </g>
+        <text x="1" y="2"><tspan x="1">S</tspan
+          ><tspan x="1" dy="1em">T</tspan
+          ><tspan x="1" dy="1em">A</tspan
+          ><tspan x="1" dy="1em">R</tspan
+          ><tspan x="1" dy="1em">T</tspan
+          ></text>
+      </g>
+      <rect x="14" y="9" width="5" height="1" class="shadow"/>
+      <use xlink:href="#bannerStart" transform="translate(18,0)"/>
+    </symbol>
+  </defs>
+  <g>
+    <use xlink:href="assetbase.svg#assetbaseT"/>
+    <g id="usage">
+      <use href="#bannersExit" transform="translate(20,2)"/>
+    </g>
+  </g>
+</svg>
