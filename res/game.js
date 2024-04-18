@@ -1,6 +1,8 @@
 import MazeGen from './RandomKruskal.js';
 import MazeView from './v_topdown.js';
 
+const LOGGER = 'GAME';
+
 const docrunner = {
   Width: '6',
   Height: '10',
@@ -19,7 +21,7 @@ if (q.has('w'))
   docrunner.Width = q.get('w');
 if (q.has('h'))
   docrunner.Height = q.get('h');
-console.log('GAME', docrunner, q);
+console.log(LOGGER, docrunner);
 
 document.getElementById('seed').textContent = docrunner.Seed;
 const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
@@ -28,7 +30,7 @@ const view = new MazeView(maze);
 const startCell = maze.exit;
 const targetCell = maze.entrance;
 
-//console.debug('GAME', startCell, targetCell);
+//console.debug(LOGGER, startCell, targetCell);
 
 let wrapper = document.createElement('div');
 wrapper.className = 'mazeview';
@@ -61,7 +63,7 @@ let direction = 'NORTH';
 let moving = false;
 
 if (view.hasPlayer) {
-  console.debug(view.player);
+  //console.debug(LOGGER, view.player);
   let dir = view.player.directions[direction];
   playerOffsetX = "playerOffsetX" in view
           ? view.playerOffsetX : (w / 2);
@@ -81,11 +83,12 @@ if (view.hasPlayer) {
   const tick = (24 * 75) / rsg.length;
   const ui = document.getElementById('timer');
   function ticker() {
-    console.log('this', this);
     let token = rsg.shift();
     ui.textContent = ui.textContent + ' ' + token;
     if (rsg.length > 0)
       setTimeout(ticker, tick);
+    else
+      console.log(LOGGER, 'GO!');
   }
 
   setTimeout(ticker, tick);
@@ -113,7 +116,7 @@ document.querySelector('main .game').append(wrapper);
 try {
   document.querySelector('main').append(new DebugView(maze).create());
 } catch (e) {
-  console.debug("debug mode disabled");
+  console.debug(LOGGER, "debug mode disabled");
 }
 
 let currentCell = startCell;
@@ -135,7 +138,7 @@ function updateTimer() {
     timer = setTimeout(updateTimer, 150);
   } else {
     let a = document.createElement('a');
-    a.href = './view.html?' + new URLSearchParams({workshopSeed:docrunner.Seed});
+    a.href = './view.html?' + new URLSearchParams({workshopSeed: docrunner.Seed});
     a.textContent = ui.textContent + " / done";
     ui.replaceChildren(a);
   }
@@ -206,10 +209,10 @@ function handleTouchMove(evt) {
 function handleTouchEnd(evt) {
   evt.preventDefault();
   if (startPoint && evt.changedTouches.length === 1) {
-    //console.log("END", startPoint, evt.changedTouches[0]);
+    //console.log(LOGGER, "END", startPoint, evt.changedTouches[0]);
     let deltaX = evt.changedTouches[0].pageX - startPoint.pageX;
     let deltaY = evt.changedTouches[0].pageY - startPoint.pageY;
-    //console.log('DELTA', deltaX, deltaY);
+    //console.log(LOGGER, 'DELTA', deltaX, deltaY);
     if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
       return;
     }
@@ -244,7 +247,7 @@ function handleTouchEnd(evt) {
   startPoint = null;
 }
 function handleTouchStart(evt) {
-  console.log("START");
+  //console.log(LOGGER, "START");
   evt.preventDefault();
   if (!moving && evt.touches.length === 1) {
     startPoint = evt.touches[0];
@@ -255,7 +258,7 @@ function handleTouchStart(evt) {
 
 function moveToNext(nextCell) {
   startTimer();
-  //console.debug(currentCell);
+  //console.debug(LOGGER, currentCell);
   if (nextCell) {
     const currentX = oX + w * currentCell.col;
     const currentY = oY + h * currentCell.row;
@@ -288,7 +291,7 @@ function moveToNext(nextCell) {
           playerChar.setAttribute('y', targetY + playerOffsetY + playerDir.offsetY);
         }
         moving = false;
-        //console.debug('GAME', "move", "done");
+        //console.debug(LOGGER, "move", "done");
         if (nextCell === targetCell) {
           moving = true; // verhindert weitere Bewegung
           stopTimer();
@@ -301,7 +304,7 @@ function moveToNext(nextCell) {
                   targetY - h + playerOffsetY + playerDir.offsetY, false);
         }
       } else {
-        //console.debug('GAME', "move", "next");
+        //console.debug(LOGGER, "move", "next");
         img.setAttribute('viewBox',
                 (nextX) + ' ' + (nextY) + ' ' + w + ' ' + h);
         if (playerChar) {
