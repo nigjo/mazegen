@@ -55,6 +55,12 @@ header,nav,main {
   .game{
     width:calc(100% - 2em);
     .mazeview::part(mazeview){
+      /*reset settings*/
+      font: initial;
+      text-shadow: initial;
+      line-height: initial;
+      color: initial;
+      /*new settings*/
       width: 100%;
       height:auto;
     }
