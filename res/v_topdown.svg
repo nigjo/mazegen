@@ -1,4 +1,5 @@
-<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <pattern id="water" viewBox="0,0,16,16" width="8" height="8"
         x="0" y="2" patternUnits="userSpaceOnUse">
