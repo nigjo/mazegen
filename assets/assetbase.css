@@ -3,7 +3,7 @@
   fill:url(../res/v_topdown.svg#water);
   stroke:none;
 }
-#boden,#doorBottom,#doorRight,#doorLeft{
+#boden,#doorBottom,#doorRight,#doorLeft,#doorTop{
   .way{
     fill:url(../res/v_topdown.svg#tiles);
     stroke:none;
@@ -12,7 +12,7 @@
     fill:url(../res/v_topdown.svg#bricks);
   }
 }
-#wallBottom,#wallTop,#decke,#ropeSide,#doorRight,#doorLeft{
+#wallBottom,#wallTop,#decke,#ropeSide,#doorRight,#doorLeft,#doorTop{
   .rope{
     stroke:Goldenrod;
     stroke-width:1.25;
@@ -22,10 +22,10 @@
     stroke:rgba(0,0,0,.2);
     stroke-width:1;
     fill:none;
-    stroke-dasharray:.25 2
+    stroke-dasharray:.25 2;
   }
 }
-#wallLeft,#pilon,#doorBottom,#decke,#doorLeft{
+#wallLeft,#pilon,#doorBottom,#decke,#doorLeft,#doorTop{
   .shadow{
     fill:rgba(0,0,0,.1);
     stroke:none;
@@ -49,6 +49,7 @@ svg{
   --doorL:visible;
   --doorR:visible;
   --doorB:hidden;
+  --doorT:hidden;
 }
 #decke{
   .ropeRight{
@@ -58,6 +59,9 @@ svg{
     visibility:var(--doorL);
   }
   .ropeBottom{
+    visibility:var(--doorB);
+  }
+  .ropeTop{
     visibility:var(--doorB);
   }
 }
