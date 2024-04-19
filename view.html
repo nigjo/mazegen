@@ -9,6 +9,7 @@
     <link rel="icon" sizes="192x192" href="res/dock_runner-192.png" type="image/png">
     <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
+    <link rel="stylesheet" href="res/game.css"/>
     <script type="module">
       import RandomKruskal from './res/RandomKruskal.js';
       let args = new URLSearchParams(location.search);
@@ -22,6 +23,7 @@
         workshop[name] = args.get(key) || workshop[name];
       }
       let backArgs = new URLSearchParams();
+      document.getElementById('seed').textContent = workshop.Seed;
       const back = document.getElementById('thisLevel');
       console.debug('back', back);
       backArgs.set('seed', workshop.Seed);
@@ -29,8 +31,8 @@
         backArgs.set('w', workshop.Width);
       if (args.has('workshopHeight'))
         backArgs.set('w', workshop.Height);
-      back.href = './index.html?'+backArgs;
-      
+      back.href = './index.html?' + backArgs;
+
       Promise.all([
         import('./res/v_topdown.js'),
         new Promise(ok => {
@@ -85,6 +87,7 @@
 
       function generateViewContent(view) {
         let w = document.createElement('div');
+        w.className = 'game';
         let shadow = w.attachShadow({
           mode: 'closed'
         });
@@ -101,43 +104,16 @@
       }
 
     </script>
-    <style>
-      body{
-        background-color:#EEE;
-      }
-      svg{
-        background-color:#FFF;
-      }
-      dl {
-        font-family: monospace;
-        display: inline-grid;
-        grid-template-columns: 1fr 2fr;
-
-        dt{
-          font-weight: bold;
-          overflow: hidden;
-          position: relative;
-          padding-right: 2.25ch;
-        }
-        dt:after{
-          position: absolute;
-          content: '······························';
-          color:lightgray;
-          text-align: left;
-          padding-left: .1ch;
-        }
-
-        dd{
-          margin-left: 0px;
-        }
-      }
-    </style>
   </head>
-  <body>
+  <body class="view bgWater">
+    <header class="bgWay">
+      <h1><a href="./">Docks Runner</a></h1>
+      <h2 class="bgWall" id="seed">loading...</h2>
+    </header>
+    <nav>
+      <a class="button" id="thisLevel" href="./">replay</a> - <a class="button" id="nextLevel">next Level</a>
+    </nav>
     <main></main>
-    <footer>
-      <a id="thisLevel" href="./">replay</a> - <a id="nextLevel">next Level</a>
-    </footer>
     <script>
       (() => {
         const a = document.getElementById('nextLevel');

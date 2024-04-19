@@ -6,8 +6,10 @@ body{
   margin:.5em;
   font-size:min(2vh,3vw,12pt);
 }
-header{
+header,nav{
   margin:.5em;
+}
+header{
   border:2px solid dimgray;
   a{
     text-decoration: none;
@@ -41,6 +43,24 @@ header *{
 header,nav,main {
   display: inline-block;
   vertical-align: top;
+}
+@media (orientation:landscape){
+  .view{
+    display:grid;
+    grid-template-columns:auto 1fr;
+
+    nav{
+      grid-column: 1/1;
+    }
+    header{
+      grid-column: 1/1;
+      grid-row: 1/1;
+    }
+    main{
+      grid-column: 2/4;
+      grid-row: 1/4;
+    }
+  }
 }
 @media (orientation:landscape){
   main{
