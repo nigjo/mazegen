@@ -37,6 +37,13 @@ header *{
   padding:1em;
   background-color:navy;
   line-height:0px;
+  .mazeview::part(mazeview){
+    /*reset settings*/
+    font: initial;
+    text-shadow: initial;
+    line-height: initial;
+    color: initial;
+  }
 }
 header,nav,main {
   display: inline-block;
@@ -55,12 +62,6 @@ header,nav,main {
   .game{
     width:calc(100% - 2em);
     .mazeview::part(mazeview){
-      /*reset settings*/
-      font: initial;
-      text-shadow: initial;
-      line-height: initial;
-      color: initial;
-      /*new settings*/
       width: 100%;
       height:auto;
     }
