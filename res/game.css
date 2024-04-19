@@ -24,13 +24,13 @@ header *{
 .bgWater{
   color:White;
   text-shadow:dimgray 2px 2px;
-  background: url('game_bg_water.svg');
+  background: royalblue url('game_bg_water.svg');
 }
 .bgWay{
-  background: url('game_bg_way.svg');
+  background: peru url('game_bg_way.svg');
 }
 .bgWall{
-  background: url('game_bg_wall.svg');
+  background: firebrick url('game_bg_wall.svg');
 }
 .game{
   display:inline-block;
