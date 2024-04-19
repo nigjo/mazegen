@@ -14,95 +14,118 @@ const docrunner = {
             .substring(0, 16).replace('T', ' ') + 'z';
   })()
 };
-const q = new URLSearchParams(location.search);
-if (q.has('seed'))
-  docrunner.Seed = q.get('seed');
-if (q.has('w'))
-  docrunner.Width = q.get('w');
-if (q.has('h'))
-  docrunner.Height = q.get('h');
-console.log(LOGGER, docrunner);
+(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.has('seed'))
+    docrunner.Seed = q.get('seed');
+  if (q.has('w'))
+    docrunner.Width = q.get('w');
+  if (q.has('h'))
+    docrunner.Height = q.get('h');
+  console.log(LOGGER, docrunner);
+})();
 
 document.getElementById('seed').textContent = docrunner.Seed;
 const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
 const view = new MazeView(maze);
 
-const startCell = maze.exit;
-const targetCell = maze.entrance;
+const gamestate = {
+  startCell: maze.exit,
+  targetCell: maze.entrance,
+  currentCell: null,
+  moving: true,
+  direction: 'NORTH',
+  playerDir: null,
+  getViewX: (cell) => gamestate.oX + gamestate.w * cell.col,
+  getViewY: (cell) => gamestate.oY + gamestate.h * cell.row
+};
+gamestate.currentCell = gamestate.startCell;
 
-//console.debug(LOGGER, startCell, targetCell);
+//console.debug(LOGGER, gamestate.startCell, gamestate.targetCell);
+function initializeGame() {
+  let wrapper = document.createElement('div');
+  wrapper.className = 'mazeview';
+  let shadow = wrapper.attachShadow({
+    mode: 'open'
+  });
+  var img = view.create();
+  shadow.append(img);
+  if (img.hasAttribute('width'))
+    wrapper.dataset.width = Number(img.getAttribute('width')) + 'px';
+  if (img.hasAttribute('height'))
+    wrapper.dataset.height = Number(img.getAttribute('height')) + 'px';
 
-let wrapper = document.createElement('div');
-wrapper.className = 'mazeview';
-let shadow = wrapper.attachShadow({
-  mode: 'open'
-});
-let img = view.create();
-shadow.append(img);
-if (img.hasAttribute('width'))
-  wrapper.dataset.width = Number(img.getAttribute('width')) + 'px';
-if (img.hasAttribute('height'))
-  wrapper.dataset.height = Number(img.getAttribute('height')) + 'px';
+  gamestate.w = Number(view.cellWidth);
+  gamestate.h = Number(view.cellHeight);
+  gamestate.oX = Number(view.offsetX);
+  gamestate.oY = Number(view.offsetY);
 
-let w = Number(view.cellWidth);
-let h = Number(view.cellHeight);
-let oX = Number(view.offsetX);
-let oY = Number(view.offsetY);
+  const startX = gamestate.getViewX(gamestate.startCell);
+  const startY = gamestate.getViewY(gamestate.startCell);
+  img.setAttribute('width', gamestate.w * 4);
+  img.setAttribute('height', gamestate.h * 4);
+  img.setAttribute('viewBox',
+          startX + ' ' + startY + ' ' + gamestate.w + ' ' + gamestate.h);
+  img.setAttribute('part', 'mazeview');
 
-const startX = oX + w * startCell.col;
-const startY = oY + h * startCell.row;
-img.setAttribute('width', w * 4);
-img.setAttribute('height', h * 4);
-img.setAttribute('viewBox',
-        startX + ' ' + startY + ' ' + w + ' ' + h);
-img.setAttribute('part', 'mazeview');
+  gamestate.playerOffsetX = 0;
+  gamestate.playerOffsetY = 0;
+  gamestate.direction = 'NORTH';
+  gamestate.moving = true;
+  gamestate.img = img;
 
-let playerOffsetX = 0;
-let playerOffsetY = 0;
-let direction = 'NORTH';
-let moving = false;
+  if (view.hasPlayer) {
+    //console.debug(LOGGER, view.player);
+    let dir = view.player.directions[gamestate.direction];
+    gamestate.playerOffsetX = "playerOffsetX" in view
+            ? view.playerOffsetX : (gamestate.w / 2);
+    gamestate.playerOffsetY = "playerOffsetY" in view
+            ? view.playerOffsetY : (gamestate.h / 2);
+    let player = document.createElementNS(img.namespaceURI, 'use');
+    player.setAttribute('id', 'playerCharacter');
+    player.setAttribute('href', '#' + dir.still);
+    player.setAttribute('x', startX + gamestate.playerOffsetX + dir.offsetX);
+    player.setAttribute('y', startY + gamestate.h + gamestate.playerOffsetY + dir.offsetY);
+    img.append(player);
+    let targetY = startY + gamestate.playerOffsetY + dir.offsetY;
+    movePlayerOnly(player, targetY, true);
+  }
+  (() => {
+    let rsg = ['Ready.', 'Steady.', 'GO!'];
+    const tick = (24 * 75) / rsg.length;
+    const ui = document.getElementById('timer');
+    function ticker() {
+      let token = rsg.shift();
+      ui.textContent = ui.textContent + ' ' + token;
+      if (rsg.length > 0)
+        setTimeout(ticker, tick);
+      else {
+        console.log(LOGGER, 'GO!');
+        gamestate.moving = false;
+      }
+    }
 
-if (view.hasPlayer) {
-  //console.debug(LOGGER, view.player);
-  let dir = view.player.directions[direction];
-  playerOffsetX = "playerOffsetX" in view
-          ? view.playerOffsetX : (w / 2);
-  playerOffsetY = "playerOffsetY" in view
-          ? view.playerOffsetY : (h / 2);
-  let player = document.createElementNS(img.namespaceURI, 'use');
-  player.setAttribute('id', 'playerCharacter');
-  player.setAttribute('href', '#' + dir.still);
-  player.setAttribute('x', startX + playerOffsetX + dir.offsetX);
-  player.setAttribute('y', startY + h + playerOffsetY + dir.offsetY);
-  img.append(player);
-  let targetY = startY + playerOffsetY + dir.offsetY;
-  movePlayerOnly(player, targetY, true);
-}
-(() => {
-  let rsg = ['Ready.', 'Steady.', 'GO!'];
-  const tick = (24 * 75) / rsg.length;
-  const ui = document.getElementById('timer');
-  function ticker() {
-    let token = rsg.shift();
-    ui.textContent = ui.textContent + ' ' + token;
-    if (rsg.length > 0)
-      setTimeout(ticker, tick);
-    else
-      console.log(LOGGER, 'GO!');
+    setTimeout(ticker, tick);
+  })();
+
+  document.querySelector('main .game').append(wrapper);
+  try {
+    document.querySelector('main').append(new DebugView(maze).create());
+  } catch (e) {
+    console.debug(LOGGER, "debug mode disabled");
   }
 
-  setTimeout(ticker, tick);
-})();
+}
 
 function movePlayerOnly(player, targetY, moveAfter) {
   let playerY = Number(player.getAttribute('y'));
-  moving = true;
+  gamestate.moving = true;
   const deltaY = (targetY - playerY) / 24;
   function movePlayerToStart() {
     playerY = playerY + deltaY;
     if (Math.abs(playerY - targetY) < 0.1) {
       player.setAttribute('y', targetY);
-      moving = !moveAfter;
+      gamestate.moving = !moveAfter;
     } else {
       player.setAttribute('y', playerY);
       setTimeout(movePlayerToStart, 75);
@@ -111,15 +134,6 @@ function movePlayerOnly(player, targetY, moveAfter) {
   setTimeout(movePlayerToStart, 0);
 }
 
-
-document.querySelector('main .game').append(wrapper);
-try {
-  document.querySelector('main').append(new DebugView(maze).create());
-} catch (e) {
-  console.debug(LOGGER, "debug mode disabled");
-}
-
-let currentCell = startCell;
 let timer = null;
 let startTime = null;
 function startTimer() {
@@ -128,6 +142,7 @@ function startTimer() {
   startTime = Date.now();
   timer = setTimeout(updateTimer, 0);
 }
+
 function updateTimer() {
   let currentTime = Date.now();
   let delta = currentTime - startTime;
@@ -152,7 +167,7 @@ document.addEventListener('keydown', (evt) => {
     //from mdn docs
     return;
   }
-  if (moving) {
+  if (gamestate.moving) {
     switch (evt.key) {
       case 'ArrowUp':
       case 'ArrowLeft':
@@ -163,29 +178,30 @@ document.addEventListener('keydown', (evt) => {
     }
   }
   let nextCell = null;
+  let currentCell = gamestate.currentCell;
   switch (evt.key) {
     case 'ArrowUp':
       //if(currentCell.wall)
       if ((currentCell.walls & MazeGen.NORTH) === 0) {
-        direction = 'NORTH';
+        gamestate.direction = 'NORTH';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
       }
       break;
     case 'ArrowLeft':
       if ((currentCell.walls & MazeGen.WEST) === 0) {
-        direction = 'WEST';
+        gamestate.direction = 'WEST';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
       }
       break;
     case 'ArrowDown':
       if ((currentCell.walls & MazeGen.SOUTH) === 0) {
-        direction = 'SOUTH';
+        gamestate.direction = 'SOUTH';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
       }
       break;
     case 'ArrowRight':
       if ((currentCell.walls & MazeGen.EAST) === 0) {
-        direction = 'EAST';
+        gamestate.direction = 'EAST';
         nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
       }
       break;
@@ -196,85 +212,87 @@ document.addEventListener('keydown', (evt) => {
   moveToNext(nextCell);
 });
 
-const el = document.querySelector('main .game');
-el.addEventListener("touchstart", handleTouchStart);
-el.addEventListener("touchend", handleTouchEnd);
-el.addEventListener("touchcancel", handleTouchEnd);
-el.addEventListener("touchmove", handleTouchMove);
+// initTouch
+(() => {
+  const el = document.querySelector('main .game');
+  el.addEventListener("touchstart", handleTouchStart);
+  el.addEventListener("touchend", handleTouchEnd);
+  el.addEventListener("touchcancel", handleTouchEnd);
+  el.addEventListener("touchmove", handleTouchMove);
 
-let startPoint;
-function handleTouchMove(evt) {
-  evt.preventDefault();
-}
-function handleTouchEnd(evt) {
-  evt.preventDefault();
-  if (startPoint && evt.changedTouches.length === 1) {
-    //console.log(LOGGER, "END", startPoint, evt.changedTouches[0]);
-    let deltaX = evt.changedTouches[0].pageX - startPoint.pageX;
-    let deltaY = evt.changedTouches[0].pageY - startPoint.pageY;
-    //console.log(LOGGER, 'DELTA', deltaX, deltaY);
-    if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
-      return;
-    }
-    let nextCell = null;
-    if (Math.abs(deltaX) < Math.abs(deltaY)) {
-      if (deltaY > 0) {
-        if ((currentCell.walls & MazeGen.NORTH) === 0) {
-          direction = 'NORTH';
-          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
-        }
-      } else {
-        if ((currentCell.walls & MazeGen.SOUTH) === 0) {
-          direction = 'SOUTH';
-          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
-        }
-      }
-    } else {
-      if (deltaX > 0) {
-        if ((currentCell.walls & MazeGen.WEST) === 0) {
-          direction = 'WEST';
-          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
-        }
-      } else {
-        if ((currentCell.walls & MazeGen.EAST) === 0) {
-          direction = 'EAST';
-          nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
-        }
-      }
-    }
-    moveToNext(nextCell);
+  let startPoint;
+  function handleTouchMove(evt) {
+    evt.preventDefault();
   }
-  startPoint = null;
-}
-function handleTouchStart(evt) {
-  //console.log(LOGGER, "START");
-  evt.preventDefault();
-  if (!moving && evt.touches.length === 1) {
-    startPoint = evt.touches[0];
-  } else {
+  function handleTouchEnd(evt) {
+    evt.preventDefault();
+    if (startPoint && evt.changedTouches.length === 1) {
+      //console.log(LOGGER, "END", startPoint, evt.changedTouches[0]);
+      let deltaX = evt.changedTouches[0].pageX - startPoint.pageX;
+      let deltaY = evt.changedTouches[0].pageY - startPoint.pageY;
+      //console.log(LOGGER, 'DELTA', deltaX, deltaY);
+      if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+        return;
+      }
+      let nextCell = null;
+      let currentCell = gamestate.currentCell;
+      if (Math.abs(deltaX) < Math.abs(deltaY)) {
+        if (deltaY > 0) {
+          if ((currentCell.walls & MazeGen.NORTH) === 0) {
+            gamestate.direction = 'NORTH';
+            nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.NORTH);
+          }
+        } else {
+          if ((currentCell.walls & MazeGen.SOUTH) === 0) {
+            gamestate.direction = 'SOUTH';
+            nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.SOUTH);
+          }
+        }
+      } else {
+        if (deltaX > 0) {
+          if ((currentCell.walls & MazeGen.WEST) === 0) {
+            gamestate.direction = 'WEST';
+            nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.WEST);
+          }
+        } else {
+          if ((currentCell.walls & MazeGen.EAST) === 0) {
+            gamestate.direction = 'EAST';
+            nextCell = currentCell.parent.getNeighbour(currentCell, MazeGen.EAST);
+          }
+        }
+      }
+      moveToNext(nextCell);
+    }
     startPoint = null;
   }
-}
-
+  function handleTouchStart(evt) {
+    //console.log(LOGGER, "START");
+    evt.preventDefault();
+    if (!gamestate.moving && evt.touches.length === 1) {
+      startPoint = evt.touches[0];
+    } else {
+      startPoint = null;
+    }
+  }
+})();
 function moveToNext(nextCell) {
   startTimer();
   //console.debug(LOGGER, currentCell);
   if (nextCell) {
-    const currentX = oX + w * currentCell.col;
-    const currentY = oY + h * currentCell.row;
-    const targetX = oX + w * nextCell.col;
-    const targetY = oY + h * nextCell.row;
+    const currentX = gamestate.getViewX(gamestate.currentCell);
+    const currentY = gamestate.getViewY(gamestate.currentCell);
+    const targetX = gamestate.getViewX(nextCell);
+    const targetY = gamestate.getViewY(nextCell);
     const deltaX = (currentX - targetX) / 8;
     const deltaY = (currentY - targetY) / 8;
     let step = 0;
-    moving = true;
-    let playerChar = img.getElementById('playerCharacter');
-    let playerDir = null;
+    gamestate.moving = true;
+    let playerChar = gamestate.img.getElementById('playerCharacter');
     if (playerChar) {
-      playerDir = direction in view.player.directions
-              ? view.player.directions[direction]
+      gamestate.playerDir = gamestate.direction in view.player.directions
+              ? view.player.directions[gamestate.direction]
               : {offsetX: 0, offsetY: 0, still: ''};
-      playerChar.setAttribute('href', '#' + playerDir.still);
+      playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
     }
 
     function move() {
@@ -283,30 +301,30 @@ function moveToNext(nextCell) {
       let nextY = currentY - step * deltaY;
       if (Math.abs(nextX - targetX) < 0.1
               && (Math.abs(nextY - targetY) < 0.1)) {
-        currentCell = nextCell;
-        img.setAttribute('viewBox',
-                (targetX) + ' ' + (targetY) + ' ' + w + ' ' + h);
+        gamestate.currentCell = nextCell;
+        gamestate.img.setAttribute('viewBox',
+                (targetX) + ' ' + (targetY) + ' ' + gamestate.w + ' ' + gamestate.h);
         if (playerChar) {
-          playerChar.setAttribute('x', targetX + playerOffsetX + playerDir.offsetX);
-          playerChar.setAttribute('y', targetY + playerOffsetY + playerDir.offsetY);
+          playerChar.setAttribute('x', targetX + gamestate.playerOffsetX + gamestate.playerDir.offsetX);
+          playerChar.setAttribute('y', targetY + gamestate.playerOffsetY + gamestate.playerDir.offsetY);
         }
-        moving = false;
+        gamestate.moving = false;
         //console.debug(LOGGER, "move", "done");
-        if (nextCell === targetCell) {
-          moving = true; // verhindert weitere Bewegung
+        if (nextCell === gamestate.targetCell) {
+          gamestate.moving = true; // verhindert weitere Bewegung
           stopTimer();
-          playerDir = 'NORTH' in view.player.directions
+          gamestate.playerDir = 'NORTH' in view.player.directions
                   ? view.player.directions['NORTH']
                   : {offsetX: 0, offsetY: 0, still: ''};
-          playerChar.setAttribute('href', '#' + playerDir.still);
+          playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
 
           movePlayerOnly(playerChar,
-                  targetY - h + playerOffsetY + playerDir.offsetY, false);
+                  targetY - gamestate.h + gamestate.playerOffsetY + gamestate.playerDir.offsetY, false);
         }
       } else {
         //console.debug(LOGGER, "move", "next");
-        img.setAttribute('viewBox',
-                (nextX) + ' ' + (nextY) + ' ' + w + ' ' + h);
+        gamestate.img.setAttribute('viewBox',
+                (nextX) + ' ' + (nextY) + ' ' + gamestate.w + ' ' + gamestate.h);
         if (playerChar) {
           let px = Number(playerChar.getAttribute('x'));
           playerChar.setAttribute('x', px - deltaX);
@@ -319,3 +337,5 @@ function moveToNext(nextCell) {
     setTimeout(move, 0);
   }
 }
+
+setTimeout(initializeGame, 0);
