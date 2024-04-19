@@ -11,13 +11,13 @@ export const asset = {
         if (cell.row > 0) {
           let oben = cell.parent.getNeighbour(cell, cell.parent.constructor.NORTH);
           let obenItem = oben.topdownTile.wallTop?.data.item;
-          console.debug('BOAT', cell, obenItem);
+          //console.debug('BOAT', cell, obenItem);
           if (obenItem && obenItem.startsWith('boot'))
             return false;
           if (cell.col > 0) {
             let links = cell.parent.getNeighbour(cell, cell.parent.constructor.WEST);
             let linksItem = links.topdownTile.wallTop?.data.item;
-            console.debug('BOAT', cell, linksItem);
+            //console.debug('BOAT', cell, linksItem);
             if (linksItem && linksItem.startsWith('boot'))
               return false;
           }
