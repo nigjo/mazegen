@@ -5,6 +5,7 @@ body{
   }
   margin:.5em;
   font-size:min(2vh,3vw,12pt);
+  background-color: royalblue;
 }
 header{
   margin:.5em;
