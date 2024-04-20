@@ -3,15 +3,15 @@
   <defs>
     <style id="playerBdefs">
       svg{
-        --playerB-stroke:Tan;
-        --playerB-skin:Wheat;
-        --playerB-shirt:skyblue;
-        --playerB-pants:green;
-        --playerB-shoes:saddlebrown;
-        --playerB-eyes:darkblue;
-        --playerB-eyewhite:whitesmoke;;
-        --playerB-hair:darkred;
-        --playerB-hairline:crimson;
+        --playerB-skin:#FFD321;
+        --playerB-stroke:#B18904;
+        --playerB-shirt:#addf6b;
+        --playerB-pants:#6b73df;
+        --playerB-shoes:#8A4B08;
+        --playerB-eyes:black;
+        --playerB-eyewhite:whitesmoke;
+        --playerB-hair:#6baddf;
+        --playerB-hairline:#4a799c;
       }
       .playerB{
         fill:var(--playerB-skin);
@@ -129,7 +129,18 @@
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
     <style>
       /*fuer den Farbentest*/
-      #usage2{
+      #charJim{
+        --playerB-skin:Wheat;
+        --playerB-stroke:BurlyWood;
+        --playerB-shirt:skyblue;
+        --playerB-pants:green;
+        --playerB-shoes:saddlebrown;
+        --playerB-eyes:darkblue;
+        --playerB-eyewhite:whitesmoke;
+        --playerB-hair:Chocolate;
+        --playerB-hairline:Sienna;
+      }
+      #charJon{
         --playerB-skin:#8d5524;
         --playerB-stroke:#e0ac69;
         --playerB-shirt:red;
@@ -144,7 +155,7 @@
   </defs>
   <g>
     <use href="assetbase.svg#assetbaseR"/>
-    <g id="usage">
+    <g id="charJim">
       <use href="#playerB-nordM" transform="translate(28,16)"/>
       <use href="#playerB-suedM" transform="translate(28,24)"/>
       <use href="#playerB-linksM" transform="translate(20,24)"/>
@@ -153,7 +164,13 @@
   </g>
   <g transform="translate(64,0)">
     <use href="assetbase.svg#assetbaseL"/>
-    <g id="usage2">
+    <g id="charDefault">
+      <use href="#playerB-nordM" transform="translate(-4,16)"/>
+      <use href="#playerB-suedM" transform="translate(-4,24)"/>
+      <use href="#playerB-linksM" transform="translate(-12,24)"/>
+      <use href="#playerB-rechtsM" transform="translate(4,24)"/>
+    </g>
+    <g id="charJon">
       <use href="#playerB-nordM" transform="translate(28,16)"/>
       <use href="#playerB-suedM" transform="translate(28,24)"/>
       <use href="#playerB-linksM" transform="translate(20,24)"/>
