@@ -124,6 +124,10 @@ function movePlayerOnly(player, targetY, moveAfter) {
   function movePlayerToStart() {
     playerY = playerY + deltaY;
     if (Math.abs(playerY - targetY) < 0.1) {
+      gamestate.direction = 'SOUTH';
+      let dir = view.player.directions[gamestate.direction];
+      console.debug('GAME', gamestate.direction, dir);
+      player.setAttribute('href', '#' + dir.still);
       player.setAttribute('y', targetY);
       gamestate.moving = !moveAfter;
     } else {
