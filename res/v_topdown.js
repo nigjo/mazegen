@@ -149,7 +149,7 @@ export default class TopDownView extends SVGGenerator {
     //console.debug(LOGGER, 'TAILS', knownAssetDefs);
     for (let a of knownAssetDefs) {
       if ("tail" in a) {
-        a.tail(svg, this.maze);
+        a.tail(svg, this.maze, this.rnd);
       }
     }
 
