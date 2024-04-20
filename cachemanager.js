@@ -26,7 +26,8 @@ self.addEventListener("install", event => {
     const cache = await caches.open(CACHE_NAME);
     console.log('CM', 'init pre cache');
     // Cache all static resources.
-    cache.addAll(PRE_CACHED_RESOURCES);
+    await cache.addAll(PRE_CACHED_RESOURCES);
+    console.log('CM', 'done.');
   }
   event.waitUntil(preCacheResources());
 });
