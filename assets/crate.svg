@@ -8,31 +8,35 @@
       .front{fill:Chocolate}
       }
     </style>
-    <symbol id="grate1" viewBox="-4 -1 8 8" width="16" height="8" class="crates">
+    <symbol id="crate1" viewBox="-2 -1 8 8" width="8" height="8" class="crates">
+      <!--<rect x="-2" y="-1" width="8" height="8" style="fill:none;stroke:red;"/>-->
       <rect x="-1" y="2" width="1" height="4" class="shadow"/>
-      <rect x="0" y="0" width="5" height="4" class="front"/>
-      <line x1="0" y1="1" x2="5" y2="1" class="line"/>
-      <line x1="0" y1="2" x2="5" y2="2" class="line"/>
-      <line x1="0" y1="3" x2="5" y2="3" class="line"/>
-      
-      <rect x=".75" y="0" width=".25" height="4" class="shadow"/>
-      <rect x="1" y="-.1" width=".75" height="4.1"/>
-      <rect x="1" y="3.9" width=".75" height=".1" class="shadow"/>
-      
-      <rect x="3.1" y="0" width=".25" height="4" class="shadow"/>
-      <rect x="3.35" y="-.1" width=".75" height="4.1"/>
-      <rect x="3.35" y="3.9" width=".75" height=".1" class="shadow"/>
-      
-      <rect x="0" y="4" width="5" height="2"/>
-      <line x1="0" y1="4.66" x2="5" y2="4.66" class="line"/>
-      <line x1="0" y1="5.33" x2="5" y2="5.33" class="line"/>
+      <g id="crate">
+        <rect x="0" y="0" width="5" height="4" class="front"/>
+        <line x1="0" y1="1" x2="5" y2="1" class="line"/>
+        <line x1="0" y1="2" x2="5" y2="2" class="line"/>
+        <line x1="0" y1="3" x2="5" y2="3" class="line"/>
+
+        <rect x=".75" y="0" width=".25" height="4" class="shadow"/>
+        <rect x="1" y="-.1" width=".75" height="4.1"/>
+        <rect x="1" y="3.9" width=".75" height=".1" class="shadow"/>
+
+        <rect x="3.1" y="0" width=".25" height="4" class="shadow"/>
+        <rect x="3.35" y="-.1" width=".75" height="4.1"/>
+        <rect x="3.35" y="3.9" width=".75" height=".1" class="shadow"/>
+
+        <rect x="0" y="4" width="5" height="2"/>
+        <line x1="0" y1="4.66" x2="5" y2="4.66" class="line"/>
+        <line x1="0" y1="5.33" x2="5" y2="5.33" class="line"/>
+      </g>
     </symbol>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
   <g>
     <use href="assetbase.svg#assetbase"/>
     <g id="usage">
-      <use href="#grate1" transform="translate(30,20)"/>
+      <use href="#crate1" transform="translate(36,20)"/>
+      <use href="#crate1" transform="translate(20,24)"/>
     </g>
   </g>
 </svg>
