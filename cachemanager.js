@@ -1,22 +1,32 @@
 //based on
 //https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/how-to/service-workers
 
-const CACHE_MANAGER_VERSION = 'v0.1.2';
+const CACHE_MANAGER_VERSION = 'v0.1.3';
 
 const CACHE_BASE_NAME = 'docksrunner';
-const CACHE_NAME = CACHE_BASE_NAME + '_v1';
+const CACHE_NAME = CACHE_BASE_NAME + '_' + CACHE_MANAGER_VERSION;
 
-const PRE_CACHED_RESOURCES = [
+//Minimale Dateien
+const MIN_CACHED_RESOURCES = [
   './',
   'index.html',
-  'res/swinit.html',
-  'res/dock_runner.svg',
-  'res/dock_runner-192.png',
+  'res/game.css',
+  'res/game.js',
+  'res/dock_runner-192.png'
+];
+//Weitere Resourcen.
+//Nicht dringend, aber später wichtig.
+const PRE_CACHED_RESOURCES = [
   'res/v_topdown.svg',
   'res/v_topdown.js',
-  'res/game.js',
-  'res/game.css',
-  'assets/assets.json'
+  'assets/assets.json',
+  'view.html',
+  'code.html',
+  'res/swinit.js',
+  'res/qr-code.png',
+  'res/game_bg_water.svg',
+  'res/game_bg_way.svg',
+  'res/game_bg_wall.svg'
 ];
 
 self.addEventListener("install", event => {
@@ -26,17 +36,17 @@ self.addEventListener("install", event => {
     const cache = await caches.open(CACHE_NAME);
     console.log('CM', 'init pre cache');
     // Cache all static resources.
-    await cache.addAll(PRE_CACHED_RESOURCES);
+    await cache.addAll(MIN_CACHED_RESOURCES);
     console.log('CM', 'done.');
   }
   event.waitUntil(preCacheResources());
 });
 
 self.addEventListener("fetch", event => {
-  console.log('WORKER: Fetching', event.request);
+  console.log('CM', 'request', event.request.url);
   async function findCacheOrOrg() {
     const cache = await caches.open(CACHE_NAME);
-    const cacheKey = event.request.url;
+    const cacheKey = event.request.url.split(/[?#]/)[0];
     const cachedResponse = await cache.match(cacheKey);
     if (cachedResponse) {
       fetch(cacheKey).then(r => {
@@ -47,6 +57,7 @@ self.addEventListener("fetch", event => {
         }
       });
       // Return the old resource.
+      console.debug('CM', 'cached', cachedResponse.url);
       return cachedResponse;
     } else {
       // The resource wasn't found in the cache, so fetch it from the network.
@@ -59,6 +70,7 @@ self.addEventListener("fetch", event => {
         console.log('CM', 'cached file', cacheKey);
       }
       // And return the response.
+      console.debug('CM', 'fetched', fetchResponse.url);
       return fetchResponse;
     }
   }
@@ -75,6 +87,12 @@ self.addEventListener("activate", event => {
         // If a cache's name is the current name, delete it.
         console.log('CM', 'delete old cache', name);
         return caches.delete(name);
+      } else {
+        console.log('CM', 'add some resources');
+        caches.open(name).then(c => {
+          c.addAll(MIN_CACHED_RESOURCES);
+          c.addAll(PRE_CACHED_RESOURCES);
+        });
       }
     }));
   }
