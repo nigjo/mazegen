@@ -11,7 +11,7 @@
     <symbol id="crate1" viewBox="-2 -1 8 8" width="8" height="8" class="crates">
       <!--<rect x="-2" y="-1" width="8" height="8" style="fill:none;stroke:red;"/>-->
       <rect x="-1" y="2" width="1" height="4" class="shadow"/>
-      <g id="crate">
+      <g id="crate" class="crates">
         <rect x="0" y="0" width="5" height="4" class="front"/>
         <line x1="0" y1="1" x2="5" y2="1" class="line"/>
         <line x1="0" y1="2" x2="5" y2="2" class="line"/>
@@ -30,13 +30,19 @@
         <line x1="0" y1="5.33" x2="5" y2="5.33" class="line"/>
       </g>
     </symbol>
+    <symbol id="crates" viewBox="-2 -1 8 16" width="8" height="16" class="crates">
+      <rect x="-1" y="2" width="1" height="4" class="shadow"/>
+      <use href="#crate"/>
+      <rect x="-.5" y="7.5" width="1" height="4" class="shadow"/>
+      <use href="#crate" transform="translate(.5,5.5)"/>
+    </symbol>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
   <g>
     <use href="assetbase.svg#assetbase"/>
     <g id="usage">
       <use href="#crate1" transform="translate(36,20)"/>
-      <use href="#crate1" transform="translate(20,24)"/>
+      <use href="#crates" transform="translate(20,24)"/>
     </g>
   </g>
 </svg>
