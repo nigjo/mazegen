@@ -39,7 +39,7 @@ await assetFetcher.then(list => {
   let assetDefs = [];
   for (let name of list) {
     assetDefs.push(
-    import('../assets/' + name ).then(mod => {
+    import('../assets/' + name).then(mod => {
       mod.asset.name = name;
       mod.asset.position = list.indexOf(name);
       return mod.asset;
@@ -194,6 +194,8 @@ export default class TopDownView extends SVGGenerator {
         let transform = assets[item].tiles[tileName].transform;
         if (typeof (transform) === 'function') {
           u.setAttribute('transform', transform(tile));
+        } else if (typeof (transform) === 'string') {
+          u.setAttribute('transform', transform);
         }
         tile.parentNode.insertBefore(u, tile.nextSibling);
       } else {
