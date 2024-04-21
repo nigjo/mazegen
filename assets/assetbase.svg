@@ -6,36 +6,36 @@
       <use href="#assetbaseB"/>
     </symbol>
     <symbol id="assetbaseB" width="64" height="64" viewBox="0 0 64 64" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#wallTop"/>
-      <use href="../res/v_topdown.svg#wallLeft"/>
-      <use href="../res/v_topdown.svg#wallRight"/>
-      <use href="../res/v_topdown.svg#doorBottom"/>
-      <use href="../res/v_topdown.svg#decke" style="--doorB:visible;"/>
+      <use class="boden" href="../res/v_topdown.svg#boden"/>
+      <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
+      <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
+      <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
+      <use class="doorBottom" href="../res/v_topdown.svg#doorBottom"/>
+      <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
     <symbol id="assetbaseT" width="64" height="64" viewBox="0 0 64 64" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#doorTop"/>
-      <use href="../res/v_topdown.svg#wallLeft"/>
-      <use href="../res/v_topdown.svg#wallRight"/>
-      <use href="../res/v_topdown.svg#wallBottom"/>
-      <use href="../res/v_topdown.svg#decke" style="--doorT:visible;"/>
+      <use class="boden" href="../res/v_topdown.svg#boden"/>
+      <use class="doorTop" href="../res/v_topdown.svg#doorTop"/>
+      <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
+      <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
+      <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+      <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
     <symbol id="assetbaseR" width="64" height="64" viewBox="0 0 64 64" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#wallTop"/>
-      <use href="../res/v_topdown.svg#wallLeft"/>
-      <use href="../res/v_topdown.svg#doorRight"/>
-      <use href="../res/v_topdown.svg#wallBottom"/>
-      <use href="../res/v_topdown.svg#decke" style="--doorR:hidden;"/>
+      <use class="boden" href="../res/v_topdown.svg#boden"/>
+      <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
+      <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
+      <use class="doorRight" href="../res/v_topdown.svg#doorRight"/>
+      <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+      <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
     <symbol id="assetbaseL" width="64" height="64" viewBox="0 0 64 64" class="background">
-      <use href="../res/v_topdown.svg#boden"/>
-      <use href="../res/v_topdown.svg#wallTop"/>
-      <use href="../res/v_topdown.svg#doorLeft"/>
-      <use href="../res/v_topdown.svg#wallRight"/>
-      <use href="../res/v_topdown.svg#wallBottom"/>
-      <use href="../res/v_topdown.svg#decke" style="--doorL:hidden;"/>
+      <use class="boden" href="../res/v_topdown.svg#boden"/>
+      <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
+      <use class="doorLeft" href="../res/v_topdown.svg#doorLeft"/>
+      <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
+      <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+      <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
   </defs>
   <g>

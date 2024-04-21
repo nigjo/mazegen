@@ -1,4 +1,4 @@
-/*only for display this asset*/
+/*only for display this asset. mostly a copy of v_topdown.svg!*/
 #boden{
   fill:url(../res/v_topdown.svg#water);
   stroke:none;
@@ -45,23 +45,22 @@
     stroke:none;
   }
 }
-svg{
-  --doorL:visible;
-  --doorR:visible;
-  --doorB:hidden;
-  --doorT:hidden;
-}
 #decke{
-  .ropeRight{
-    visibility:var(--doorR);
-  }
-  .ropeLeft{
-    visibility:var(--doorL);
-  }
-  .ropeBottom{
-    visibility:var(--doorB);
-  }
-  .ropeTop{
-    visibility:var(--doorB);
-  }
+  .rope.topDoor{display:var(--doorTop);}
+  .rope.topWall{display:var(--wallTop);}
+  .rope.bottomDoor{display:var(--doorBottom);}
+  .rope.bottomWall{display:var(--wallBottom);}
+  .rope.leftDoor{display:var(--doorLeft);}
+  .rope.leftWall{display:var(--wallLeft);}
+  .rope.rightDoor{display:var(--doorRight);}
+  .rope.rightWall{display:var(--wallRight);}
 }
+.doorTop~.decke{--wallTop:none;}
+.wallTop~.decke{--doorTop:none;}
+.doorBottom~.decke{--wallBottom:none;}
+.wallBottom~.decke{--doorBottom:none;}
+.doorLeft~.decke{--wallLeft:none;}
+.wallLeft~.decke{--doorLeft:none;}
+.doorRight~.decke{--wallRight:none;}
+.wallRight~.decke{--doorRight:none;}
+
