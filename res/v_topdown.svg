@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <pattern id="water" viewBox="0,0,16,16" width="8" height="8"
         x="0" y="2" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="16" height="16" class="waterbg"/>
-      <g class="waterwaves">
+      <g class="waterwaves1">
         <path d="M0,7s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
+      </g>
+      <g class="waterwaves2">
         <path d="M0,15s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
       </g>
     </pattern>
@@ -124,7 +126,8 @@
       svg{--waybg-col:green;--ropeLeft:hidden;--ropeRight:visible;--ropeBottom:visible;}
       .boden{fill:url(#water);stroke:none;}
       .waterbg{fill:RoyalBlue;}
-      .waterwaves{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2;}
+      .waterwaves1{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2;}
+      .waterwaves2{fill:none;stroke:rgba(255,255,255,.25);stroke-width:2;}
       .bodenc{fill:blue;stroke:none;}
       .way{fill:url(#tiles);stroke:none;}
       .waybg{fill:peru;stroke:none;}
