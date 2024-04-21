@@ -74,7 +74,7 @@ self.addEventListener("fetch", event => {
       return fetchResponse;
     }
   }
-  event.responseWith(findCacheOrOrg());
+  event.respondWith(findCacheOrOrg());
 });
 
 self.addEventListener("activate", event => {
