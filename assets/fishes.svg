@@ -20,13 +20,26 @@
     <symbol id="fishes1b" viewBox="0 0 64 24" width="32" height="12">
       <use href="#fish" transform="translate(44,4)"/>
     </symbol>
+    <symbol id="fishes1r" viewBox="0 0 32 64" width="16" height="32">
+      <use href="#fish" transform="translate(9,9) rotate(90,8,8)"/>
+      <use href="#fish" transform="translate(17,30) scale(-1,1) rotate(90,8,8)"/>
+    </symbol>
+    <symbol id="fishes2r" viewBox="0 0 32 64" width="16" height="32">
+      <use href="#fish" transform="translate(9,40) rotate(-90,8,8)"/>
+      <use href="#fish" transform="translate(17,11) scale(-1,1) rotate(-90,8,8)"/>
+    </symbol>
+    <symbol id="fishes3r" viewBox="0 0 32 64" width="16" height="32">
+      <use href="#fish" transform="translate(19,24) scale(-1,1) rotate(90,8,8)"/>
+    </symbol>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
   <g>
     <use href="assetbase.svg#assetbaseT"/>
     <g id="usage">
-      <rect x="16" y="52" width="32" height="12" style="fill:none;stroke:red;stroke-width:.25px;"/>
-      <use href="#fishes2" transform="translate(16,52)"/>
+      <!--<rect x="16" y="52" width="32" height="12" style="fill:none;stroke:red;stroke-width:.25px;"/>-->
+      <!--<use href="#fishes2b" transform="translate(16,52)"/>-->
+      <rect x="48" y="16" width="16" height="32" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#fishes3r" transform="translate(48,16)"/>
     </g>
   </g>
 </svg>
