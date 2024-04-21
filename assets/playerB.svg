@@ -3,40 +3,38 @@
   <defs>
     <style id="playerBdefs">
       svg{
-        --playerB-skin:#FFD321;
-        --playerB-stroke:#B18904;
-        --playerB-shirt:#addf6b;
-        --playerB-pants:#6b73df;
-        --playerB-shoes:#8A4B08;
-        --playerB-eyes:black;
-        --playerB-eyewhite:whitesmoke;
-        --playerB-hair:#6baddf;
-        --playerB-hairline:#4a799c;
+      --playerB-skin:#FFD321;
+      --playerB-stroke:#B18904;
+      --playerB-shirt:#addf6b;
+      --playerB-pants:#6b73df;
+      --playerB-shoes:#8A4B08;
+      --playerB-eyes:black;
+      --playerB-eyewhite:whitesmoke;
+      --playerB-hair:#6baddf;
+      --playerB-hairline:#4a799c;
       }
       .playerB{
-        fill:var(--playerB-skin);
-        stroke:var(--playerB-stroke);
-        stroke-width:.25px;
-        .figure{
-          fill:navy;
-        }
-        .augen{
-          fill: var(--playerB-eyes);
-          stroke: var(--playerB-eyewhite);
-        }
-        .haare{
-          fill: var(--playerB-hair);
-          stroke: var(--playerB-hairline);
-        }
-        .shirt{
-          fill: var(--playerB-shirt)
-        }
-        .pants{
-          fill: var(--playerB-pants)
-        }
-        .shoes{
-          fill: var(--playerB-shoes)
-        }
+      fill:var(--playerB-skin);
+      stroke:var(--playerB-stroke);
+      stroke-width:.25px;
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      .augen{
+      fill: var(--playerB-eyes);
+      stroke: var(--playerB-eyewhite);
+      }
+      .haare{
+      fill: var(--playerB-hair);
+      stroke: var(--playerB-hairline);
+      }
+      .shirt{
+      fill: var(--playerB-shirt)
+      }
+      .pants{
+      fill: var(--playerB-pants)
+      }
+      .shoes{
+      fill: var(--playerB-shoes)
+      }
       }
     </style>
     <symbol id="playerBTop" viewBox="-4 -4 8 8" width="8" height="8" class="playerB">
@@ -53,8 +51,8 @@
         <rect x="-2.5" y="2.25" width="5" height=".5"/>
       </g>
       <g class="shoes">
-      <rect x="-2.5" y="2.75" width="2.5" height=".5"/>
-      <rect x="0" y="2.75" width="2.5" height=".5"/>
+        <rect x="-2.5" y="2.75" width="2.5" height=".5"/>
+        <rect x="0" y="2.75" width="2.5" height=".5"/>
       </g>
       <g class="haare">
         <path d="M-2.25,-.75h-1v-1.5a1,1,90,0,1,1,-1h4.5a1,1,90,0,1,1,1v1.5z"/>
@@ -76,8 +74,8 @@
         <rect x="-2.5" y="2.25" width="5" height=".5"/>
       </g>
       <g class="shoes">
-      <rect x="-2.5" y="2.75" width="2.5" height=".5"/>
-      <rect x="0" y="2.75" width="2.5" height=".5"/>
+        <rect x="-2.5" y="2.75" width="2.5" height=".5"/>
+        <rect x="0" y="2.75" width="2.5" height=".5"/>
       </g>
       <g class="augen">
         <rect x="-1.5" y="-2" width=".5" height="1" rx=".25"/>
@@ -103,8 +101,8 @@
         <rect x="-1.25" y="2.25" width="2.5" height=".5"/>
       </g>
       <g class="shoes">
-      <rect x="-1.25" y="2.75" width="2.5" height=".5"/>
-      <!--<rect x="0" y="2.75" width="2.5" height=".5"/>-->
+        <rect x="-1.25" y="2.75" width="2.5" height=".5"/>
+        <!--<rect x="0" y="2.75" width="2.5" height=".5"/>-->
       </g>
       <g class="augen">
         <rect x="-1" y="-2" width=".5" height="1" rx=".25"/>
@@ -115,41 +113,45 @@
       </g>
     </symbol>
     <symbol id="playerB-nordM" viewBox="0 0 8 8" width="8" height="8" class="playerB">
+      <rect class="shadow" x="0" y="6" width="2" height="1.5"/>
       <use href="#playerBTop"/>
     </symbol>
     <symbol id="playerB-suedM" viewBox="0 0 8 8" width="8" height="8" class="playerB">
+      <rect class="shadow" x="0" y="6" width="2" height="1.5"/>
       <use href="#playerBBottom"/>
     </symbol>
     <symbol id="playerB-linksM" viewBox="0 0 8 8" width="8" height="8" class="playerB">
+      <rect class="shadow" x="1" y="5.5" width="2" height="2"/>
       <use href="#playerBLeft"/>
     </symbol>
     <symbol id="playerB-rechtsM" viewBox="0 0 8 8" width="8" height="8" class="playerB">
+      <rect class="shadow" x="1" y="5.5" width="2" height="2"/>
       <use href="#playerBLeft" transform="translate(8,0) scale(-1,1)"/>
     </symbol>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
     <style>
       /*fuer den Farbentest*/
       #charJim{
-        --playerB-skin:Wheat;
-        --playerB-stroke:BurlyWood;
-        --playerB-shirt:skyblue;
-        --playerB-pants:green;
-        --playerB-shoes:saddlebrown;
-        --playerB-eyes:darkblue;
-        --playerB-eyewhite:whitesmoke;
-        --playerB-hair:Chocolate;
-        --playerB-hairline:Sienna;
+      --playerB-skin:Wheat;
+      --playerB-stroke:BurlyWood;
+      --playerB-shirt:skyblue;
+      --playerB-pants:green;
+      --playerB-shoes:saddlebrown;
+      --playerB-eyes:darkblue;
+      --playerB-eyewhite:whitesmoke;
+      --playerB-hair:Chocolate;
+      --playerB-hairline:Sienna;
       }
       #charJon{
-        --playerB-skin:#8d5524;
-        --playerB-stroke:#e0ac69;
-        --playerB-shirt:red;
-        --playerB-pants:blue;
-        --playerB-shoes:black;
-        --playerB-eyes:#63443d;
-        --playerB-eyewhite:#fff7ee;
-        --playerB-hair:#63443d;
-        --playerB-hairline:#7f584d;
+      --playerB-skin:#8d5524;
+      --playerB-stroke:#e0ac69;
+      --playerB-shirt:red;
+      --playerB-pants:blue;
+      --playerB-shoes:black;
+      --playerB-eyes:#63443d;
+      --playerB-eyewhite:#fff7ee;
+      --playerB-hair:#63443d;
+      --playerB-hairline:#7f584d;
       }
     </style>
   </defs>
