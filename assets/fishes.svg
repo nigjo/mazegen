@@ -6,18 +6,18 @@
         fill:rgba(0,0,0,.15);stroke:none;
       }
     </style>
-    <symbol id="fishes3" viewBox="0 0 64 24" width="32" height="12">
+    <symbol id="fishes3b" viewBox="0 0 64 24" width="32" height="12">
       <g id="fish" class="fishes">
         <path d="M5,10a3,3,180,1,1,0,-6q6,0,10,6q-2,-1,-3,-1q-2,0,-7,1"/>
       </g>
       <use href="#fish" transform="translate(17,26) scale(1,-1)"/>
       <use href="#fish" transform="translate(34,4)"/>
     </symbol>
-    <symbol id="fishes2" viewBox="0 0 64 24" width="32" height="12">
+    <symbol id="fishes2b" viewBox="0 0 64 24" width="32" height="12">
       <use href="#fish" transform="translate(12,22) scale(1,-1)"/>
       <use href="#fish" transform="translate(30,0)"/>
     </symbol>
-    <symbol id="fishes1" viewBox="0 0 64 24" width="32" height="12">
+    <symbol id="fishes1b" viewBox="0 0 64 24" width="32" height="12">
       <use href="#fish" transform="translate(44,4)"/>
     </symbol>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
