@@ -32,6 +32,14 @@
         <line x1="16" y1="12" x2="16" y2="16"/>
       </g>
     </pattern>
+    <linearGradient id="rundschattenFront">
+      <stop offset="0%" style="stop-color:rgba(0,0,0,.05);"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,.1);"/>
+    </linearGradient>
+    <linearGradient id="rundschattenBack">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,.1);"/>
+      <stop offset="100%" style="stop-color:rgba(0,0,0,.05);"/>
+    </linearGradient>
     <g id="boden" class="boden">
       <rect x="0" y="0" width="64.5" height="64.5"/>
       <rect x="16" y="44" width="32" height="8" class="wall"/>
@@ -92,11 +100,11 @@
         <path d="M46,11q9,1,18,1" class="ropemark"/>
       </g>
       <g transform="translate(18,14)">
-        <g id="pilon">
+        <g id="pilon" class="pilon">
           <rect x="-2" y="-1.5" width="2" height="3" class="shadow"/>
-          <circle cx="0" cy="0" r="1.75" class="pilon" transform="scale(1,.75)"/>
-          <rect x="-1.75" y="-4" width="3.5" height="4" class="pilon"/>
-          <circle cx="0" cy="0" r="1.75" class="pilon" transform="translate(0,-4) scale(1,.75)"/>
+          <path id="pilonbase" d="M-1.75,-4v4a1.75,1.5,180,0,0,3.5,0v-4z"/>
+          <use href="#pilonbase" class="pilon3d"/>
+          <circle cx="0" cy="0" r="1.75" transform="translate(0,-4) scale(1,.75)"/>
           <circle cx="0" cy="0" r="1.75" class="shadow" transform="translate(0,-4) scale(1,.75)"/>
         </g>
       </g>
@@ -155,6 +163,7 @@
       .wallbg{fill:FireBrick;stroke:none;}
       .wall{fill:url(#bricks);}
       .pilon{fill:Olive;}
+      .pilon3d{fill:url(#rundschattenFront);}
       .ropeLeft{visibility:var(--ropeLeft);}
       .ropeRight{visibility:var(--ropeRight);}
       .ropeBottom{visibility:var(--ropeBottom);}
