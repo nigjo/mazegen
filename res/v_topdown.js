@@ -15,10 +15,20 @@ fetch('res/v_topdown.svg').then(r => {
     return r.text();
   }
   throw r;
-}).then(str => {
+}).then(t => t
+          .replace(/>\s*/gs, '>')
+          .replace(/\s*</gs, '<')
+).then(str => {
   return new DOMParser().parseFromString(str, "image/svg+xml");
 }).then(svg => {
   let defs = [...svg.querySelectorAll('defs>[id]')];
+  defs
+          .filter(i => i.tagName === 'style')
+          .forEach(s => s.textContent = String(s.textContent)
+                    .replace(/^\s+/gm, '')
+                    .replace(/\s+([}{;:])/gs, '$1')
+                    .replace(/([}{;:])\s+/gs, '$1')
+          );
   //console.debug(LOGGER, 'defs', defs);
   return new Map(defs.map(e => [e.id, e]));
 });
@@ -38,6 +48,9 @@ await assetFetcher.then(list => {
         console.debug(LOGGER, "ASSETS", a.view, "loading...");
         return fetch('assets/' + a.view)
                 .then(r => r.text())
+                .then(t => t
+                          .replace(/>\s*/gs, '>')
+                          .replace(/\s*</gs, '<'))
                 .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
       }
       return [a, null];
