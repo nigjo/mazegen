@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="fishesDefs">
+      .fishes{
+        fill:rgba(0,0,0,.1);stroke:none;
+      }
+    </style>
+    <symbol id="fishes3" viewBox="0 0 64 24" width="32" height="12">
+      <g id="fish" class="fishes">
+        <path d="M5,12a3,3,180,1,1,0,-6q4,0,10,4q-6,1,-10,2"/>
+      </g>
+      <use href="#fish" transform="translate(14,8)"/>
+      <use href="#fish" transform="translate(28,4)"/>
+    </symbol>
+    <symbol id="fishes2" viewBox="0 0 64 24" width="32" height="12">
+      <use href="#fish" transform="translate(16,8)"/>
+      <use href="#fish" transform="translate(30,0)"/>
+    </symbol>
+    <symbol id="fishes1" viewBox="0 0 64 24" width="32" height="12">
+      <use href="#fish" transform="translate(44,4)"/>
+    </symbol>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseT"/>
+    <g id="usage">
+      <rect x="16" y="52" width="32" height="12" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#fishes1" transform="translate(16,52)"/>
+    </g>
+  </g>
+</svg>
