@@ -26,16 +26,16 @@ fetch('res/v_topdown.svg').then(r => {
 const assets = {};
 await assetFetcher.then(list => {
   //console.debug(LOGGER, list, svgDefs);
-  let assetFetcher = [];
+  let assetDefs = [];
   for (let name of list) {
-    assetFetcher.push(
+    assetDefs.push(
     import('../assets/' + name + '.js').then(mod => {
       mod.asset.name = name;
       mod.asset.position = list.indexOf(name);
       return mod.asset;
     }).then(a => {
       if ("view" in a) {
-        console.debug(LOGGER, "asset", a.view, "loading...");
+        console.debug(LOGGER, "ASSETS", a.view, "loading...");
         return fetch('assets/' + a.view)
                 .then(r => r.text())
                 .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
@@ -43,14 +43,28 @@ await assetFetcher.then(list => {
       return [a, null];
     }));
   }
-  return Promise.all(assetFetcher).then(assetList => {
+  return Promise.all(assetDefs).then(assetList => {
     console.debug(LOGGER, 'ASSETS', assetList.map(i => i[0].position + '/' + i[0].name));
     let a, svg;
     for ([a, svg] of assetList) {
       //const add = svg => {
       const defs = [...svg.querySelectorAll('defs>[id]')];
       defs.forEach(def => {
-        svgDefs.set(def.id, def);
+        if (def.tagName === 'style') {
+          let styles = svgDefs.get('asset_styles');
+          if (!svgDefs.has('asset_styles')) {
+            styles = document.createElementNS(SVGGenerator.SVGNS, 'style');
+            styles.setAttribute('id', 'asset_styles');
+            svgDefs.set('asset_styles', styles);
+          }
+          styles.append(String(def.textContent)
+                  .replace(/^\s+/gm, '')
+                  .replace(/\s+([}{;:])/gs, '$1')
+                  .replace(/([}{;:])\s+/gs, '$1')
+                  );
+        } else {
+          svgDefs.set(def.id, def);
+        }
         if (def.tagName === 'g' || def.tagName === 'symbol')
           assets[def.id] = a;
       });
