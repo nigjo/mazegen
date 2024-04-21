@@ -1,0 +1,231 @@
+= Asset Deklaration
+:lang: de
+:toc:
+:sectnums:
+
+== `assets.json`
+
+Alle für das Spiel relavanten Assets -- also Gegenstände, Spielercharaktere oder
+Grafiken -- werden in der Datei `assets/assets.json` eingetragen.
+
+Um ein "Asset" zu erstellen werden 2 Dateien benötigt:
+
+ 1. `myasset.js` und
+ 2. `myasset.svg`
+
+Die erste Datei ist ein JavaScript-Module welches ein einzelnes Objekt mit
+Namen "```asset```" exportieren muss. Die zweite Datei beinhaltet alle 
+`symbol`- und `style`-Definitionen um die Assets anzuzeigen.
+
+Der Name des JavaScript-Module muss in die `assets.json` eingetragen werden.
+Die Reihenfolge dort ist nicht unbedingt entscheidend, daher ist die Sortierung
+dort alphabetisch.
+
+
+== Item Assets
+
+Die meisten Assets werden "Item"-Assets sein, also "Gegenstände" die am Rand
+des Laufweges, im Wasser oder an der "Wand" zu finden sind. Die Datei hat
+dabei immer den gleichen Mindestinhalt:
+
+[source,javascript]
+.`myasset.js`
+----
+export const asset = {
+  view: 'myasset.svg',
+  // [...]
+};
+----
+
+In dieser `asset`-Konstante folgen dann weitere Einstellungen:
+
+=== `view`
+
+Der `view` Parameter definiert den Dateinamen der SVG-Datei aus der die
+konkreten Assets geladen werden sollen. Der Dateiname entspricht in der Regel
+dem Basisnamen der Javascriptdatei.
+
+Aus der SVG werden alle Elemente mit einer ID als "Asset" herauskopiert, die
+unmittelbare Kindelemente des des `<defs>`-Blocks sind. Alle Element außerhalb
+des `<defs>`-Blocks werden ignoriert. Die IDs der "Assets" sollte so gewählt
+werden, dass sie auch in der generierten Gesamt-SVG noch eindeutig sind.
+Ein gute Konvention ist, wenn die ID mit dem Namen der JavaScript-Datei
+beginnt.
+
+
+[discrete]
+==== Styles
+
+Pro Assetsdefinition sollte ein `<styles>` Block verwendet werden. Dieser
+sollte ebenfalls eine ID besitzen, allerdings wird diese nicht mit in die
+generierte Irrgarten-SVG kopiert.
+
+Da die SVG nur im Browser angezeigt wird, können (und sollten) so
+genanntes "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting[CSS nesting]"
+verwendet werden:
+
+[source,css]
+----
+.myasset {
+  fill:red;
+  .subelement{
+    fill:blue;
+  }
+}
+----
+
+Damit ist sichergestellt, dass die Styles nicht mit denen von anderen Assets
+in Konkurenz treten. Alle Elemente, die als Asset verwendet werden oder per
+`<use>` eingebunden sind sollten explizit das `class` Attribut setzen.
+
+
+=== `tiles`
+
+Ein "tile" ist eine bestimmte Platzierung eines Assets innerhalb eines
+Irrgarten-Feldes. Die Namen unterscheiden sich pro Feld, je nachdem ob in
+einer Richtung ein Durchgang ist oder nicht.
+
+Die folgenden "Tiles" sind bekannt und werden auch in dieser Reihenfolge
+innerhalb der SVG "gezeichnet". Die "```wall*```" und "```door*```"
+Tiles der jeweiligen Richtungen schließen sich gegenseitig aus.
+
+[compact]
+ * `boden`
+ * `wallTop`
+ * `doorTop`
+ * `wallLeft`
+ * `doorLeft`
+ * `wallRight`
+ * `doorRight`
+ * `wallBottom`
+ * `doorBottom`
+ * `dach`
+
+Jedes dieser Tiles kann optional angegeben werden. Soll ein Asset in einem
+Tile nicht auftauchen so sollte dieses Tile auch nicht angegeben werden.
+Innerhalb der Tile-Objekte gibt es weitere Angaben:
+
+[discrete]
+==== `transform(tile)`
+
+`tile`::
+  Das SVG-Tile aus der SVG-Datei selbst. Die SVG kann durch dem DOM-Baum
+  navigiert (und theoretisch bearbeitet) werden. Allerding sollte bei
+  Veränderungen darauf geachtet werden, dass keine `data-item`-Einträge
+  modifiziert werden. Für solche Veränderungen ist die `tail`-Funktion
+  besser geeignet.
+
+return::
+  Zeichenkette die in das "```transform```"-Attribut des SVG-Elements
+  eingetragen wird.
+
+Sollte die Transformation konstant sein und unabhängig vom `tile`, so kann
+die `transform`-Angabe auch eine konstante Zeichenkette sein.
+
+
+[discrete]
+==== `validator(cell, id)`
+
+Ein "Validator" kann eingesetzt werden, wenn eines oder mehrere Assets aus
+der SVG zu einem bestimmten Tile zugeordnet oder ausgeschlossen werden soll.
+So können mehrere gleichartige Assets in einer SVG zusammengefasst werden,
+auch wenn sie nur zu einem bestimmten "Tile" passend sind.
+
+
+`cell`:: 
+  Zelle aus der aktuellen `Maze`-Instanz. Enthält einen `topdownTile`-Parameter
+  Mit Angaben zum aktuellen Irrgarten.
+
+`id`::
+  Name des Assets, das zur aktuellen Zelle registriert werden soll. Das
+  "tile" definiert sich aus dem Kontext in dem der Validator registriert ist.
+
+return::
+  Liefert `true`, wenn das Asset zur aktuellen Zelle passt.
+
+=== `tail`
+
+ - Nachdem `tiles` alle gesetzt
+ - Bevor `data-item` ausgewertet wird
+ - Synopsis: `tile: (svg, maze, rng)=>{}`
+
+== Player Assets
+
+In der `assets.json` muss/sollte genau ein Eintrag für ein "Player-Asset" sein.
+Auch hier ist der Mindestinhalt der Export der `asset`-Konstante. Wichtigster
+Parameter ist die Angabe:
+
+[source,javascript]
+----
+asset = {
+  player: true
+}
+----
+
+Anstelle eine `tiles` Angabe wird eine `directions`-Angabe gemacht
+
+=== `directions`
+
+[source,javascript]
+----
+  directions: {
+    NORTH: {
+      still: PLAYER_ID + '-north',
+      offsetX: -4,
+      offsetY: -4
+    }
+  }
+----
+
+ * `NORTH`
+ * `EAST`
+ * `SOUTH`
+ * `WEST`
+
+== `assetbase`
+
+Anzeige funktioniert nur im Firefox, nicht im Chrome/Edge. Lokaler Webserver
+notwendig.
+
+[source,xml]
+.`myasset.svg`
+----
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="assetdefs">
+    </style>
+    <symbol id="myasset1">
+    </symbol>
+    <!-- ... --->
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseB"/>
+    <g id="usage">
+      <use href="#myasset1" transform="translate(28,20)"/>
+    </g>
+  </g>
+</svg>
+----
+
+  * `assetbaseT` -- Top
+  * `assetbaseL` -- Left
+  * `assetbaseR` -- Right
+  * `assetbaseB` -- Bottom
+
+== Beispiel
+
+
+[source,javascript]
+.`fish.js`
+----
+export const asset = {
+  view: 'fish.svg',
+  tiles: {
+    wallBottom: {
+      transform: "translate(16,52)"
+    }
+  }
+};
+----
