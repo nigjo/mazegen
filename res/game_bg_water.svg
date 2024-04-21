@@ -5,6 +5,8 @@
       <rect x="0" y="0" width="16" height="16" class="waterbg"/>
       <g class="waterwaves">
         <path d="M0,7s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
+      </g>
+      <g class="waterwavesD">
         <path d="M0,15s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
       </g>
     </pattern>
@@ -12,6 +14,7 @@
       .boden{fill:url(#water);stroke:none;}
       .waterbg{fill:RoyalBlue;}
       .waterwaves{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2;}
+      .waterwavesD{fill:none;stroke:rgba(255,255,255,.25);stroke-width:2;}
     </style>
   </defs>
   <rect x="0" y="0" width="32" height="32" class="boden"/>
