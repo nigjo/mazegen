@@ -1,5 +1,5 @@
 <svg
-  width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  width="640" height="640" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
     <symbol id="assetbase" width="64" height="64" viewBox="0 0 64 64" class="background">
@@ -39,6 +39,9 @@
     </symbol>
   </defs>
   <g>
-    <use href="#assetbase"/>
+    <use href="#assetbaseT"/>
+    <use href="#assetbaseR" transform="translate(64,0)"/>
+    <use href="#assetbaseL" transform="translate(0,64)"/>
+    <use href="#assetbaseB" transform="translate(64,64)"/>
   </g>
 </svg>
