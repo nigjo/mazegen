@@ -36,10 +36,11 @@
   stroke:none;
 }
 #pilon{
-  .pilon{
+  &.pilon{
     fill:Olive;
     z-index:1;
   }
+  .pilon3d{fill:url(../res/v_topdown.svg#rundschattenFront);}
   .shadow{
     fill:rgba(0,0,0,.1);
     stroke:none;
