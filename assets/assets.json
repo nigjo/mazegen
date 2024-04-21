@@ -1,11 +1,11 @@
 [
-  "banner",
-  "boat",
-  "crate",
-  "fishes",
-  "ladder",
-  "playerB",
-  "puddles",
-  "rescue",
-  "vine"
+  "banner.js",
+  "boat.js",
+  "crate.js",
+  "fishes.js",
+  "ladder.js",
+  "playerB.js",
+  "puddles.js",
+  "rescue.js",
+  "vine.js"
 ]

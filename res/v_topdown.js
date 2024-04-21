@@ -39,7 +39,7 @@ await assetFetcher.then(list => {
   let assetDefs = [];
   for (let name of list) {
     assetDefs.push(
-    import('../assets/' + name + '.js').then(mod => {
+    import('../assets/' + name ).then(mod => {
       mod.asset.name = name;
       mod.asset.position = list.indexOf(name);
       return mod.asset;
