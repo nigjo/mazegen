@@ -1,13 +1,27 @@
 <svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <pattern id="water" viewBox="0,0,16,16" width="8" height="8"
+    <pattern id="water" viewBox="0,0,16,16" width="16" height="16"
         x="0" y="2" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="16" height="16" class="waterbg"/>
-      <g class="waterwaves">
-        <path d="M0,7s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
-      </g>
-      <g class="waterwavesD">
-        <path d="M0,15s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
+      <g fill="none" stroke-linecap="round" stroke-width=".5">
+        <g stroke="rgba(255,255,255,.1)" >
+          <use href="#water4wave1" transform="translate(8,3) scale(1,-1)"/>
+          <use href="#water4wave2" transform="translate(12,5)"/>
+          <use href="#water4wave2" transform="translate(-4,5)"/>
+          <g transform="translate(1,11)">
+            <path id="water4wave2" d="M1,2q1,-1,4,-1q1,0,2,-.5"/>
+          </g>
+        </g>
+        <g stroke="rgba(255,255,255,.05)" >
+          <path id="water4wave1" d="M1,1q1,1,4,1q1,0,2,-.5"/>
+          <use href="#water4wave1" transform="translate(6,7.5)"/>
+        </g>
+        <g stroke="rgba(0,0,0,.05)" >
+          <use href="#water4wave2" transform="translate(6,8) scale(-1,1)"/>
+          <use href="#water4wave2" transform="translate(22,8) scale(-1,1)"/>
+          <use href="#water4wave1" transform="translate(4,3)"/>
+          <use href="#water4wave1" transform="translate(7,13)"/>
+        </g>
       </g>
     </pattern>
     <style>
