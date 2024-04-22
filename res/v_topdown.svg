@@ -11,11 +11,35 @@
         <path d="M0,15s2,0,4,-3,2,-3,4,-3,2,0,4,3,2,3,4,3"/>
       </g>
     </pattern>
-    <pattern id="tiles" viewBox="0,0,8,8" width="4" height="4" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="8" height="8" class="waybg"/>
-      <rect x="1" y="1" width="6" height="6" rx="1" class="waytile"/>
-      <path d="M5.75,1.25a1,1,90,0,1,1,1v3.5a1,1,90,0,1,-1,1" class="lightline thinline"/>
-      <path d="M2.25,1.25a1,1,90,0,0,-1,1v3.5a1,1,90,0,0,1,1" class="shadowline thinline"/>
+    <pattern id="tiles" viewBox="0,0,32,32" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="32" height="32" class="waybg"/>
+      <g class="waytile">
+        <g id="tile">
+          <rect x="1" y="1" width="6" height="6" rx="1"/>
+          <path d="M5.75,1.25a1,1,90,0,1,1,1v3.5a1,1,90,0,1,-1,1" class="lightline thinline"/>
+          <path d="M2.25,1.25a1,1,90,0,0,-1,1v3.5a1,1,90,0,0,1,1" class="shadowline thinline"/>
+        </g>
+        <use href="#tile" transform="translate(8,0)"/>
+        <use href="#tile" transform="translate(16,24)"/>
+        <use href="#tile" transform="translate(24,16)"/>
+        <use href="#tile" transform="translate(8,8)"/>
+        <use href="#tile" transform="translate(24,24)"/>
+        <g class="waytile2">
+          <use href="#tile" transform="translate(16,16)"/>
+          <use href="#tile" transform="translate(24,0)"/>
+          <use href="#tile" transform="translate(0,8)"/>
+          <use href="#tile" transform="translate(8,24)"/>
+        </g>
+        <g class="waytile3">
+          <use href="#tile" transform="translate(16,0)"/>
+          <use href="#tile" transform="translate(16,8)"/>
+          <use href="#tile" transform="translate(24,8)"/>
+          <use href="#tile" transform="translate(0,16)"/>
+          <use href="#tile" transform="translate(8,16)"/>
+          <use href="#tile" transform="translate(0,24)"/>
+        </g>
+      </g>
+      <!--<use href="#tile" transform="translate(24,8)"/>-->
     </pattern>
     <pattern id="bricks" viewBox="0,0,16,16" width="8" height="8" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="16" height="16" class="wallbg"/>
@@ -162,6 +186,8 @@
       .way{fill:url(#tiles);stroke:none;}
       .waybg{fill:peru;stroke:none;}
       .waytile{fill:rgba(255,255,255,.05);}
+      .waytile2{fill:rgba(255,255,255,.10);}
+      .waytile3{fill:rgba(255,255,255,0);}
       .wallbg{fill:FireBrick;stroke:none;}
       .wall{fill:url(#bricks);}
       .pilon{fill:Olive;}
