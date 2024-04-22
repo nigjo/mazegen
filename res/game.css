@@ -52,19 +52,17 @@ header,nav,main {
   display: inline-block;
   vertical-align: top;
 }
-.view{
-  nav {
-    padding-top: .5em;
-  }
-  .button+.button {
-    margin-left:.5em;
-  }
+nav {
+  padding-top: .5em;
   .button {
     /*! background: url(#way); */
     padding: .5em;
     text-decoration: none;
     text-shadow: gray 1px 1px;
     position:relative;
+    margin-right:.5em;
+    margin-bottom:1.5em;
+    display:inline-block;
   }
   .button:after{
     content:'';
@@ -77,7 +75,7 @@ header,nav,main {
   }
 }
 @media (orientation:landscape){
-  .view{
+  body{
     display:grid;
     grid-template-columns:auto 1fr;
     nav {
@@ -90,6 +88,10 @@ header,nav,main {
     main{
       grid-column: 2/4;
       grid-row: 1/4;
+    }
+    footer{
+      grid-column: 1/1;
+      grid-row: 4/4;
     }
   }
 }

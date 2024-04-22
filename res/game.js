@@ -152,20 +152,46 @@ function updateTimer() {
   let delta = currentTime - startTime;
   const ui = document.getElementById('timer');
   let sec = Math.floor(delta / 1000);
-  ui.textContent = 'Time: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
+  ui.textContent = 'Time elapsed: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
   if (timer) {
     timer = setTimeout(updateTimer, 150);
   } else {
-    let a = document.createElement('a');
-    let next = {seed:docrunner.Seed};
+    let viewLink = document.createElement('a');
+    viewLink.className = 'bgWay button';
+    let next = {seed: docrunner.Seed};
     const q = new URLSearchParams(location.search);
     if (q.has('width'))
       next.width = docrunner.Width;
     if (q.has('height'))
       next.height = docrunner.Height;
-    a.href = './view.html?' + new URLSearchParams(next);
-    a.textContent = ui.textContent + " / done";
-    ui.replaceChildren(a);
+    viewLink.href = './view.html?' + new URLSearchParams(next);
+    viewLink.textContent = 'Level Time: ' + ui.textContent.substring(ui.textContent.indexOf(':') + 1);
+    const nav = document.querySelector('nav');
+    nav.replaceChildren(viewLink);
+    
+    let navline = document.createElement('div');
+
+    let restartLink = document.createElement('a');
+    restartLink.className = 'bgWay button';
+    restartLink.href = './?' + new URLSearchParams(next);
+    restartLink.textContent = 'Wiederholen';
+    navline.append(restartLink);
+
+    let randomLink = document.createElement('a');
+    let alphabeth = "abcdefghijklmnopqrstuvwxyz";
+    alphabeth += alphabeth.toUpperCase();
+    alphabeth += " +-._#~!";
+    alphabeth += "0123456789";
+    let seed = '';
+    for (let i = 0; i < 16; i++) {
+      seed += alphabeth.charAt(Math.random() * alphabeth.length);
+    }
+    next.seed = seed;
+    randomLink.className = 'bgWay button';
+    randomLink.href = './?' + new URLSearchParams(next);
+    randomLink.textContent = 'Zufallsspiel';
+    navline.append(randomLink);
+    nav.append(navline);
   }
 }
 function stopTimer() {
