@@ -20,7 +20,9 @@
       };
       for (let name of Object.keys(workshop)) {
         let key = 'workshop' + name;
-        workshop[name] = args.get(key) || workshop[name];
+        workshop[name] = args.get(key)
+            || args.get(name.toLowerCase())
+            || workshop[name];
       }
       let backArgs = new URLSearchParams();
       document.getElementById('seed').textContent = workshop.Seed;
@@ -111,7 +113,8 @@
       <h2 class="bgWall" id="seed">loading...</h2>
     </header>
     <nav>
-      <a class="button" id="thisLevel" href="./">replay</a> - <a class="button" id="nextLevel">next Level</a>
+      <a class="bgWay button" id="thisLevel" href="./">Wiederholen</a>
+       <a class="bgWay button" id="nextLevel">Zufallsspiel</a>
     </nav>
     <main></main>
     <script>
@@ -128,10 +131,10 @@
           seed += alphabeth.charAt(Math.random() * alphabeth.length);
         }
         let next = {seed: seed};
-        if (q.has('w'))
-          next.w = docrunner.Width;
-        if (q.has('h'))
-          next.h = docrunner.Height;
+        if (q.has('width'))
+          next.width = docrunner.Width;
+        if (q.has('height'))
+          next.height = docrunner.Height;
         a.setAttribute('href', './index.html?' + new URLSearchParams(next));
       })();
     </script>

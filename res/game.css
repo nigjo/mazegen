@@ -52,12 +52,35 @@ header,nav,main {
   display: inline-block;
   vertical-align: top;
 }
+.view{
+  nav {
+    padding-top: .5em;
+  }
+  .button+.button {
+    margin-left:.5em;
+  }
+  .button {
+    /*! background: url(#way); */
+    padding: .5em;
+    text-decoration: none;
+    text-shadow: gray 1px 1px;
+    position:relative;
+  }
+  .button:after{
+    content:'';
+    height:1em;
+    position: absolute;
+    bottom:-1em;
+    left:0px;
+    background: firebrick url('game_bg_wall.svg');
+    width:100%;
+  }
+}
 @media (orientation:landscape){
   .view{
     display:grid;
     grid-template-columns:auto 1fr;
-
-    nav{
+    nav {
       grid-column: 1/1;
     }
     header{

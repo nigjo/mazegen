@@ -18,10 +18,10 @@ const docrunner = {
   const q = new URLSearchParams(location.search);
   if (q.has('seed'))
     docrunner.Seed = q.get('seed');
-  if (q.has('w'))
-    docrunner.Width = q.get('w');
-  if (q.has('h'))
-    docrunner.Height = q.get('h');
+  if (q.has('width'))
+    docrunner.Width = q.get('width');
+  if (q.has('height'))
+    docrunner.Height = q.get('height');
   console.log(LOGGER, docrunner);
 })();
 
