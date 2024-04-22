@@ -157,7 +157,13 @@ function updateTimer() {
     timer = setTimeout(updateTimer, 150);
   } else {
     let a = document.createElement('a');
-    a.href = './view.html?' + new URLSearchParams({workshopSeed: docrunner.Seed});
+    let next = {seed:docrunner.Seed};
+    const q = new URLSearchParams(location.search);
+    if (q.has('width'))
+      next.width = docrunner.Width;
+    if (q.has('height'))
+      next.height = docrunner.Height;
+    a.href = './view.html?' + new URLSearchParams(next);
     a.textContent = ui.textContent + " / done";
     ui.replaceChildren(a);
   }

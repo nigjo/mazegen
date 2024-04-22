@@ -29,10 +29,10 @@
       const back = document.getElementById('thisLevel');
       console.debug('back', back);
       backArgs.set('seed', workshop.Seed);
-      if (args.has('workshopWidth'))
-        backArgs.set('w', workshop.Width);
-      if (args.has('workshopHeight'))
-        backArgs.set('w', workshop.Height);
+      if (args.has('width'))
+        backArgs.set('width', workshop.Width);
+      if (args.has('height'))
+        backArgs.set('height', workshop.Height);
       back.href = './index.html?' + backArgs;
 
       Promise.all([
@@ -130,11 +130,13 @@
         for (let i = 0; i < 16; i++) {
           seed += alphabeth.charAt(Math.random() * alphabeth.length);
         }
+        console.debug("VIEW", q);
         let next = {seed: seed};
         if (q.has('width'))
-          next.width = docrunner.Width;
+          next.width = q.get('width');
         if (q.has('height'))
-          next.height = docrunner.Height;
+          next.height = q.get('height');
+        console.debug("VIEW", next);
         a.setAttribute('href', './index.html?' + new URLSearchParams(next));
       })();
     </script>
