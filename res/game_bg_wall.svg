@@ -23,20 +23,6 @@
         </g>
       </g>
     </pattern>
-      <g class="shadowline">
-        <line x1="0" y1="8" x2="16" y2="8"/>
-        <line x1="0" y1="4" x2="16" y2="4"/>
-        <line x1="0" y1="12" x2="16" y2="12"/>
-        <line x1="0" y1="16" x2="16" y2="16"/>
-        <line x1="8" y1="0" x2="8" y2="4"/>
-        <line x1="8" y1="8" x2="8" y2="12"/>
-        <line x1="4" y1="4" x2="4" y2="8"/>
-        <line x1="4" y1="12" x2="4" y2="16"/>
-        <line x1="12" y1="0" x2="12" y2="4"/>
-        <line x1="12" y1="8" x2="12" y2="12"/>
-        <line x1="16" y1="4" x2="16" y2="8"/>
-        <line x1="16" y1="12" x2="16" y2="16"/>
-      </g>
     <style id="wallDefs">
       .wall{fill:url(#bricks);}
       .bricks{
