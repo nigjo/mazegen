@@ -6,6 +6,7 @@
   "ladder.js",
   "playerB.js",
   "puddles.js",
+  "relief.js",
   "rescue.js",
   "vine.js"
 ]

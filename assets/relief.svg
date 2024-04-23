@@ -1,0 +1,82 @@
+<svg width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="relief-styles">
+      .alkoven{
+      fill:firebrick;
+      .plate{fill:gray;}
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      .lightline{stroke:rgba(255,255,255,.1);stroke-width:.25;fill:none;}
+      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.25;fill:none;}
+      }
+    </style>
+    <symbol data-id="alkovenNone" viewBox="0 0 10 8" width="10" height="8" class="alkoven">
+      <rect x="1" y="1" width="8" height="6"/>
+      <rect x="1" y="1" width="8" height="6" class="shadow"/>
+      <g class="plate" transform="translate(0,-1)">
+        <rect x="1.25" y="2.25" width="7.5" height="5.5"/>
+        <line x1="1.365" y1="2.25" x2="1.365" y2="7.75" class="shadowline"/>
+        <line x1="8.625" y1="2.25" x2="8.625" y2="7.75" class="lightline"/>
+      </g>
+      <line x1=".85" y1="4.25" x2=".85" y2="5.75" class="lightline"/>
+      <line x1="9.125" y1="4.25" x2="9.125" y2="5.75" class="shadowline"/>
+      <line x1=".85" y1="1" x2=".85" y2="1.75" class="lightline"/>
+      <line x1="9.125" y1="1" x2="9.125" y2="1.75" class="shadowline"/>
+    </symbol>
+    <symbol id="reliefFishes" viewBox="0 0 10 8" width="10" height="8" class="alkoven">
+      <g id="reliefNone" class="alkoven">
+        <rect x="1" y="1" width="8" height="6"/>
+        <rect x="1" y="1" width="8" height="6" class="shadow"/>
+        <g class="plate" transform="translate(0,-1)">
+          <rect x="1.25" y="2.25" width="7.5" height="5.5"/>
+          <line x1="1.365" y1="2.25" x2="1.365" y2="7.75" class="shadowline"/>
+          <line x1="8.625" y1="2.25" x2="8.625" y2="7.75" class="lightline"/>
+        </g>
+        <line x1=".85" y1="4.25" x2=".85" y2="5.75" class="lightline"/>
+        <line x1="9.125" y1="4.25" x2="9.125" y2="5.75" class="shadowline"/>
+        <line x1=".85" y1="1" x2=".85" y2="1.75" class="lightline"/>
+        <line x1="9.125" y1="1" x2="9.125" y2="1.75" class="shadowline"/>
+      </g>
+      <g class="shadow" transform="translate(2,0) scale(.4)">
+        <g id="relief-fish">
+          <path d="M5,10a3,3,180,1,1,0,-6q6,0,10,6q-2,-1,-3,-1q-2,0,-7,1"/>
+        </g>
+        <use href="#relief-fish" transform="translate(0,4) rotate(180,8,8)"/>
+      </g>
+    </symbol>
+    <symbol data-id="reliefCross" viewBox="0 0 10 8" width="10" height="8" class="alkoven">
+      <use href="#reliefNone"/>
+      <g class="shadow" transform="rotate(45,5,5)">
+        <rect x="4.5" y="3" width="1" height="4"/>
+        <rect x="3" y="4.5" width="1.5" height="1"/>
+        <rect x="5.5" y="4.5" width="1.5" height="1"/>
+      </g>
+    </symbol>
+    <symbol id="reliefShip" viewBox="0 0 10 8" width="10" height="8" class="alkoven">
+      <use href="#reliefNone"/>
+      <g class="shadow" transform="translate(0,2)">
+        <rect x="4.5" y="0" width="1" height="3"/>
+        <path d="M2.5,3a2,1,180,0,0,5,0z"/>
+        <path d="M4.25,.25v2.5h-1.5z"/>
+        <path d="M5.75,.25v2.5h1.5z"/>
+      </g>
+    </symbol>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseR"/>
+    <g id="usage">
+      <!-- bottom links -->
+      <!--<use href="#alkovenNone" transform="translate(20.75,44)"/>-->
+      <!-- bottom mitteL -->
+      <!--<use href="#alkovenNone" transform="translate(24.75,44)"/>-->
+      <!-- bottom mitteR -->
+      <!--<use href="#alkovenCross" transform="translate(28.75,44)"/>-->
+      <!-- bottom rechts -->
+      <use href="#reliefShip" transform="translate(32.75,44)"/>
+      <!-- links -->
+      <!--<use href="#alkovenFishes" transform="translate(4.75,40)"/>-->
+      <!-- rechts -->
+      <use href="#reliefFishes" transform="translate(52.75,40)"/>
+    </g>
+  </g>
+</svg>
