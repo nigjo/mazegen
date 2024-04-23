@@ -1,9 +1,9 @@
 <svg width="128" height="128" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <pattern id="bricks" viewBox="0,0,16,8" width="8" height="4" patternUnits="userSpaceOnUse">
+    <pattern id="bricks" viewBox="0 -.5 16 8" width="8" height="4" patternUnits="userSpaceOnUse">
       <g class="bricks">
-        <rect x="0" y="0" width="16" height="16"/>
-        <rect x="0" y="0" width="16" height="16" class="shadow"/>
+        <rect x="0" y="-1" width="16" height="17"/>
+        <rect x="0" y="-1" width="16" height="17" class="shadow"/>
         <rect x="0" y="0" width="7" height="3"/>
         <rect x="8" y="0" width="7" height="3"/>
         <rect x="8" y="0" width="7" height="3" style="fill:rgba(255,255,255,.1)"/>
