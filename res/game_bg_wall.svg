@@ -6,8 +6,9 @@
         <rect x="0" y="0" width="16" height="16" class="shadow"/>
         <rect x="0" y="0" width="7" height="3"/>
         <rect x="8" y="0" width="7" height="3"/>
+        <rect x="8" y="0" width="7" height="3" style="fill:rgba(255,255,255,.1)"/>
         <rect x="-4" y="4" width="7" height="3"/>
-        <rect x="4" y="4" width="7" height="3"/>
+        <!--<rect x="4" y="4" width="7" height="3" style="fill:rgba(255,255,255,.1)"/>-->
         <rect x="12" y="4" width="7" height="3"/>
         <g class="shadowline">
           <path d="M.25,0v3"/>
