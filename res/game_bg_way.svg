@@ -30,7 +30,7 @@
       </g>
       <!--<use href="#tile" transform="translate(24,8)"/>-->
     </pattern>
-    <style>
+    <style id="wayDefs">
       .waytile{fill:rgba(255,255,255,.033);}
       .waytile2{fill:rgba(255,255,255,.066);}
       .waytile3{fill:rgba(255,255,255,0);}

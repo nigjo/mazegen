@@ -1,77 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
-    <pattern id="water" viewBox="0,0,16,16" width="16" height="16"
-             x="0" y="2" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="16" height="16" class="waterbg"/>
-      <g fill="none" stroke-linecap="round" stroke-width=".5">
-        <g stroke="rgba(255,255,255,.1)" >
-          <use href="#water4wave1" transform="translate(8,3) scale(1,-1)"/>
-          <use href="#water4wave2" transform="translate(12,5)"/>
-          <use href="#water4wave2" transform="translate(-4,5)"/>
-          <g transform="translate(1,11)">
-            <path id="water4wave2" d="M1,2q1,-1,4,-1q1,0,2,-.5"/>
-          </g>
-        </g>
-        <g stroke="rgba(255,255,255,.05)" >
-          <path id="water4wave1" d="M1,1q1,1,4,1q1,0,2,-.5"/>
-          <use href="#water4wave1" transform="translate(6,7.5)"/>
-        </g>
-        <g stroke="rgba(0,0,0,.05)" >
-          <use href="#water4wave2" transform="translate(6,8) scale(-1,1)"/>
-          <use href="#water4wave2" transform="translate(22,8) scale(-1,1)"/>
-          <use href="#water4wave1" transform="translate(4,3)"/>
-          <use href="#water4wave1" transform="translate(7,13)"/>
-        </g>
-      </g>
-    </pattern>
-    <pattern id="tiles" viewBox="0,0,32,32" width="16" height="16" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="32" height="32" class="waybg"/>
-      <g class="waytile">
-        <g id="tile">
-          <rect x="1" y="1" width="6" height="6" rx="1"/>
-          <path d="M5.75,1.25a1,1,90,0,1,1,1v3.5a1,1,90,0,1,-1,1" class="lightline thinline"/>
-          <path d="M2.25,1.25a1,1,90,0,0,-1,1v3.5a1,1,90,0,0,1,1" class="shadowline thinline"/>
-        </g>
-        <use href="#tile" transform="translate(8,0)"/>
-        <use href="#tile" transform="translate(16,24)"/>
-        <use href="#tile" transform="translate(24,16)"/>
-        <use href="#tile" transform="translate(8,8)"/>
-        <use href="#tile" transform="translate(24,24)"/>
-        <g class="waytile2">
-          <use href="#tile" transform="translate(16,16)"/>
-          <use href="#tile" transform="translate(24,0)"/>
-          <use href="#tile" transform="translate(0,8)"/>
-          <use href="#tile" transform="translate(8,24)"/>
-        </g>
-        <g class="waytile3">
-          <use href="#tile" transform="translate(16,0)"/>
-          <use href="#tile" transform="translate(16,8)"/>
-          <use href="#tile" transform="translate(24,8)"/>
-          <use href="#tile" transform="translate(0,16)"/>
-          <use href="#tile" transform="translate(8,16)"/>
-          <use href="#tile" transform="translate(0,24)"/>
-        </g>
-      </g>
-      <!--<use href="#tile" transform="translate(24,8)"/>-->
-    </pattern>
-    <pattern id="bricks" viewBox="0,0,16,16" width="8" height="8" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="16" height="16" class="wallbg"/>
-      <g class="shadowline">
-        <line x1="0" y1="8" x2="16" y2="8"/>
-        <line x1="0" y1="4" x2="16" y2="4"/>
-        <line x1="0" y1="12" x2="16" y2="12"/>
-        <line x1="0" y1="16" x2="16" y2="16"/>
-        <line x1="8" y1="0" x2="8" y2="4"/>
-        <line x1="8" y1="8" x2="8" y2="12"/>
-        <line x1="4" y1="4" x2="4" y2="8"/>
-        <line x1="4" y1="12" x2="4" y2="16"/>
-        <line x1="12" y1="0" x2="12" y2="4"/>
-        <line x1="12" y1="8" x2="12" y2="12"/>
-        <line x1="16" y1="4" x2="16" y2="8"/>
-        <line x1="16" y1="12" x2="16" y2="16"/>
-      </g>
-    </pattern>
     <linearGradient id="rundschattenFront">
       <stop offset="0%" style="stop-color:rgba(0,0,0,.05);"/>
       <stop offset="100%" style="stop-color:rgba(255,255,255,.1);"/>
@@ -190,20 +119,7 @@
         <line x1="46" y1="39.5" x2="46" y2="64" class="ropemark"/>
       </g>
     </g>
-    <style id="colors">
-      svg{--waybg-col:green;--ropeLeft:hidden;--ropeRight:visible;--ropeBottom:visible;}
-      .boden{fill:url(#water);stroke:none;}
-      .waterbg{fill:RoyalBlue;}
-      .waterwaves1{fill:none;stroke:rgba(255,255,255,.15);stroke-width:2;}
-      .waterwaves2{fill:none;stroke:rgba(255,255,255,.25);stroke-width:2;}
-      .bodenc{fill:blue;stroke:none;}
-      .way{fill:url(#tiles);stroke:none;}
-      .waybg{fill:peru;stroke:none;}
-      .waytile{fill:rgba(255,255,255,.033);}
-      .waytile2{fill:rgba(255,255,255,.066);}
-      .waytile3{fill:rgba(255,255,255,0);}
-      .wallbg{fill:FireBrick;stroke:none;}
-      .wall{fill:url(#bricks);}
+    <style id="topdownDefs">
       .pilon{fill:Olive;}
       .pilon3d{fill:url(#rundschattenFront);}
       .ropeLeft{visibility:var(--ropeLeft);}
@@ -211,13 +127,6 @@
       .ropeBottom{visibility:var(--ropeBottom);}
       .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}      
       .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
-      .wallLeft~.decke{--ropeLeft:visible;}
-      .doorRight~.decke{--ropeRight:hidden;}
-      .wallBottom~.decke{--ropeBottom:hidden;}
-      .lightline{stroke:rgba(255,255,255,.05);stroke-width:1px;fill:none;}
-      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:1px;fill:none;}
-      .thinline{stroke-width:.5px;stroke-linecap:round;}
-      .shadowline.thinline{stroke:rgba(0,0,0,.05)}
       .shadow{fill:rgba(0,0,0,.1);stroke:none;}
       #decke{
       .rope.topDoor{display:var(--doorTop);}

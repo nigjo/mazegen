@@ -1,15 +1,15 @@
 /*only for display this asset. mostly a copy of v_topdown.svg!*/
 #boden{
-  fill:url(../res/v_topdown.svg#water);
+  fill:url(../res/game_bg_water.svg#water);
   stroke:none;
 }
 #boden,#doorBottom,#doorRight,#doorLeft,#doorTop{
   .way{
-    fill:url(../res/v_topdown.svg#tiles);
+    fill:url(../res/game_bg_way.svg#tiles);
     stroke:none;
   }
   .wall{
-    fill:url(../res/v_topdown.svg#bricks);
+    fill:url(../res/game_bg_wall.svg#bricks);
   }
 }
 #wallBottom,#wallTop,#decke,#ropeSide,#doorRight,#doorLeft,#doorTop{

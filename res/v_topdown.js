@@ -9,18 +9,23 @@ const assetFetcher = fetch('assets/assets.json').then(r => {
   throw r;
 });
 
-const svgDefs = await
-fetch('res/v_topdown.svg').then(r => {
-  if (r.ok) {
-    return r.text();
-  }
-  throw r;
-}).then(t => t
-          .replace(/>\s*/gs, '>')
-          .replace(/\s*</gs, '<')
-).then(str => {
-  return new DOMParser().parseFromString(str, "image/svg+xml");
-}).then(svg => {
+async function fetchSvg(uri) {
+  return fetch(uri)
+          .then(r => r.text())
+          .then(t => t
+                    .replace(/>\s*/gs, '>')
+                    .replace(/\s*</gs, '<'))
+          .then(t => new DOMParser().parseFromString(t, "image/svg+xml"));
+}
+
+const svgDefs = new Map();
+await Promise.all([
+  fetchSvg('res/v_topdown.svg'),
+  fetchSvg('res/game_bg_water.svg'),
+  fetchSvg('res/game_bg_way.svg'),
+  fetchSvg('res/game_bg_wall.svg')
+]).then(svgs => {
+  const svg = svgs[0];
   let defs = [...svg.querySelectorAll('defs>[id]')];
   defs
           .filter(i => i.tagName === 'style')
@@ -29,9 +34,39 @@ fetch('res/v_topdown.svg').then(r => {
                     .replace(/\s+([}{;:])/gs, '$1')
                     .replace(/([}{;:])\s+/gs, '$1')
           );
-  //console.debug(LOGGER, 'defs', defs);
-  return new Map(defs.map(e => [e.id, e]));
+  console.debug(LOGGER, 'basics', defs.map(e => [e.id, e]));
+  defs.forEach(e => svgDefs.set(e.id, e));
+  for (var i = 1, max = svgs.length; i < max; i++) {
+    addDefinitions(svgs[i], 'topdownDefs');
+  }
+  return ;
 });
+
+function addDefinitions(svg, styleTarget, cb) {
+  const defs = [...svg.querySelectorAll('defs>[id]')];
+  defs.forEach(def => {
+    if (def.tagName === 'style') {
+      let styles = svgDefs.get(styleTarget);
+      if (!svgDefs.has(styleTarget)) {
+        styles = document.createElementNS(SVGGenerator.SVGNS, 'style');
+        styles.setAttribute('id', styleTarget);
+        svgDefs.set(styleTarget, styles);
+      }
+      styles.append(String(def.textContent)
+              .replace(/^\s+/gm, '')
+              .replace(/\s+([}{;:])/gs, '$1')
+              .replace(/([}{;:])\s+/gs, '$1')
+              );
+    } else {
+      svgDefs.set(def.id, def);
+    }
+    if (typeof (cb) === 'function') {
+      cb(def);
+    }
+  });
+  console.debug(LOGGER, styleTarget, defs.map(d => d.id));
+}
+
 
 const assets = {};
 await assetFetcher.then(list => {
@@ -61,30 +96,13 @@ await assetFetcher.then(list => {
     let a, svg;
     for ([a, svg] of assetList) {
       //const add = svg => {
-      const defs = [...svg.querySelectorAll('defs>[id]')];
-      defs.forEach(def => {
-        if (def.tagName === 'style') {
-          let styles = svgDefs.get('asset_styles');
-          if (!svgDefs.has('asset_styles')) {
-            styles = document.createElementNS(SVGGenerator.SVGNS, 'style');
-            styles.setAttribute('id', 'asset_styles');
-            svgDefs.set('asset_styles', styles);
-          }
-          styles.append(String(def.textContent)
-                  .replace(/^\s+/gm, '')
-                  .replace(/\s+([}{;:])/gs, '$1')
-                  .replace(/([}{;:])\s+/gs, '$1')
-                  );
-        } else {
-          svgDefs.set(def.id, def);
-        }
+      addDefinitions(svg, 'asset_styles', (def) => {
         if (def.tagName === 'g' || def.tagName === 'symbol')
           assets[def.id] = a;
       });
       if ("init" in a) {
         a.init();
       }
-      console.debug(LOGGER, "asset", a.view, defs.map(d => d.id));
     }
   });
 });
