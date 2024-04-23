@@ -106,21 +106,26 @@ Tile nicht auftauchen so sollte dieses Tile auch nicht angegeben werden.
 Innerhalb der Tile-Objekte gibt es weitere Angaben:
 
 [discrete]
-==== `transform(tile)`
+==== `transform(tile, use)`
 
 `tile`::
-  Das SVG-Tile aus der SVG-Datei selbst. Die SVG kann durch dem DOM-Baum
-  navigiert (und theoretisch bearbeitet) werden. Allerding sollte bei
-  Veränderungen darauf geachtet werden, dass keine `data-item`-Einträge
-  modifiziert werden. Für solche Veränderungen ist die `tail`-Funktion
-  besser geeignet.
+  Das SVG-Tile aus der SVG-Datei selbst dem das Asset zugeordnet wurde. Die SVG
+  kann durch dem DOM-Baum navigiert (und theoretisch bearbeitet) werden.
+  Das `data-item`-Attribut ist bereits vom `tile` entfernt, auch andere
+  Items wurden bereits bearbeitet. Sollten Änderungen an den Items erfolgen
+  sollte dies besser in der `tail`-Funktion erfolgen.
+
+`use`::
+  Der neue `<use>`-Tag des Assets. Das `href` Attribut ist bereits gesetzt,
+  andere Attribute noch nicht. Das Element ist auch noch nicht Teil der
+  Ziel-SVG.
 
 return::
-  Zeichenkette die in das "```transform```"-Attribut des SVG-Elements
-  eingetragen wird.
+  Eine Zeichenkette die in das "```transform```"-Attribut des SVG-Elements
+  eingetragen wird. "falsy"-Werte sind nicht erlaubt.
 
 Sollte die Transformation konstant sein und unabhängig vom `tile`, so kann
-die `transform`-Angabe auch eine konstante Zeichenkette sein.
+die `transform`-Angabe auch eine konstante Zeichenkette statt einer Funktion sein.
 
 
 [discrete]

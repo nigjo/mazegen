@@ -19,7 +19,8 @@ async function fetchSvg(uri) {
 }
 
 const svgDefs = new Map();
-await Promise.all([
+await
+Promise.all([
   fetchSvg('res/v_topdown.svg'),
   fetchSvg('res/game_bg_water.svg'),
   fetchSvg('res/game_bg_way.svg'),
@@ -39,7 +40,7 @@ await Promise.all([
   for (var i = 1, max = svgs.length; i < max; i++) {
     addDefinitions(svgs[i], 'topdownDefs');
   }
-  return ;
+  return;
 });
 
 function addDefinitions(svg, styleTarget, cb) {
@@ -69,7 +70,8 @@ function addDefinitions(svg, styleTarget, cb) {
 
 
 const assets = {};
-await assetFetcher.then(list => {
+await
+assetFetcher.then(list => {
   //console.debug(LOGGER, list, svgDefs);
   let assetDefs = [];
   for (let name of list) {
@@ -211,7 +213,7 @@ export default class TopDownView extends SVGGenerator {
         u.setAttribute('href', '#' + item);
         let transform = assets[item].tiles[tileName].transform;
         if (typeof (transform) === 'function') {
-          u.setAttribute('transform', transform(tile));
+          u.setAttribute('transform', transform(tile, u));
         } else if (typeof (transform) === 'string') {
           u.setAttribute('transform', transform);
         }
