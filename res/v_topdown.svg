@@ -22,8 +22,6 @@
     <g id="doorLeft">
       <rect x="0" y="16" width="16" height="24" class="way"/>
       <rect x="0" y="40" width="16" height="8" class="wall"/>
-      <path d="M16,40l0,8,-8,0z" class="shadow"/>
-      <rect x="8" y="48" width="8" height="4" class="shadow"/>
     </g>
     <g id="doorRight">
       <rect x="48" y="16" width="16" height="24" class="way"/>
@@ -85,6 +83,8 @@
       <g class="rope leftDoor">
         <path d="M18,39q-9,1,-18,1" class="rope"/>
         <path d="M18,39q-9,1,-18,1" class="ropemark"/>
+        <path d="M16,40l0,8,-8,0z" class="shadow"/>
+        <rect x="8" y="48" width="8" height="4" class="shadow"/>
       </g>
       <g class="rope leftWall">
         <g id="ropeSide" class="rope">
