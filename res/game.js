@@ -22,6 +22,14 @@ const docrunner = {
     docrunner.Width = q.get('width');
   if (q.has('height'))
     docrunner.Height = q.get('height');
+  if ('true' === q.get('code')) {
+    setTimeout(() => {
+      console.debug(LOGGER, 'adding QR Code');
+      const img = `<img id="qrcode" src="res/qr-code.png"
+       alt="QR-Code to https://nigjo.github.io/mazegen/"/>`;
+      document.querySelector('nav').innerHTML = img;
+    });
+  }
   console.log(LOGGER, docrunner);
 })();
 
@@ -168,7 +176,7 @@ function updateTimer() {
     viewLink.textContent = 'Level Time: ' + ui.textContent.substring(ui.textContent.indexOf(':') + 1);
     const nav = document.querySelector('nav');
     nav.replaceChildren(viewLink);
-    
+
     let navline = document.createElement('div');
 
     let restartLink = document.createElement('a');
