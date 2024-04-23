@@ -36,8 +36,8 @@
   <g>
     <use href="assetbase.svg#assetbaseT"/>
     <g id="usage">
-      <!--<rect x="16" y="52" width="32" height="12" style="fill:none;stroke:red;stroke-width:.25px;"/>-->
-      <!--<use href="#fishes2b" transform="translate(16,52)"/>-->
+      <rect x="16" y="52" width="32" height="12" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#fishes2b" transform="translate(16,52)"/>
       <rect x="48" y="16" width="16" height="32" style="fill:none;stroke:red;stroke-width:.25px;"/>
       <use href="#fishes3r" transform="translate(48,16)"/>
     </g>
