@@ -54,6 +54,7 @@ header,nav,main {
 }
 nav {
   padding-top: .5em;
+  font-size: min(2.4vw,12pt);
   .button {
     /*! background: url(#way); */
     padding: .5em;
