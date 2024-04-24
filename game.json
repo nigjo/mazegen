@@ -1,6 +1,7 @@
 {
   "name": "Docks Runner",
   "short_name": "Docks Runner",
+  "id": "/mazegen/index.html",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#4169e1",
