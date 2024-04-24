@@ -43,14 +43,14 @@
   ],
   "screenshots":[
     {
-      "src": "2024-04-01-11-00z-n.webp",
+      "src": "screenshots/2024-04-01-11-00z-n.webp",
       "sizes": "720x1280",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "Starting position"
     },
     {
-      "src": "2024-04-01-11-00z-w.webp",
+      "src": "screenshots/2024-04-01-11-00z-w.webp",
       "sizes": "1280x720",
       "type": "image/webp",
       "form_factor": "wide",
