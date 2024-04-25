@@ -3,28 +3,28 @@
   <defs>
     <style id="playerBdefs">
       svg{
-      --playerB-skin:#FFD321;
-      --playerB-stroke:#B18904;
-      --playerB-shirt:#addf6b;
-      --playerB-pants:#6b73df;
-      --playerB-shoes:#8A4B08;
-      --playerB-eyes:black;
-      --playerB-eyewhite:whitesmoke;
-      --playerB-hair:#6baddf;
-      --playerB-hairline:#4a799c;
+        --playerB-skin:#FFD321;
+        --playerB-stroke:#B18904;
+        --playerB-shirt:#addf6b;
+        --playerB-pants:#6b73df;
+        --playerB-shoes:#8A4B08;
+        --playerB-eyes:black;
+        --playerB-eyewhite:whitesmoke;
+        --playerB-hair:#6baddf;
+        --playerB-hairline:#4a799c;
       }
       .playerB{
-      fill:var(--playerB-skin);
-      stroke:var(--playerB-stroke);
-      stroke-width:.25px;
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      .augen{
-      fill: var(--playerB-eyes);
-      stroke: var(--playerB-eyewhite);
+        fill:var(--playerB-skin);
+        stroke:var(--playerB-stroke);
+        stroke-width:.25px;
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        .augen{
+        fill: var(--playerB-eyes);
+        stroke: var(--playerB-eyewhite);
       }
       .haare{
-      fill: var(--playerB-hair);
-      stroke: var(--playerB-hairline);
+        fill: var(--playerB-hair);
+        stroke: var(--playerB-hairline);
       }
       .shirt{
       fill: var(--playerB-shirt)
@@ -60,7 +60,7 @@
     </symbol>
     <symbol id="playerBBottom" viewBox="-4 -4 8 8" width="8" height="8" class="playerB">
       <!--<rect x="-4" y="-4" width="8" height="8" style="fill:rgba(255,255,255,.15)"/>-->
-      <g class="shirt" fill="skyblue">
+      <g class="shirt">
         <rect x="-2.5" y=".75" width="5" height="1.5"/>
         <rect x="-3" y="1" width=".5" height="1.25"/>
         <rect x="2.5" y="1" width=".5" height="1.25"/>
@@ -87,7 +87,7 @@
     </symbol>
     <symbol id="playerBLeft" viewBox="-4 -4 8 8" width="8" height="8" class="playerB">
       <!--<rect x="-4" y="-4" width="8" height="8" style="fill:rgba(255,255,255,.15)"/>-->
-      <g class="shirt" fill="skyblue">
+      <g class="shirt">
         <rect x="-1.5" y=".75" width="3" height="1.5"/>
         <rect x="-.5" y="1" width="1" height="1.25"/>
         <!--<rect x="2.5" y="1" width=".5" height="1.25"/>-->
