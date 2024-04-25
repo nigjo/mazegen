@@ -19,23 +19,14 @@ limitations under the License.
     <title>Docks Runner - Settings</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
     <link rel="stylesheet" href="res/game.css"/>
+    <script src="res/settings.js"></script>
     <style>body{
         background-color: royalblue;
         color:white;
         .settings{
           display:block;
-        }
-        #player{
-          --playerB-skin:#FFD321;
-          --playerB-stroke:#B18904;
-          --playerB-shirt:#addf6b;
-          --playerB-pants:#6b73df;
-          --playerB-shoes:#8A4B08;
-          --playerB-eyes:black;
-          --playerB-eyewhite:whitesmoke;
-          --playerB-hair:#6baddf;
-          --playerB-hairline:#4a799c;
         }
         .character{
           display: inline-block;
@@ -43,63 +34,32 @@ limitations under the License.
           label{
             display:block;
           }
+          &.colors {
+            display: inline-grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 2em 2em;
+          }
         }
-      }
-      .playerB{
-        fill:var(--playerB-skin);
-        stroke:var(--playerB-stroke);
-        stroke-width:.25px;
-        .shadow{
-          fill:rgba(0,0,0,.1);
-          stroke:none;
-        }
-        .augen{
-          fill: var(--playerB-eyes);
-          stroke: var(--playerB-eyewhite);
-        }
-        .haare{
-          fill: var(--playerB-hair);
-          stroke: var(--playerB-hairline);
-        }
-        .shirt{
-          fill: var(--playerB-shirt)
-        }
-        .pants{
-          fill: var(--playerB-pants)
-        }
-        .shoes{
-          fill: var(--playerB-shoes)
-        }
-      }</style>
-  </head>
-  <body class="bgWater">
-    <header class="bgWay">
-      <h1><a href="./">Docks Runner</a></h1>
-      <h2 class="bgWall">Einstellungen</h2>
-    </header>
-    <nav></nav>
-    <main class="settings">
-      <form name="gamesettings">
+      </style>
+    </head>
+    <body class="bgWater">
+      <header class="bgWay">
+        <h1><a href="./">Docks Runner</a></h1>
+        <h2 class="bgWall">Einstellungen</h2>
+      </header>
+      <nav></nav>
+      <main class="settings">
         <section id="player">
           <h2>Spieler</h2>
-          <div class="bgWay character">
-            <div >
-              <svg width="128" height="128" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg">
-              <use href="assets/playerB.svg#playerB-suedM"/>
-              </svg>
-            </div>
-            <div >
-              <svg width="128" height="128" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg">
-              <use href="assets/playerB.svg#playerB-rechtsM"/>
-              </svg>
-            </div>
+          <div class="bgWay character" id="playerView">
           </div>
-          <div class="character">
+          <div class="character colors">
             <label><input type="color" value="#FFD321" name="playerB-skin"> Haut</label>
             <label><input type="color" value="#B18904" name="playerB-stroke"> Kontur</label>
             <label><input type="color" value="#6baddf" name="playerB-hair"> Haare</label>
             <label><input type="color" value="#4a799c" name="playerB-hairline"> Haarkontur</label>
-            <label><input type="color" value="#000000" name="playerB-eyes"> Augen</label>
+            <label><input type="color" value="#000000" name="playerB-eyes"> Augenfarbe</label>
+            <label><input type="color" value="#FFFFFF" name="playerB-eyewhite"> Augapfel</label>
             <label><input type="color" value="#addf6b" name="playerB-shirt"> Hemd</label>
             <label><input type="color" value="#6b73df" name="playerB-pants"> Hose</label>
             <label><input type="color" value="#8A4B08" name="playerB-shoes"> Schuhe</label>
@@ -116,12 +76,11 @@ limitations under the License.
           <label><input type="radio" value="midi" name="gamesize"> Größer</label>
           <label><input type="radio" value="maxi" name="gamesize"> Max</label>
         </section>
-      </form>
-    </main>
-    <footer>
-      &copy; Nigjo Iqn
-      - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
-      - <a href="code.html">Teilen</a>
-    </footer>
-  </body>
-</html>
+      </main>
+      <footer>
+        &copy; Nigjo Iqn
+        - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
+        - <a href="code.html">Teilen</a>
+      </footer>
+    </body>
+  </html>
