@@ -3,7 +3,7 @@
   fill:url(../res/game_bg_water.svg#water);
   stroke:none;
 }
-#boden,#doorBottom,#doorRight,#doorLeft,#doorTop{
+#decke,#boden,#doorBottom,#doorRight,#doorLeft,#doorTop{
   .way{
     fill:url(../res/game_bg_way.svg#tiles);
     stroke:none;
