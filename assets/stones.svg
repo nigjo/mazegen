@@ -1,0 +1,122 @@
+<svg width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="relief-styles">
+      .stones{
+      fill:#3f3a3a;
+        &amp;.stone{
+      fill:url(#stonelight);
+      stroke:none;
+      stroke-width:.25px;
+      }
+      .stonesButtom{fill:url(#stonesBgBottom);}
+      .stonesRight{fill:url(#stonesBgRight);}
+      .stonesLeft{fill:url(#stonesBgLeft);}
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.25;fill:none;}
+      .light{fill:rgba(255,255,255,.1);stroke:none;}
+      .lightline{stroke:rgba(255,255,255,.1);stroke-width:.25;fill:none;}
+      }
+    </style>
+    <radialGradient id="stonelight" cx="70%" cy="50%">
+      <stop offset="10%" stop-color="gray" />
+      <stop offset="100%" stop-color="#3f3a3a" />
+    </radialGradient>
+    <g id="stone1b" class="stones stone">
+      <circle cx="-.25" cy="0" r="2" class="shadow"/>
+      <circle cx="0" cy="0" r="2"/>
+    </g>
+    <g id="stone2b" class="stones stone">
+      <circle cx="-.25" cy="0" r="1" class="shadow"/>
+      <circle cx="0" cy="0" r="1"/>
+    </g>
+    <pattern id="stonesBgRight" patternUnits="userSpaceOnUse"
+             viewBox="-1 0 8 16" width="8" height="16">
+      <rect x="4" y="0" width="4" height="16" class="stones"/>
+      <g class="stones stone">
+        <use href="#stone1b" x="4" y="-1"/>
+        <use href="#stone1b" x="7" y="1"/>
+        <use href="#stone1b" x="5" y="3"/>
+        <use href="#stone2b" x="7" y="3"/>
+        <use href="#stone1b" x="6" y="5"/>
+        <use href="#stone1b" x="4.5" y="7"/>
+        <use href="#stone1b" x="7" y="9"/>
+        <use href="#stone2b" x="5" y="9"/>
+        <use href="#stone1b" x="5" y="11"/>
+        <use href="#stone1b" x="6" y="13"/>
+
+        <use href="#stone2b" x="7" y="14"/>
+        <use href="#stone1b" x="4" y="15"/>
+        <use href="#stone1b" x="7" y="17"/>
+      </g>
+    </pattern>
+    <pattern id="stonesBgLeft" patternUnits="userSpaceOnUse"
+             viewBox="1 0 8 16" width="8" height="16">
+      <rect x="0" y="0" width="4" height="16" class="stones"/>
+      <g class="stones stone">
+        <use href="#stone2b" x="3.75" y="-.25"/>
+        <use href="#stone1b" x="1.5" y="-1.5"/>
+        <use href="#stone1b" x="2.5" y="1.5"/>
+
+        <use href="#stone2b" x="3.5" y="3"/>
+        <use href="#stone2b" x="3.5" y="4.5"/>
+        <use href="#stone1b" x="1.75" y="4"/>
+        <use href="#stone1b" x="3.25" y="7"/>
+        <use href="#stone2b" x="1" y="7"/>
+        <use href="#stone1b" x="2" y="9"/>
+        <use href="#stone1b" x="4" y="11"/>
+        <use href="#stone1b" x="2" y="12"/>
+        
+        <use href="#stone2b" x="3.5" y="14"/>
+        <use href="#stone2b" x="3.75" y="15.75"/>
+        <use href="#stone1b" x="1.5" y="14.5"/>
+        <use href="#stone1b" x="2.5" y="17.5"/>
+      </g>
+    </pattern>
+    <pattern id="stonesBgBottom" patternUnits="userSpaceOnUse"
+             viewBox="0 -1.5 16 8" width="16" height="8">
+      <rect x="0" y="4" width="16" height="4" class="stones"/>
+      <!--<rect x="0" y="0" width="16" height="8" style="fill:none;stroke:red;stroke-width:.25px;"/>-->
+      <g class="stones stone">
+        <use href="#stone1b" x="-1.5" y="4"/>
+        <use href="#stone2b" x="0" y="6.5"/>
+        <use href="#stone1b" x="1" y="5"/>
+        <use href="#stone2b" x="2" y="7"/>
+        <use href="#stone1b" x="4" y="4.5"/>
+        <use href="#stone2b" x="5" y="6.5"/>
+        <use href="#stone1b" x="8" y="4"/>
+        <use href="#stone2b" x="6" y="3.5"/>
+        <use href="#stone1b" x="7.5" y="6.5"/>
+        <use href="#stone1b" x="9" y="5.5"/>
+        <use href="#stone2b" x="11" y="3.75"/>
+        <use href="#stone1b" x="11.5" y="6.5"/>
+        <use href="#stone2b" x="13.75" y="7.5"/>
+        <use href="#stone1b" x="13" y="5.5"/>
+      
+        <use href="#stone1b" x="14.5" y="4"/>
+        <use href="#stone2b" x="16" y="6.5"/>
+        <use href="#stone1b" x="17" y="5"/>
+      </g>
+    </pattern>
+    <symbol id="stonesBottom" viewBox="0 0 64 8" width="64" height="8" class="stones">
+      <rect x="0" y="0" width="64" height="8" class="stonesButtom"/>
+    </symbol>
+    <symbol id="stonesRight" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <rect x="0" y="0" width="8" height="64" class="stonesRight"/>
+    </symbol>
+    <symbol id="stonesLeft" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <rect x="0" y="0" width="8" height="64" class="stonesLeft"/>
+    </symbol>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseT"/>
+    <g id="usage">
+      <rect x="0" y="16" width="8" height="16" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#stonesLeft" transform="translate(0,0)"/>
+      <rect x="16" y="56" width="16" height="32" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#stonesBottom" transform="translate(0,56)"/>
+      <rect x="56" y="32" width="8" height="16" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#stonesRight" transform="translate(56,0)"/>
+    </g>
+  </g>
+</svg>
