@@ -13,9 +13,10 @@
         .stonesRight{fill:url(#stonesBgRight);}
         .stonesLeft{fill:url(#stonesBgLeft);}
         .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.3;fill:none;}
-        .light{fill:rgba(255,255,255,.1);stroke:none;stroke-linecap:round;}
-        .lightline{stroke:rgba(255,255,255,.1);stroke-width:.3;fill:none;}
+        .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.3;fill:none;stroke-linecap:round;}
+        .light{fill:rgba(255,255,255,.1);stroke:none;}
+        .lightline{stroke:rgba(255,255,255,.1);stroke-width:.3;fill:none;stroke-linecap:round;}
+        .mark{stroke:red;opacity:.5;}
       }
     </style>
     <radialGradient id="stonelight" cx="70%" cy="50%">
@@ -25,17 +26,20 @@
     <g id="stone1b" class="stones stone">
       <use href="#stone1bstone" x="-.5" class="shadow"/>
       <path id="stone1bstone" d="M-1,-2H0.5L 1.2,-1.5 2,0 2,0.6 1,2 -1.1,1.5 -1.5,1 -2,-0.5Z"/>
-      <polyline points="0.35,-2 1.05,-1.5 1.85,0 1.85,0.6 .85,2" class="lightline"/>
+      <polyline points="0.45,-1.85 1.08,-1.4 1.85,0.05 1.85,0.55 .95,1.8" class="lightline"/>
+      <polyline points="-1.03,1.35 -1.35,.95 -1.825,-0.475 -.925,-1.85" class="shadowline"/>
     </g>
     <g id="stone2b" class="stones stone">
       <use href="#stone2bstone" x="-.5" class="shadow"/>
       <path id="stone2bstone" d="M-0.6,-1 L0.3,-2 0.9,-2 1.6,-0.4 1.7,0.4 0.5,2 -0.75,1.75 -2,0.2v-0.7z"/>
-      <polyline points="0.75,-2 1.45,-0.4 1.55,0.4 0.3,2" class="lightline"/>
+      <polyline points="0.8,-1.85 1.45,-0.4 1.55,0.35 0.45,1.825" class="lightline"/>
+      <polyline points="-0.675,1.6 -1.85,0.15 -1.85,-0.4 -0.5,-.875 0.375,-1.85" class="shadowline"/>
     </g>
     <g id="stone3b" class="stones stone">
       <use href="#stone3bstone" x="-.5" class="shadow"/>
       <path id="stone3bstone" d="M 0,-2 1.2,-1.7 1.7,-0.4 0.9,0.4 0.5,1.2h -0.9l -0.8,-1.3v -1z"/>
-      <polyline points="0,-1.85 1.1,-1.6 1.55,-0.4 0.75,0.4 0.35,1.2" class="lightline"/>
+      <polyline points=" 1.09,-1.575 1.525,-0.425 0.75,0.35 0.41,1.05" class="lightline"/>
+      <polyline points="-.325,1.05 -1.05,-.15 -1.05,-1 0.08,-1.825" class="shadowline"/>
     </g>
     <pattern id="stonesBgRight" patternUnits="userSpaceOnUse"
              viewBox="-1 0 8 16" width="8" height="16">
