@@ -4,17 +4,18 @@
       .stones{
       fill:#3f3a3a;
         &amp;.stone{
-      fill:url(#stonelight);
-      stroke:none;
-      stroke-width:.25px;
-      }
-      .stonesButtom{fill:url(#stonesBgBottom);}
-      .stonesRight{fill:url(#stonesBgRight);}
-      .stonesLeft{fill:url(#stonesBgLeft);}
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.25;fill:none;}
-      .light{fill:rgba(255,255,255,.1);stroke:none;}
-      .lightline{stroke:rgba(255,255,255,.1);stroke-width:.25;fill:none;}
+          /*fill:url(#stonelight);*/
+          fill:#3f3a3a;
+          stroke:none;
+          stroke-width:.05px;
+        }
+        .stonesButtom{fill:url(#stonesBgBottom);}
+        .stonesRight{fill:url(#stonesBgRight);}
+        .stonesLeft{fill:url(#stonesBgLeft);}
+        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.3;fill:none;}
+        .light{fill:rgba(255,255,255,.1);stroke:none;stroke-linecap:round;}
+        .lightline{stroke:rgba(255,255,255,.1);stroke-width:.3;fill:none;}
       }
     </style>
     <radialGradient id="stonelight" cx="70%" cy="50%">
@@ -22,21 +23,29 @@
       <stop offset="100%" stop-color="#3f3a3a" />
     </radialGradient>
     <g id="stone1b" class="stones stone">
-      <circle cx="-.25" cy="0" r="2" class="shadow"/>
-      <circle cx="0" cy="0" r="2"/>
+      <use href="#stone1bstone" x="-.5" class="shadow"/>
+      <path id="stone1bstone" d="M-1,-2H0.5L 1.2,-1.5 2,0 2,0.6 1,2 -1.1,1.5 -1.5,1 -2,-0.5Z"/>
+      <polyline points="0.35,-2 1.05,-1.5 1.85,0 1.85,0.6 .85,2" class="lightline"/>
     </g>
     <g id="stone2b" class="stones stone">
-      <circle cx="-.25" cy="0" r="1" class="shadow"/>
-      <circle cx="0" cy="0" r="1"/>
+      <use href="#stone2bstone" x="-.5" class="shadow"/>
+      <path id="stone2bstone" d="M-0.6,-1 L0.3,-2 0.9,-2 1.6,-0.4 1.7,0.4 0.5,2 -0.75,1.75 -2,0.2v-0.7z"/>
+      <polyline points="0.75,-2 1.45,-0.4 1.55,0.4 0.3,2" class="lightline"/>
+    </g>
+    <g id="stone3b" class="stones stone">
+      <use href="#stone3bstone" x="-.5" class="shadow"/>
+      <path id="stone3bstone" d="M 0,-2 1.2,-1.7 1.7,-0.4 0.9,0.4 0.5,1.2h -0.9l -0.8,-1.3v -1z"/>
+      <polyline points="0,-1.85 1.1,-1.6 1.55,-0.4 0.75,0.4 0.35,1.2" class="lightline"/>
     </g>
     <pattern id="stonesBgRight" patternUnits="userSpaceOnUse"
              viewBox="-1 0 8 16" width="8" height="16">
       <rect x="4" y="0" width="4" height="16" class="stones"/>
       <g class="stones stone">
-        <use href="#stone1b" x="4" y="-1"/>
+        <use href="#stone3b" x="4" y="-1"/>
         <use href="#stone1b" x="7" y="1"/>
-        <use href="#stone1b" x="5" y="3"/>
         <use href="#stone2b" x="7" y="3"/>
+        
+        <use href="#stone1b" x="5" y="3"/>
         <use href="#stone1b" x="6" y="5"/>
         <use href="#stone1b" x="4.5" y="7"/>
         <use href="#stone1b" x="7" y="9"/>
@@ -44,9 +53,9 @@
         <use href="#stone1b" x="5" y="11"/>
         <use href="#stone1b" x="6" y="13"/>
 
-        <use href="#stone2b" x="7" y="14"/>
-        <use href="#stone1b" x="4" y="15"/>
+        <use href="#stone3b" x="4" y="15"/>
         <use href="#stone1b" x="7" y="17"/>
+        <use href="#stone2b" x="7" y="14"/>
       </g>
     </pattern>
     <pattern id="stonesBgLeft" patternUnits="userSpaceOnUse"
@@ -57,13 +66,13 @@
         <use href="#stone1b" x="1.5" y="-1.5"/>
         <use href="#stone1b" x="2.5" y="1.5"/>
 
-        <use href="#stone2b" x="3.5" y="3"/>
+        <use href="#stone3b" x="3.5" y="3"/>
         <use href="#stone2b" x="3.5" y="4.5"/>
-        <use href="#stone1b" x="1.75" y="4"/>
+        <use href="#stone3b" x="1.75" y="4"/>
         <use href="#stone1b" x="3.25" y="7"/>
         <use href="#stone2b" x="1" y="7"/>
         <use href="#stone1b" x="2" y="9"/>
-        <use href="#stone1b" x="4" y="11"/>
+        <use href="#stone3b" x="4" y="11"/>
         <use href="#stone1b" x="2" y="12"/>
         
         <use href="#stone2b" x="3.5" y="14"/>
@@ -111,6 +120,10 @@
   <g>
     <use href="assetbase.svg#assetbaseT"/>
     <g id="usage">
+      <use href="#stone1b" transform="translate(24,32) scale(2)"/>
+      <use href="#stone2b" transform="translate(32,24) scale(2)"/>
+      <use href="#stone3b" transform="translate(40,32) scale(2)"/>
+      <use href="#stonesLeft" transform="translate(0,0)"/>
       <rect x="0" y="16" width="8" height="16" style="fill:none;stroke:red;stroke-width:.25px;"/>
       <use href="#stonesLeft" transform="translate(0,0)"/>
       <rect x="16" y="56" width="16" height="32" style="fill:none;stroke:red;stroke-width:.25px;"/>
