@@ -81,7 +81,10 @@ nav {
     nav {
       grid-column: 1/1;
       position:relative;
-      .qrcode{
+      &:has(#qrcode){
+        width:495px;
+      }
+      #qrcode{
         width: 90%;
         height: auto;
         margin: auto;
@@ -126,7 +129,7 @@ nav {
   .game{
     width:calc(100% - 2em);
   }
-  nav .qrcode{
+  nav #qrcode{
     display:none;
   }
   main{
