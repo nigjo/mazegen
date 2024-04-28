@@ -12,12 +12,16 @@
     <link rel="stylesheet" href="res/game.css"/>
     <script type="module">
       import RandomKruskal from './res/RandomKruskal.js';
+      import settings from './res/m_usersettings.js';
       let args = new URLSearchParams(location.search);
       const workshop = {
         Width: '6',
         Height: '10',
         Seed: 'czx95c9bh30k'
       };
+      workshop.Width = String(settings.width);
+      workshop.Height = String(settings.height);
+      
       for (let name of Object.keys(workshop)) {
         let key = 'workshop' + name;
         workshop[name] = args.get(key)

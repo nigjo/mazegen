@@ -1,11 +1,12 @@
 import MazeGen from './RandomKruskal.js';
 import MazeView from './v_topdown.js';
+import settings from './m_usersettings.js';
 
 const LOGGER = 'GAME';
 
 const docrunner = {
-  Width: '6',
-  Height: '10',
+  Width: String(settings.width),
+  Height: String(settings.height),
   Seed: (() => {
     let timestamp = new Date();
     timestamp.setMinutes(0);
@@ -15,6 +16,10 @@ const docrunner = {
   })()
 };
 (() => {
+  console.debug(LOGGER, "init");
+  docrunner.Width = String(settings.width);
+  docrunner.Height = String(settings.height);
+
   const q = new URLSearchParams(location.search);
   if (q.has('seed'))
     docrunner.Seed = q.get('seed');
