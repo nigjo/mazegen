@@ -56,7 +56,6 @@ nav {
   padding-top: .5em;
   font-size: min(2.4vw,12pt);
   .button {
-    /*! background: url(#way); */
     padding: .5em;
     text-decoration: none;
     text-shadow: gray 1px 1px;
@@ -81,6 +80,15 @@ nav {
     grid-template-columns:auto 1fr;
     nav {
       grid-column: 1/1;
+      position:relative;
+      .qrcode{
+        width: 90%;
+        height: auto;
+        margin: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+      }
     }
     header{
       grid-column: 1/1;
@@ -117,6 +125,9 @@ nav {
 @media screen and (orientation:portrait) {
   .game{
     width:calc(100% - 2em);
+  }
+  nav .qrcode{
+    display:none;
   }
   main{
     width:100%;
