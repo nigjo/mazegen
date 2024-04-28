@@ -17,6 +17,8 @@
 const LOGGER = 'SETTINGS';
 const SVGNS = 'http://www.w3.org/2000/svg';
 
+import settings from './m_usersettings.js';
+
 async function fetchSvg(uri) {
   return fetch(uri)
           .then(r => r.text())
@@ -66,20 +68,86 @@ fetchSvg('assets/playerB.svg').then(svg => {
 
 });
 
-function initColorEditor() {
-  console.debug(LOGGER, 'init editor');
-  let colors = document.querySelectorAll('#player .colors input[type="color"]');
-  for (let c of colors) {
-    c.onchange = e => {
-      console.debug(LOGGER, e.target.value, e.target.name);
-      let svg = document.querySelector('#player svg');
-      let colname = e.target.name;
-      svg.style.setProperty('--' + colname, e.target.value);
-    };
-  }
+function initButtons() {
+  document.getElementById('btnBack').onclick = () => {
+    window.location = './index.html';
+  };
+  document.getElementById('btnSave').onclick = () => {
+    let formdata = document.forms.settings;
+    console.debug(LOGGER, formdata);
+
+    let sizeValue = formdata.gamesize.value;
+    if (sizeValue === 'custom') {
+      sizeValue = formdata.customsize.value;
+    }
+    let size = sizeValue.match(/^\s*(\d+)\s*[xX]\s*(\d+)\s*$/);
+    console.warn(LOGGER, sizeValue, size);
+    if (!size) {
+      formdata.customsize.setCustomValidity("invalid size value");
+      console.warn(LOGGER, "invalid size value");
+      settings.reset();
+      formdata.customsize.reportValidity();
+      return;
+    } else {
+      let w = Number(size[1]);
+      let h = Number(size[2]);
+      if (w > 50 || h > 50) {
+        formdata.customsize.setCustomValidity("invalid size value");
+        console.warn(LOGGER, "invalid size value");
+        settings.reset();
+        formdata.customsize.reportValidity();
+        return;
+      }
+      if (w < 2 || h < 2) {
+        formdata.customsize.setCustomValidity("invalid size value");
+        console.warn(LOGGER, "invalid size value");
+        settings.reset();
+        formdata.customsize.reportValidity();
+        return;
+      }
+      console.debug(LOGGER, w, h);
+      settings.width = w;
+      settings.height = h;
+    }
+
+    settings.store();
+    window.location = './index.html';
+  };
+
+  document.forms.settings.customsize.onchange = () => {
+    document.forms.settings.gamesize.value = 'custom';
+  };
+
+  document.forms.settings.onsubmit = () => {
+    document.getElementById('btnSave').click();
+    return false;
+  };
 }
+
+function initSettings() {
+  let formdata = document.forms.settings;
+
+  let sizeVal = settings.width + 'x' + settings.height;
+
+  formdata.gamesize.value = sizeVal;
+  if (formdata.gamesize.value !== sizeVal) {
+    formdata.gamesize.value = 'custom';
+    formdata.customsize.value = sizeVal;
+  }
+
+}
+
+
+function initSettingsPage() {
+  console.debug(LOGGER, 'init page');
+  initButtons();
+  initSettings();
+}
+
 if (document.readyState !== 'loaded') {
-  document.addEventListener('DOMContentLoaded', initColorEditor);
+  console.debug(LOGGER, 'wait for init');
+  document.addEventListener('DOMContentLoaded', initSettingsPage);
 } else {
-  initColorEditor();
+  console.debug(LOGGER, 'init page');
+  initSettingsPage();
 }

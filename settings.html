@@ -21,66 +21,56 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
     <link rel="stylesheet" href="res/game.css"/>
-    <script src="res/settings.js"></script>
+    <script src="res/settings.js" type="module"></script>
     <style>body{
         background-color: royalblue;
         color:white;
         .settings{
           display:block;
-        }
-        .character{
-          display: inline-block;
-          vertical-align: top;
-          label{
-            display:block;
-          }
-          &.colors {
-            display: inline-grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 2em 2em;
+          #gamedata .row{
+            display: inline-block;
           }
         }
-      </style>
-    </head>
-    <body class="bgWater">
-      <header class="bgWay">
-        <h1><a href="./">Docks Runner</a></h1>
-        <h2 class="bgWall">Einstellungen</h2>
-      </header>
-      <nav></nav>
-      <main class="settings">
-        <section id="player">
-          <h2>Spieler</h2>
-          <div class="bgWay character" id="playerView">
-          </div>
-          <div class="character colors">
-            <label><input type="color" value="#FFD321" name="playerB-skin"> Haut</label>
-            <label><input type="color" value="#B18904" name="playerB-stroke"> Kontur</label>
-            <label><input type="color" value="#6baddf" name="playerB-hair"> Haare</label>
-            <label><input type="color" value="#4a799c" name="playerB-hairline"> Haarkontur</label>
-            <label><input type="color" value="#000000" name="playerB-eyes"> Augenfarbe</label>
-            <label><input type="color" value="#FFFFFF" name="playerB-eyewhite"> Augapfel</label>
-            <label><input type="color" value="#addf6b" name="playerB-shirt"> Hemd</label>
-            <label><input type="color" value="#6b73df" name="playerB-pants"> Hose</label>
-            <label><input type="color" value="#8A4B08" name="playerB-shoes"> Schuhe</label>
-            <label><input type="checkbox" checked name="randomColors"> Zufall</label>
-          </div>
-        </section>
-        <section id="control">
-          <h2>Steuerung</h2>
-          <label><input type="checkbox" value="0" name="ctrl-invert"> Invertieren</label>
-        </section>
+      }
+      @media ( orientation: portrait){
+        #player{
+          display:grid;
+          grid-template-columns: auto 1fr;
+          grid-gap: 0 .5em;
+          h2{
+            grid-column:1/3;
+          }
+        }
+
+      }
+    </style>
+  </head>
+  <body class="bgWater">
+    <header class="bgWay">
+      <h1><a href="./">Docks Runner</a></h1>
+      <h2 class="bgWall">Einstellungen</h2>
+    </header>
+    <nav>
+      <div id="btnSave" class="bgWay button">Speichern</div>
+      <div id="btnBack" class="bgWay button">Zurück</div>
+    </nav>
+    <main class="settings"><form name="settings" id="settings">
         <section id="gamedata">
-          <h2>Spiel</h2>
-          <label><input type="radio" value="default" checked name="gamesize"> Standard</label>
-          <label><input type="radio" value="midi" name="gamesize"> Größer</label>
-          <label><input type="radio" value="maxi" name="gamesize"> Max</label>
+          <h2>Spielfeld</h2>
+          <span class="row">
+          <label><input type="radio" value="6x10" checked name="gamesize"> Standard</label>
+          <label><input type="radio" value="8x12" name="gamesize"> Größer</label>
+          <label><input type="radio" value="10x16" name="gamesize"> Max</label>
+          </span><span class="row">
+          <label><input type="radio" value="custom" name="gamesize"> Custom:</label>
+          <input placeholder="width x height" pattern="[0-9]+ *[xX] *[0-9]+" name="customsize">
+          </span>
         </section>
-      </main>
-      <footer>
-        &copy; Nigjo Iqn
-        - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
-        - <a href="code.html">Teilen</a>
-      </footer>
-    </body>
-  </html>
+      </form></main>
+    <footer>
+      &copy; Nigjo Iqn
+      - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
+      - <a href="code.html">Teilen</a>
+    </footer>
+  </body>
+</html>

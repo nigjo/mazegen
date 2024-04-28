@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-let userSettings = {
+const defaultSettings = {
   width: 6,
   height: 10
 };
+let userSettings = {...defaultSettings};
 function reloadSettings() {
   let stored = localStorage.getItem("docksrunner.settings");
   if (stored) {
     userSettings = JSON.parse(stored);
+  } else {
+    //store defaults. should happen only once.
+    localStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
   }
 }
 reloadSettings();
@@ -41,6 +45,13 @@ const settingsManager = {
   store: () => {
     localStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
     postMessage('docksrunner.settings.stored', "*");
+  },
+  reset: (full) => {
+    if (full) {
+      userSettings = {...defaultSettings};
+    } else {
+      reloadSettings();
+    }
   }
 };
 
