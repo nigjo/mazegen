@@ -29,45 +29,6 @@ async function fetchSvg(uri) {
 }
 
 
-fetchSvg('assets/playerB.svg').then(svg => {
-  const target = document.createElementNS(SVGNS, 'svg');
-  target.setAttribute('viewBox', '0 0 8 16');
-  target.setAttribute('width', 128);
-  target.setAttribute('height', 256);
-  const defs = document.createElementNS(SVGNS, 'defs');
-  target.append(defs);
-  //let symbols = {};
-  let styles;
-  for (const n of svg.querySelectorAll('defs>[id]')) {
-    if (n.nodeName === 'symbol') {
-      defs.append(n.cloneNode(true));
-    } else if (n.nodeName === 'style') {
-      if (!styles) {
-        styles = document.createElementNS(SVGNS, 'style');
-        defs.append(styles);
-      }
-      styles.append(n.textContent.replace(/\s*([{}:;])\s*/g, '$1'));
-    }
-  }
-  let top = document.createElementNS(SVGNS, 'use');
-  top.setAttribute('class', 'playerView');
-  top.setAttribute('href', '#playerB-suedM');
-  target.append(top);
-  let bottom = document.createElementNS(SVGNS, 'use');
-  top.setAttribute('class', 'playerView');
-  bottom.setAttribute('href', '#playerB-rechtsM');
-  bottom.setAttribute('transform', 'translate(0,8)');
-  target.append(bottom);
-
-  console.debug(LOGGER, target);
-  document.getElementById('playerView')
-          .replaceChildren(target);
-  //console.debug(LOGGER, styles);
-  //let defs = [...].reduce((a, v) => ({...a, [v.id]: v}), {});
-  //let d = 
-
-});
-
 function initButtons() {
   document.getElementById('btnBack').onclick = () => {
     window.location = './index.html';
