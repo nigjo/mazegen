@@ -20,9 +20,11 @@ const defaultSettings = {
 };
 let userSettings = {...defaultSettings};
 function reloadSettings() {
-  let stored = localStorage.getItem("docksrunner.settings");
+  const stored = localStorage.getItem("docksrunner.settings");
   if (stored) {
-    userSettings = JSON.parse(stored);
+    const storedData = JSON.parse(stored);
+    for (const p in defaultSettings)
+      userSettings[p] = (p in storedData ? storedData : defaultSettings)[p];
   } else {
     //store defaults. should happen only once.
     localStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
@@ -48,8 +50,10 @@ const settingsManager = {
   },
   reset: (full) => {
     if (full) {
+      //rewrite userSettings from defaults
       userSettings = {...defaultSettings};
     } else {
+      //just reload stored values
       reloadSettings();
     }
   }
@@ -57,9 +61,11 @@ const settingsManager = {
 
 const settings = new Proxy(userSettings, {
   set: (target, prop, value) => {
-    console.log('setting', prop);
-    target[prop] = value;
-    return value;
+    if (prop in target) {
+      console.log('setting', prop);
+      target[prop] = value;
+      return value;
+    }
   },
   get: (target, prop, receiver) => {
     if (prop in settingsManager) {
