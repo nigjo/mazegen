@@ -24,10 +24,10 @@ export const asset = {
     wallRight: {validator: () => false}
   },
   tail: (svg, maze, rng) => {
-    let exitCol = maze.exit.col;
+    //let exitCol = maze.exit.col;
     const m = svg.querySelector('.maze');
     let row = m.firstElementChild;
-    console.log('STONES', maze.constructor);
+    //console.debug('STONES', maze.constructor);
     const addStones = (parent, id, x, y) => {
       let l = document.createElementNS(SVGNS, 'use');
       l.setAttribute('href', id);
@@ -43,7 +43,7 @@ export const asset = {
       //next
       row = row.nextElementSibling;
     }
-    console.log('STONES', row);
+    //console.debug('STONES', row);
     addStones(row.lastElementChild, '#stonesRight', 56, 0);
     [...row.children].forEach(c => addStones(c, '#stonesBottom', 0, 56));
     addStones(row.firstElementChild, '#stonesLeft', 0, 0);
