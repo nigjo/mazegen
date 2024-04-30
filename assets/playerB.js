@@ -36,7 +36,7 @@ const colors = {
 };
 
 export const asset = {
-  view: PLAYER_ID + '.svg',
+  view: 'playerB.svg',
   player: true,
   directions: {
     NORTH: {
