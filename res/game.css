@@ -40,7 +40,7 @@ header *{
   padding:1em;
   background-color:navy;
   line-height:0px;
-  .mazeview::part(mazeview){
+  .mazeview::part(mazeview), &::part(mazeview){
     /*reset settings*/
     font: initial;
     text-shadow: initial;

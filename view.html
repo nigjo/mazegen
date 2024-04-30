@@ -103,6 +103,7 @@
           w.style.width = Number(img.getAttribute('width')) + 'px';
         if (img.hasAttribute('height'))
           w.style.height = Number(img.getAttribute('height')) + 'px';
+        img.setAttribute('part', 'mazeview');
 
         document.querySelector('main').append(w);
 
