@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+Copyright 2024 nigjo.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+  <head>
+    <title>Docks Runner - Assets</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      function updateSize(e) {
+        console.debug(e);
+      }
+      function loadAsset(uri, idx = 999) {
+        console.log('ASSETS', uri);
+        fetch(uri).then(r => r.text()).then(src => {
+          for (var line of src.split("\n")) {
+            if (line.trim().startsWith('view:')) {
+              let value = line.substring(line.indexOf(':') + 1).trim();
+              let viewName = value.substring(1, value.indexOf(value[0], 1));
+              loadAssetView(viewName, idx);
+              return;
+            }
+          }
+          console.warn('ASSETS', 'unable to find view in', uri);
+        }).catch(e => {
+          console.warn('ASSETS', 'unable load asset', uri);
+        });
+      }
+      const viewSize = 448;
+      function loadAssetView(uri, idx = 999) {
+        console.log('ASSETS', 'VIEW', uri, idx);
+        fetch(uri)
+                .then(r => r.text())
+                .then(t => new DOMParser().parseFromString(t, "image/svg+xml"))
+                .then(doc => {
+                  const svg = doc.rootElement;
+                  console.debug('ASSETS', svg);
+                  let w = svg.getAttribute('width');
+                  let h = svg.getAttribute('height');
+                  console.log('ASSERT', uri, w, h);
+                  if (w === h) {
+                    w = h = viewSize;
+                  } else if (Number(w) > Number(h)) {
+                    console.log('ASSERT', 'wide');
+                    w = viewSize * w / h;
+                    h = viewSize;
+                  }else{
+                    h = viewSize * h / w;
+                    w = viewSize;
+                  }
+                  console.log('ASSERT', uri, w, h);
+                  svg.setAttribute('width', w);
+                  svg.setAttribute('height', h);
+                  const fig = document.createElement('figure');
+                  fig.style.order = idx;
+                  fig.innerHTML = '<figcaption>' + uri + '</figcaption>';
+                  const frame = document.createElement('div');
+                  //frame.src = uri;
+                  frame.style.width = w + 'px';
+                  frame.style.height = h + 'px';
+                  const s = frame.attachShadow({mode: 'open'});
+                  s.append(svg);
+                  fig.append(frame);
+                  document.querySelector('main').append(fig);
+                })
+                .catch(e => {
+                  console.warn('ASSETS', 'unable load asset view', uri, e);
+                });
+      }
+      fetch('assets.json').then(r => r.json()).then(list => {
+        list.forEach((a, i) => loadAsset(a, i));
+      });
+    </script>
+    <style>
+      body{
+        font-family: sans-serif;
+      }
+      main{
+        display:flex;
+        flex-direction: row;
+        flex-wrap:wrap;
+      }
+      figure {
+        margin: .25em;
+        padding: .25em;
+        background-color: royalblue;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Docks Runner - Assets</h1>
+    </header>
+    <main>
+    </main>
+    <script>loadAssetView('assetbase.svg', -1);</script>
+    <footer>
+      &copy; 2024 Nigjo
+      - <a href="../">zum Spiel</a>
+      - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
+    </footer>
+  </body>
+</html>
