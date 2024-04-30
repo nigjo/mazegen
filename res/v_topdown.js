@@ -137,26 +137,33 @@ export default class TopDownView extends SVGGenerator {
     svg.append(defs);
   }
 
+  addRandomItems(tile, cell) {
+    if (this.rnd(3) === 1) {
+      let items = [];
+      for (let id of Object.keys(assets)) {
+        if ("tiles" in assets[id] && tile in assets[id].tiles) {
+          if ("validator" in assets[id].tiles[tile]) {
+            if (!assets[id].tiles[tile].validator(cell, id)) {
+              continue;
+            }
+          }
+          items.push(id);
+        }
+      }
+      if (items.length > 0) {
+        return items[this.rnd(items.length)];
+      }
+    }
+  }
+
   tile(tile, cell) {
     if (svgDefs.has(tile)) {
       let classes = [tile];
-      let items = [];
       let data = {};
-      if (this.rnd(3) === 1) {
-        for (let id of Object.keys(assets)) {
-          if ("tiles" in assets[id] && tile in assets[id].tiles) {
-            if ("validator" in assets[id].tiles[tile]) {
-              if (!assets[id].tiles[tile].validator(cell, id)) {
-                continue;
-              }
-            }
-            items.push(id);
-          }
-        }
-        if (items.length > 0) {
-          data.item = items[this.rnd(items.length)];
-        }
-      }
+
+      let item = this.addRandomItems(tile, cell);
+      if (item)
+        data.item = item;
 
       cell.topdownTile = cell.topdownTile || {};
       cell.topdownTile[tile] = {
@@ -219,7 +226,7 @@ export default class TopDownView extends SVGGenerator {
         }
         tile.parentNode.insertBefore(u, tile.nextSibling);
       } else {
-        console.debug(LOGGER, 'failed', item in assets);
+        console.debug(LOGGER, item, item in assets);
       }
     });
     return svg;
