@@ -7,34 +7,103 @@
     </symbol>
     <symbol id="assetbaseB" width="64" height="64" viewBox="0 0 64 64" class="background">
       <use class="boden" href="../res/v_topdown.svg#boden"/>
-      <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
-      <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
-      <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
-      <use class="doorBottom" href="../res/v_topdown.svg#doorBottom"/>
+      <g class="top">
+        <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
+        <use id="assetRopeTop" class="rope" href="ropesAndPiles.svg#ropeH" transform="translate(18,11)"/>
+      </g>
+      <g class="left">
+        <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
+        <use id="assetPileTL" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(18,14)"/>
+        <use id="assetRopeLeft" class="rope" href="ropesAndPiles.svg#ropeV" transform="translate(18,12)"/>
+      </g>
+      <g class="right">
+        <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
+        <use id="assetPileTR" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(46,14)"/>
+        <use id="assetRopeRight" class="rope" href="ropesAndPiles.svg#ropeV" transform="translate(46,12)"/>
+      </g>
+      <g class="bottom door">
+        <use class="doorBottom" href="../res/v_topdown.svg#doorBottom"/>
+        <use id="assetPileBL" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(18,42)"/>
+        <use id="assetPileBR" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(46,42)"/>
+        <use id="assetPileBR" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(46,42)"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeVB" x="18" y="40"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeVB" x="46" y="40"/>
+      </g>
       <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
     <symbol id="assetbaseT" width="64" height="64" viewBox="0 0 64 64" class="background">
       <use class="boden" href="../res/v_topdown.svg#boden"/>
-      <use class="doorTop" href="../res/v_topdown.svg#doorTop"/>
-      <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
-      <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
-      <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+      <g class="top door">
+        <use class="doorTop" href="../res/v_topdown.svg#doorTop"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeVT" x="18" y="0"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeVT" x="46" y="0"/>
+      </g>
+      <g class="left">
+        <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
+        <use href="#assetPileTL"/>
+        <use href="#assetRopeLeft"/>
+      </g>
+      <g class="right">
+        <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
+        <use href="#assetPileTR"/>
+        <use href="#assetRopeRight"/>
+      </g>
+      <g class="bottom">
+        <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+        <use id="assetRopeBottom" class="rope" href="ropesAndPiles.svg#ropeH" transform="translate(18,39)"/>
+        <use href="#assetPileBL"/>
+        <use href="#assetPileBR"/>
+      </g>
       <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
     <symbol id="assetbaseR" width="64" height="64" viewBox="0 0 64 64" class="background">
       <use class="boden" href="../res/v_topdown.svg#boden"/>
-      <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
-      <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
-      <use class="doorRight" href="../res/v_topdown.svg#doorRight"/>
-      <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+      <g class="top">
+        <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
+        <use href="#assetRopeTop"/>
+      </g>
+      <g class="left">
+        <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
+        <use href="#assetPileTL"/>
+        <use href="#assetRopeLeft"/>
+      </g>
+      <g class="right door">
+        <use class="doorRight" href="../res/v_topdown.svg#doorRight"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeHR" x="46" y="11"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeHR" x="46" y="39"/>
+        <use href="#assetPileTR"/>
+      </g>
+      <g class="bottom">
+        <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+        <use id="assetRopeBottom" class="rope" href="ropesAndPiles.svg#ropeH" transform="translate(18,39)"/>
+        <use href="#assetPileBL"/>
+        <use href="#assetPileBR"/>
+      </g>
       <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
     <symbol id="assetbaseL" width="64" height="64" viewBox="0 0 64 64" class="background">
       <use class="boden" href="../res/v_topdown.svg#boden"/>
-      <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
-      <use class="doorLeft" href="../res/v_topdown.svg#doorLeft"/>
-      <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
-      <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+      <g>
+        <use class="wallTop" href="../res/v_topdown.svg#wallTop"/>
+        <use href="#assetRopeTop"/>
+      </g>
+      <g class="left door">
+        <use class="doorLeft" href="../res/v_topdown.svg#doorLeft"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeHL" x="18" y="11"/>
+        <use class="rope" href="ropesAndPiles.svg#ropeHL" x="18" y="39"/>
+        <use href="#assetPileTL"/>
+      </g>
+      <g class="right">
+        <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
+        <use href="#assetPileTR"/>
+        <use href="#assetRopeRight"/>
+      </g>
+      <g class="bottom">
+        <use class="wallBottom" href="../res/v_topdown.svg#wallBottom"/>
+        <use id="assetRopeBottom" class="rope" href="ropesAndPiles.svg#ropeH" transform="translate(18,39)"/>
+        <use href="#assetPileBL"/>
+        <use href="#assetPileBR"/>
+      </g>
       <use class="decke" href="../res/v_topdown.svg#decke"/>
     </symbol>
   </defs>

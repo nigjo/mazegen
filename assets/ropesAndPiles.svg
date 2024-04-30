@@ -1,0 +1,73 @@
+<svg width="512" height="512" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="ropesAndPilesDefs">
+      .pilon{
+        fill:Olive;
+        .pilon3d{fill:url(#pile_rundschatten);}
+      }
+      .rope{
+        stroke:Goldenrod;
+        stroke-width:1.25;
+        fill:none;
+        .mark{stroke:rgba(0,0,0,.2);
+          stroke-width:1;stroke-dasharray:.25 2;}
+      }
+    </style>
+    <linearGradient id="pile_rundschatten">
+      <stop offset="0%" style="stop-color:rgba(0,0,0,.05);"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,.1);"/>
+    </linearGradient>
+    <g id="pilon" class="pilon">
+      <rect x="-2" y="-1.5" width="2" height="3" class="shadow"/>
+      <path id="pilonbase" d="M-1.75,-4v4a1.75,1.5,180,0,0,3.5,0v-4z"/>
+      <use href="#pilonbase" class="pilon3d"/>
+      <circle cx="0" cy="0" r="1.75" transform="translate(0,-4) scale(1,.75)"/>
+      <circle cx="0" cy="0" r="1.75" class="shadow" transform="translate(0,-4) scale(1,.75)"/>
+    </g>
+    <path d="M-2,-1.5l0,3,-3,0a1,1.5,180,1,1,0,-3z" class="shadow" id="pilonShadow"/>
+    <g id="ropeV" class="rope">
+      <line x1="0" y1="0" x2="0" y2="25"/>
+      <line x1="0" y1="1" x2="0" y2="25" class="mark"/>
+    </g>
+    <g id="ropeH" class="rope">
+      <path d="M0,0q14,2,28,0"/>
+      <path d="M0,0q14,2,28,0" class="mark"/>
+    </g>
+    <g id="ropeHL" class="rope">
+      <path d="M0,0q-9,1,-18,1"/>
+      <path d="M0,0q-9,1,-18,1" class="mark"/>
+    </g>
+    <g id="ropeHR" class="rope">
+      <path d="M0,0q9,1,18,1"/>
+      <path d="M0,0q9,1,18,1" class="mark"/>
+    </g>
+    <g id="ropeVT" class="rope">
+      <line x1="0" y1="0" x2="0" y2="9"/>
+      <line x1="0" y1="1" x2="0" y2="9" class="mark"/>
+    </g>
+    <g id="ropeVB" class="rope">
+      <line x1="0" y1="0" x2="0" y2="24"/>
+      <line x1="0" y1="1" x2="0" y2="24" class="mark"/>
+    </g>
+    <style>
+      .background .rope{
+        display:none;
+      }
+    </style>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseB" class="base"/>
+    <g id="usage">
+      <use href="#ropeH" transform="translate(18,11)"/>
+      <use href="#pilon" transform="translate(18,14)"/>
+      <use href="#pilonShadow" transform="translate(-8,8) translate(18,14)"/>
+      <use href="#pilon" transform="translate(46,14)"/>
+      <use href="#pilonShadow" transform="translate(46,14)"/>
+      <use href="#pilon" transform="translate(18,42)"/>
+      <use href="#pilonShadow" transform="translate(-8,8) translate(18,42)"/>
+      <use href="#pilon" transform="translate(46,42)"/>
+      <use href="#pilonShadow" transform="translate(46,42)"/>
+    </g>
+  </g>
+</svg>

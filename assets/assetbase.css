@@ -12,19 +12,6 @@
     fill:url(../res/game_bg_wall.svg#bricks);
   }
 }
-#wallBottom,#wallTop,#decke,#ropeSide,#doorRight,#doorLeft,#doorTop{
-  .rope{
-    stroke:Goldenrod;
-    stroke-width:1.25;
-    fill:none
-  }
-  .ropemark{
-    stroke:rgba(0,0,0,.2);
-    stroke-width:1;
-    fill:none;
-    stroke-dasharray:.25 2;
-  }
-}
 #wallLeft,#pilon,#doorBottom,#decke,#doorLeft,#doorTop{
   .shadow{
     fill:rgba(0,0,0,.1);
@@ -35,33 +22,24 @@
   fill:rgba(0,0,0,.1);
   stroke:none;
 }
-#pilon{
-  &.pilon{
-    fill:Olive;
-    z-index:1;
-  }
-  .pilon3d{fill:url(../res/v_topdown.svg#rundschattenFront);}
-  .shadow{
-    fill:rgba(0,0,0,.1);
-    stroke:none;
-  }
-}
-#decke{
-  .rope.topDoor{display:var(--doorTop);}
-  .rope.topWall{display:var(--wallTop);}
-  .rope.bottomDoor{display:var(--doorBottom);}
-  .rope.bottomWall{display:var(--wallBottom);}
-  .rope.leftDoor{display:var(--doorLeft);}
-  .rope.leftWall{display:var(--wallLeft);}
-  .rope.rightDoor{display:var(--doorRight);}
-  .rope.rightWall{display:var(--wallRight);}
-}
-.doorTop~.decke{--wallTop:none;}
-.wallTop~.decke{--doorTop:none;}
-.doorBottom~.decke{--wallBottom:none;}
-.wallBottom~.decke{--doorBottom:none;}
-.doorLeft~.decke{--wallLeft:none;}
-.wallLeft~.decke{--doorLeft:none;}
-.doorRight~.decke{--wallRight:none;}
-.wallRight~.decke{--doorRight:none;}
 
+.pilon{
+  fill:Olive;
+  .pilon3d{fill:url(#pile_rundschatten);}
+}
+.rope{
+  stroke:Goldenrod;
+  stroke-width:1.25;
+  fill:none;
+  &.leftDoor{
+    display:var(--leftDoor);
+  }
+  .mark{stroke:rgba(0,0,0,.2);
+    stroke-width:1;stroke-dasharray:.25 2;}
+}
+.decke{
+  --leftDoor:none;
+}
+.doorLeft~.decke{
+  --leftDoor:initial;
+}

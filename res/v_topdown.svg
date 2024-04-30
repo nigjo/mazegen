@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
-    <linearGradient id="rundschattenFront">
-      <stop offset="0%" style="stop-color:rgba(0,0,0,.05);"/>
-      <stop offset="100%" style="stop-color:rgba(255,255,255,.1);"/>
-    </linearGradient>
-    <linearGradient id="rundschattenBack">
-      <stop offset="0%" style="stop-color:rgba(255,255,255,.1);"/>
-      <stop offset="100%" style="stop-color:rgba(0,0,0,.05);"/>
-    </linearGradient>
     <g id="boden" class="boden">
       <rect x="0" y="0" width="64.5" height="64.5"/>
       <rect x="16" y="44" width="32" height="8" class="wall"/>
-      <!-- <circle cx="32" cy="32" r="20" class="way"/> -->
+      <rect x="16" y="12" width="32" height="32" class="way"/>
     </g>
     <g id="wallLeft">
       <rect x="8" y="20" width="8" height="32" class="shadow"/>
-      <use href="#pilonShadow" transform="translate(10,22)"/>
     </g>
     <g id="doorLeft">
       <rect x="0" y="16" width="16.5" height="24" class="way"/>
-      <rect x="0" y="40" width="16.5" height="8" class="wall"/>
+      <rect x="15.5" y="44" width="1" height="4" class="wall"/>
+      <rect x="0" y="40" width="16" height="8" class="wall"/>
     </g>
     <g id="doorRight">
       <rect x="47.5" y="16" width="18" height="24" class="way"/>
@@ -43,109 +35,15 @@
     <g id="wallBottom">
     </g>
     <g id="decke">
-      <rect x="16" y="12" width="32" height="32" class="way"/>
-      <g class="rope topWall">
-        <path d="M46,11q-14,2,-28,0"/>
-        <path d="M46,11q-14,2,-28,0" class="ropemark"/>
-      </g>
-      <g class="rope topDoor">
-        <g>
-          <line x1="18" y1="0" x2="18" y2="9"/>
-          <line x1="18" y1="0" x2="18" y2="9" class="ropemark"/>
-        </g>
-        <g>
-          <line x1="46" y1="0" x2="46" y2="9"/>
-          <line x1="46" y1="0" x2="46" y2="9" class="ropemark"/>
-        </g>
-      </g>
-      <g class="rope leftDoor">
-        <path d="M18,11q-9,1,-18,1" class="rope"/>
-        <path d="M18,11q-9,1,-18,1" class="ropemark"/>
-      </g>
-      <g class="rope rightDoor">
-        <path d="M46,11q9,1,18,1"/>
-        <path d="M46,11q9,1,18,1" class="ropemark"/>
-      </g>
-      <g transform="translate(18,14)">
-        <g id="pilon" class="pilon">
-          <rect x="-2" y="-1.5" width="2" height="3" class="shadow"/>
-          <path id="pilonbase" d="M-1.75,-4v4a1.75,1.5,180,0,0,3.5,0v-4z"/>
-          <use href="#pilonbase" class="pilon3d"/>
-          <circle cx="0" cy="0" r="1.75" transform="translate(0,-4) scale(1,.75)"/>
-          <circle cx="0" cy="0" r="1.75" class="shadow" transform="translate(0,-4) scale(1,.75)"/>
-        </g>
-      </g>
-      <g transform="translate(46,14)" class="shadow">
-        <path d="M-2,-1.5l0,3,-3,0a1,1.5,180,1,1,0,-3z" class="shadow" id="pilonShadow"/>
-        <use href="#pilon"/>
-      </g>
-
-      <g class="rope leftDoor">
-        <path d="M18,39q-9,1,-18,1" class="rope"/>
-        <path d="M18,39q-9,1,-18,1" class="ropemark"/>
+      <g class="leftDoor">
         <path d="M16,40l0,8,-8,0z" class="shadow"/>
         <rect x="8" y="48" width="8" height="4" class="shadow"/>
       </g>
-      <g class="rope leftWall">
-        <g id="ropeSide" class="rope">
-          <line x1="18" y1="12" x2="18" y2="37"/>
-          <line x1="18" y1="13" x2="18" y2="37" class="ropemark"/>
-        </g>
-      </g>
-      <g class="rope rightDoor">
-        <path d="M46,39q9,1,18,1"/>
-        <path d="M46,39q9,1,18,1" class="ropemark"/>
-      </g>
-      <g class="rope rightWall">
-        <use href="#ropeSide" transform="translate(28,0)"/>
-      </g>
-      <g class="rope bottomWall">
-        <path d="M46,39q-14,2,-28,0"/>
-        <path d="M46,39q-14,2,-28,0" class="ropemark"/>
-      </g>
-      
-      <g transform="translate(18,42)">
-        <use href="#pilon"/>
-        <use href="#pilonShadow" transform="translate(-8,8)"/>
-      </g>
-      <g transform="translate(46,42)">
-        <use href="#pilon"/>
-        <use href="#pilonShadow"/>
-      </g>
-      <g class="rope bottomDoor">
-        <line x1="18" y1="39.5" x2="18" y2="64"/>
-        <line x1="18" y1="39.5" x2="18" y2="64" class="ropemark"/>
-        <line x1="46" y1="39.5" x2="46" y2="64"/>
-        <line x1="46" y1="39.5" x2="46" y2="64" class="ropemark"/>
-      </g>
     </g>
     <style id="topdownDefs">
-      .pilon{fill:Olive;}
-      .pilon3d{fill:url(#rundschattenFront);}
-      .ropeLeft{visibility:var(--ropeLeft);}
-      .ropeRight{visibility:var(--ropeRight);}
-      .ropeBottom{visibility:var(--ropeBottom);}
-      .rope{stroke:Goldenrod;stroke-width:1.25;fill:none}      
-      .ropemark{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;stroke-dasharray:.25 2}
       .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      #decke{
-      .rope.topDoor{display:var(--doorTop);}
-      .rope.topWall{display:var(--wallTop);}
-      .rope.bottomDoor{display:var(--doorBottom);}
-      .rope.bottomWall{display:var(--wallBottom);}
-      .rope.leftDoor{display:var(--doorLeft);}
-      .rope.leftWall{display:var(--wallLeft);}
-      .rope.rightDoor{display:var(--doorRight);}
-      .rope.rightWall{display:var(--wallRight);}
-      }
-      .doorTop~.decke{--wallTop:none;}
-      .wallTop~.decke{--doorTop:none;}
-      .doorBottom~.decke{--wallBottom:none;}
-      .wallBottom~.decke{--doorBottom:none;}
-      .doorLeft~.decke{--wallLeft:none;}
+      #decke .leftDoor{display:var(--doorLeft);}
       .wallLeft~.decke{--doorLeft:none;}
-      .doorRight~.decke{--wallRight:none;}
-      .wallRight~.decke{--doorRight:none;}
     </style>
   </defs>
 </svg>
