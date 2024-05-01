@@ -57,7 +57,7 @@ limitations under the License.
                     console.log('ASSERT', 'wide');
                     w = viewSize * w / h;
                     h = viewSize;
-                  }else{
+                  } else {
                     h = viewSize * h / w;
                     w = viewSize;
                   }
@@ -66,6 +66,7 @@ limitations under the License.
                   svg.setAttribute('height', h);
                   const fig = document.createElement('figure');
                   fig.style.order = idx;
+                  fig.onclick = () => window.location = './' + uri;
                   fig.innerHTML = '<figcaption>' + uri + '</figcaption>';
                   const frame = document.createElement('div');
                   //frame.src = uri;
@@ -87,17 +88,26 @@ limitations under the License.
     <style>
       body{
         font-family: sans-serif;
+        background-color: #5478e4;
+        color: white;
       }
       main{
         display:flex;
         flex-direction: row;
         flex-wrap:wrap;
       }
+      .hint{
+        order:-10;
+        flex-basis:100%;
+        background-color:beige;
+        color:crimson;
+        padding:.5em;
+      }
       figure {
         margin: .25em;
         padding: .25em;
         background-color: royalblue;
-        color: white;
+        cursor:pointer;
       }
     </style>
   </head>
@@ -106,6 +116,8 @@ limitations under the License.
       <h1>Docks Runner - Assets</h1>
     </header>
     <main>
+      <p class="hint">Da der Chrome/Webkit keine standardkonformen, externen Verweise in SVGs zulässt.
+        Lässt sich diese Übersicht nur im Firefox korrekt betrachten.</p>
     </main>
     <script>loadAssetView('assetbase.svg', -1);</script>
     <footer>
