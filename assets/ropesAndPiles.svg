@@ -50,8 +50,8 @@
       <line x1="0" y1="1" x2="0" y2="24" class="mark"/>
     </g>
     <style>
-      .background .rope{
-        display:none;
+      .background .rope, .assetShadow{
+        display:none !important;
       }
     </style>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
@@ -64,10 +64,12 @@
       <use href="#pilonShadow" transform="translate(-8,8) translate(18,14)"/>
       <use href="#pilon" transform="translate(46,14)"/>
       <use href="#pilonShadow" transform="translate(46,14)"/>
+      <use href="#ropeV" transform="translate(46,12)"/>
       <use href="#pilon" transform="translate(18,42)"/>
       <use href="#pilonShadow" transform="translate(-8,8) translate(18,42)"/>
       <use href="#pilon" transform="translate(46,42)"/>
       <use href="#pilonShadow" transform="translate(46,42)"/>
+      <use href="#ropeVB" transform="translate(18,40)"/>
     </g>
   </g>
 </svg>
