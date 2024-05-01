@@ -158,7 +158,7 @@ export default class TopDownView extends SVGGenerator {
 
   tile(tile, cell) {
     if (svgDefs.has(tile)) {
-      let classes = [tile];
+      let classes = [tile, 'tile'];
       let data = {};
 
       let item = this.addRandomItems(tile, cell);
@@ -212,7 +212,8 @@ export default class TopDownView extends SVGGenerator {
     items.forEach(tile => {
       //console.debug(LOGGER, 'TD', tile);
       let item = tile.getAttribute('data-item');
-      let tileName = tile.getAttribute('class');
+      let classes = tile.getAttribute('class').split(' ');
+      let tileName = classes[0];
       //console.debug(LOGGER, tile, item, tileName);
       if (item in assets && tileName in assets[item].tiles) {
         let u = document.createElementNS(SVGGenerator.SVGNS, 'use');
@@ -224,11 +225,42 @@ export default class TopDownView extends SVGGenerator {
         } else if (typeof (transform) === 'string') {
           u.setAttribute('transform', transform);
         }
-        tile.parentNode.insertBefore(u, tile.nextSibling);
+        if (!u.hasAttribute('data-z')) {
+          const move = u.getAttribute('transform').match(/translate\([-\.\d]+,([-\.\d]+)\)/)
+          //console.debug(LOGGER, move, u.getAttribute('transform'));
+          u.setAttribute('data-z', move[1]);
+        }
+        tile.parentNode.insertBefore(u, tile.nextElementSibling);
       } else {
-        console.debug(LOGGER, item, item in assets);
+        console.debug(LOGGER, item,'not handled. Known?', item in assets);
       }
     });
+
+    const tiles = svg.getElementsByClassName('tile');
+    //console.debug(LOGGER, tiles.length);
+    [...tiles].forEach(tile =>
+    {
+      let tileAssets = [];
+      let tileAsset = tile.nextElementSibling;
+      //console.debug(LOGGER, tileAsset);
+      while (tileAsset && tileAsset.hasAttribute('data-z')) {
+        let next = tileAsset.nextElementSibling;
+        tileAssets.push(tileAsset);
+        tileAsset.remove();
+        tileAsset = next;
+      }
+      tileAssets.sort((a1, a2) =>
+        Number(a1.getAttribute('data-z'))
+                - Number(a2.getAttribute('data-z')));
+      //console.debug(LOGGER, tileAssets);
+      const nextTile = tile.nextElementSibling;
+      tileAssets.forEach(a => {
+        tile.parentNode.insertBefore(a, nextTile);
+        //a.removeAttribute('data-z');
+      });
+
+    });
+
     return svg;
   }
 }

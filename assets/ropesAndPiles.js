@@ -28,11 +28,12 @@ export const asset = {
   },
   tail: (svg, maze, rng) => {
     //console.log(LOGGER,svg.outerHTML);
-    function addRope(parent, type, x, y) {
+    function addRope(parent, type, x, y, offset = 0) {
       let u;
       u = document.createElementNS(svg.namespaceURI, 'use');
       u.setAttribute('href', '#rope' + type);
       u.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+      u.setAttribute('data-z', y + offset);
       parent.insertAdjacentElement('afterend', u);
     }
     function addPilon(parent, x, y, shadow) {
@@ -42,11 +43,13 @@ export const asset = {
         u.setAttribute('href', '#pilonShadow');
         let offset = typeof (shadow) === 'number' ? shadow : 0;
         u.setAttribute('transform', 'translate(' + (x - offset) + ',' + (y + offset) + ')');
+        u.setAttribute('data-z', y - .1);
         parent.insertAdjacentElement('afterend', u);
       }
       u = document.createElementNS(svg.namespaceURI, 'use');
       u.setAttribute('href', '#pilon');
       u.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+      u.setAttribute('data-z', y);
       parent.insertAdjacentElement('afterend', u);
     }
     for (const k of Object.keys(asset.tiles)) {
@@ -59,7 +62,7 @@ export const asset = {
             addRope(tile, 'VT', 46, 0);
             break;
           case 'wallTop':
-            addRope(tile, 'H', 18, 11);
+            addRope(tile, 'H', 18, 11, 2.8);
             break;
           case 'doorLeft':
             addPilon(tile, 18, 14, false);
@@ -67,7 +70,7 @@ export const asset = {
             addRope(tile, 'HL', 18, 39);
             break;
           case 'wallLeft':
-            addRope(tile, 'V', 18, 12);
+            addRope(tile, 'V', 18, 12, 24);
             addPilon(tile, 18, 14, 8);
             break;
           case 'doorRight':
@@ -76,19 +79,19 @@ export const asset = {
             addRope(tile, 'HR', 46, 39);
             break;
           case 'wallRight':
-            addRope(tile, 'V', 46, 12);
+            addRope(tile, 'V', 46, 12, 24);
             addPilon(tile, 46, 14, true);
             break;
           case 'doorBottom':
-            addRope(tile, 'VB', 18, 40);
-            addRope(tile, 'VB', 46, 40);
+            addRope(tile, 'VB', 18, 40, 20);
+            addRope(tile, 'VB', 46, 40, 20);
             addPilon(tile, 18, 42, 8);
             addPilon(tile, 46, 42, true);
             break;
           case 'wallBottom':
             addPilon(tile, 18, 42, 8);
             addPilon(tile, 46, 42, true);
-            addRope(tile, 'H', 18, 39);
+            addRope(tile, 'H', 18, 39, 2.8);
             break;
         }
       }
