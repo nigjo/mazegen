@@ -138,7 +138,7 @@ export default class TopDownView extends SVGGenerator {
   }
 
   addRandomItems(tile, cell) {
-    if (this.rnd(3) === 1) {
+    if (this.rnd(5) < 2) {
       let items = [];
       for (let id of Object.keys(assets)) {
         if ("tiles" in assets[id] && tile in assets[id].tiles) {
@@ -232,7 +232,7 @@ export default class TopDownView extends SVGGenerator {
         }
         tile.parentNode.insertBefore(u, tile.nextElementSibling);
       } else {
-        console.debug(LOGGER, item,'not handled. Known?', item in assets);
+        console.debug(LOGGER, item, 'not handled. Known?', item in assets);
       }
     });
 
