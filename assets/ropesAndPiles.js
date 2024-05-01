@@ -66,8 +66,8 @@ export const asset = {
             break;
           case 'doorLeft':
             addPilon(tile, 18, 14, false);
-            addRope(tile, 'HL', 18, 11);
-            addRope(tile, 'HL', 18, 39);
+            addRope(tile, 'HL', 18, 11, 2.8);
+            addRope(tile, 'HL', 18, 39, 2.8);
             break;
           case 'wallLeft':
             addRope(tile, 'V', 18, 12, 24);
@@ -75,8 +75,8 @@ export const asset = {
             break;
           case 'doorRight':
             addPilon(tile, 46, 14, true);
-            addRope(tile, 'HR', 46, 11);
-            addRope(tile, 'HR', 46, 39);
+            addRope(tile, 'HR', 46, 11, 2.8);
+            addRope(tile, 'HR', 46, 39, 2.8);
             break;
           case 'wallRight':
             addRope(tile, 'V', 46, 12, 24);
