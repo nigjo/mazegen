@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2024 nigjo.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<svg version="1.1" width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style id="fishnetDefs">
+      .fishnet{
+      fill:none;
+      stroke:tan;
+      stroke-width:.15px;
+      stroke-linecap:round;
+      stroke-linejoin:bevel;
+      .pile{
+      fill:saddlebrown;
+      stroke:none;
+      }
+      }
+    </style>
+    <symbol id="fishnet1" viewBox="-3 0 19 8" width="19" height="8" class="fishnet">
+      <!--<rect x="0" y="0" width="16" height="12" style="stroke:red;fill:none;" />-->
+      <g transform="scale(1,.66)">
+        <path d="M2.5,2l11,0l0,8l-11,0z"/>
+        <line x1=".9" y1="1.3" x2="2.5" y2="2"/>
+        <line x1="15.1" y1="1.3" x2="13.5" y2="2"/>
+        <line x1=".9" y1="10.3" x2="2.5" y2="10"/>
+        <line x1="15.1" y1="10.3" x2="13.5" y2="10"/>
+        <!--<path d="M2.5,2l11,0l0,8l-11,0z" style="stroke:red;opacity:.2;"/>-->
+        <!--<polyline points="4.5,2 2.5,4 2.5,6 6.5,2 8.5,2 2.5,8 2.5,10 10.5,2 12.5,2 4.5,10 6.5,10 13.5,3 13.5,5 8.5,10 10.5,10 13.5,7 13.5,9 12.5,10"            style="stroke:red;opacity:.2;"/>-->
+        <polyline points="2.5,10 10.5,2 13.5,5 8.5,10 2.5,4 4.5,2 12.5,10 13.5,9 6.5,2 2.5,6 6.5,10 13.5,3 12.5,2 4.5,10 2.5,8 8.5,2 13.5,7 10.5,10 2.5,2"/>
+      </g>
+      <g class="pile">
+        <rect x=".5" y=".75" width=".4" height="7.25"/>
+        <rect x="-3" y="7.6" width="3.5" height=".4" class="shadow"/>
+        <circle cx=".7" cy=".75" r=".2"/>
+        <circle cx=".7" cy=".75" r=".2" class="shadow"/>
+        <rect x="15.1" y=".75" width=".4" height="7.25"/>
+        <rect x="11.6" y="7.6" width="3.5" height=".4" class="shadow"/>
+        <circle cx="15.3" cy=".75" r=".2"/>
+        <circle cx="15.3" cy=".75" r=".2" class="shadow"/>
+      </g>
+    </symbol>
+    <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
+  </defs>
+  <g>
+    <use href="assetbase.svg#assetbaseR"/>
+    <g id="usage">
+      <use href="#fishnet1" transform="translate(21,8)"/>
+      <!--<use href="#fishnet1" transform="translate(36,16)"/>-->
+      <!--<use href="#fishnet1" transform="translate(20,32)"/>-->
+      <!--<use href="#fishnet1" transform="translate(36,32)"/>-->
+    </g>
+  </g>
+</svg>
