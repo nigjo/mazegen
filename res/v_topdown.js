@@ -236,30 +236,27 @@ export default class TopDownView extends SVGGenerator {
       }
     });
 
-    const tiles = svg.getElementsByClassName('tile');
-    //console.debug(LOGGER, tiles.length);
-    [...tiles].forEach(tile =>
-    {
-      let tileAssets = [];
-      let tileAsset = tile.nextElementSibling;
-      //console.debug(LOGGER, tileAsset);
-      while (tileAsset && tileAsset.hasAttribute('data-z')) {
-        let next = tileAsset.nextElementSibling;
-        tileAssets.push(tileAsset);
-        tileAsset.remove();
-        tileAsset = next;
-      }
-      tileAssets.sort((a1, a2) =>
-        Number(a1.getAttribute('data-z'))
-                - Number(a2.getAttribute('data-z')));
-      //console.debug(LOGGER, tileAssets);
-      const nextTile = tile.nextElementSibling;
-      tileAssets.forEach(a => {
-        tile.parentNode.insertBefore(a, nextTile);
-        //a.removeAttribute('data-z');
-      });
+    const m = svg.querySelector('.maze');
+    let row = m.firstElementChild;
+    while (row) {
+      let cell = row.firstElementChild;
+      while (cell) {
+        let tileAssets = [...cell.getElementsByTagName('use')]
+                .filter(u => u.hasAttribute('data-z'));
+        tileAssets.sort((a1, a2) =>
+          Number(a1.getAttribute('data-z'))
+                  - Number(a2.getAttribute('data-z')));
+        const decke = cell.querySelector('.decke');
+        //reinsert before "decke"
+        tileAssets.forEach(a => {
+          a.removeAttribute('data-z');
+          cell.insertBefore(a, decke);
+        });
 
-    });
+        cell = cell.nextElementSibling;
+      }
+      row = row.nextElementSibling;
+    }
 
     return svg;
   }
