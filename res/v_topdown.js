@@ -233,13 +233,3 @@ export default class TopDownView extends SVGGenerator {
   }
 }
 
-if (window.mazedata) {
-  import("./m_mazeinfo.js").then(mod => {
-    let mazeinfo = mod.default;
-    mazeinfo.registerView(5000, {
-      displayName: 'Kaianlage',
-      generator: m => new TopDownView(m)
-    });
-  });
-}
-
