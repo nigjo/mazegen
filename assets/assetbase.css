@@ -12,13 +12,7 @@
     fill:url(../res/game_bg_wall.svg#bricks);
   }
 }
-#wallLeft,#pilon,#doorBottom,#decke,#doorLeft,#doorTop{
-  .shadow{
-    fill:rgba(0,0,0,.1);
-    stroke:none;
-  }
-}
-#pilonShadow.shadow{
+.shadow{
   fill:rgba(0,0,0,.1);
   stroke:none;
 }
@@ -31,15 +25,15 @@
   stroke:Goldenrod;
   stroke-width:1.25;
   fill:none;
-  &.leftDoor{
-    display:var(--leftDoor);
-  }
   .mark{stroke:rgba(0,0,0,.2);
     stroke-width:1;stroke-dasharray:.25 2;}
 }
-.decke{
+.leftDoor, .doorShadow{
+  display:var(--leftDoor);
+}
+.decke,.left{
   --leftDoor:none;
 }
-.doorLeft~.decke{
+.left.door~.decke,.left:not(.door){
   --leftDoor:initial;
 }

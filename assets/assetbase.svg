@@ -13,19 +13,30 @@
       </g>
       <g class="left">
         <use class="wallLeft" href="../res/v_topdown.svg#wallLeft"/>
-        <use id="assetPileTL" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(18,14)"/>
+        <g id="assetPileTL" transform="translate(18,14)">
+          <use class="pilon" href="ropesAndPiles.svg#pilon"/>
+          <use class="pilon doorShadow" href="ropesAndPiles.svg#pilonShadow" transform="translate(-8,8)"/>
+        </g>
         <use id="assetRopeLeft" class="rope" href="ropesAndPiles.svg#ropeV" transform="translate(18,12)"/>
       </g>
       <g class="right">
         <use class="wallRight" href="../res/v_topdown.svg#wallRight"/>
-        <use id="assetPileTR" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(46,14)"/>
+        <g id="assetPileTR" transform="translate(46,14)">
+          <use class="pilon" href="ropesAndPiles.svg#pilon"/>
+          <use class="pilon" href="ropesAndPiles.svg#pilonShadow"/>
+        </g>
         <use id="assetRopeRight" class="rope" href="ropesAndPiles.svg#ropeV" transform="translate(46,12)"/>
       </g>
       <g class="bottom door">
         <use class="doorBottom" href="../res/v_topdown.svg#doorBottom"/>
-        <use id="assetPileBL" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(18,42)"/>
-        <use id="assetPileBR" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(46,42)"/>
-        <use id="assetPileBR" class="pilon" href="ropesAndPiles.svg#pilon" transform="translate(46,42)"/>
+        <g id="assetPileBL" transform="translate(18,42)">
+          <use class="pilon" href="ropesAndPiles.svg#pilon"/>
+          <use class="pilon" href="ropesAndPiles.svg#pilonShadow" transform="translate(-8,8)"/>
+        </g>
+        <g id="assetPileBR" transform="translate(46,42)">
+          <use class="pilon" href="ropesAndPiles.svg#pilon"/>
+          <use class="pilon" href="ropesAndPiles.svg#pilonShadow"/>
+        </g>
         <use class="rope" href="ropesAndPiles.svg#ropeVB" x="18" y="40"/>
         <use class="rope" href="ropesAndPiles.svg#ropeVB" x="46" y="40"/>
       </g>
