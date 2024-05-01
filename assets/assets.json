@@ -1,5 +1,6 @@
 [
   "banner.js",
+  "bench.js",
   "boat.js",
   "crate.js",
   "fishes.js",
