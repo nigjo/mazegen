@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 /*only for display this asset. mostly a copy of v_topdown.svg!*/
-#boden{
+#boden,.boden{
   fill:url(../res/game_bg_water.svg#water);
   stroke:none;
 }
@@ -27,11 +27,10 @@ limitations under the License.
     fill:url(../res/game_bg_wall.svg#bricks);
   }
 }
-.shadow{
-  fill:rgba(0,0,0,.1);
-  stroke:none;
-}
+.shadow{fill:rgba(0,0,0,.1);stroke:none;}
+.shadowline{stroke:rgba(0,0,0,.2);stroke-width:.25;fill:none;}
 .light{fill:rgba(255,255,255,.1);stroke:none;}
+.lightline{stroke:rgba(255,255,255,.1);stroke-width:.25;fill:none;}
 
 .pilon{
   fill:Olive;

@@ -57,7 +57,9 @@ limitations under the License.
     </g>
     <style id="topdownDefs">
       .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.25;fill:none;}
       .light{fill:rgba(255,255,255,.1);stroke:none;}
+      .lightline{stroke:rgba(255,255,255,.1);stroke-width:.25;fill:none;}
       #decke .leftDoor{display:var(--doorLeft);}
       .wallLeft~.decke{--doorLeft:none;}
     </style>
