@@ -20,9 +20,6 @@ limitations under the License.
       .alkoven{
       fill:firebrick;
       .plate{fill:gray;}
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      .lightline{stroke:rgba(255,255,255,.1);stroke-width:.25;fill:none;}
-      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.25;fill:none;}
       }
     </style>
     <symbol data-id="alkovenNone" viewBox="0 0 10 8" width="10" height="8" class="alkoven">
