@@ -19,9 +19,7 @@ limitations under the License.
   <defs>
     <pattern class="boat" id="boatWood" viewBox="0,0,16,16" width="2" height="2" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="16" height="16"/>
-      <!--<rect x="0" y="0" width="16" height="16" class="boat" transform="rotate(90)"/>-->
-      <!--<rect x="0" y="0" width="8" height="16" class="shadowline"/>-->
-      <g class="shadowline">
+      <g class="shadowline thickline">
         <line x1="0" y1="0" x2="0" y2="16"/>
         <line x1="0" y1="4" x2="8" y2="4"/>
         <line x1="8" y1="0" x2="8" y2="16"/>
@@ -45,8 +43,7 @@ limitations under the License.
       .boatgrad{fill:url(#boat-bugschatten);stroke:none;}
       .boatgrad1{fill:url(#boat-bugschatten1);stroke:none;}
       .boatrope{fill:none;stroke:tan;stroke-width:.2px;stroke-linecap:round;}
-      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:1;fill:none;}
+      .thickline{stroke-width:1;}
       .heller{fill:rgba(255,255,255,.05);stroke:none;}
       }
     </style>
