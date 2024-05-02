@@ -14,8 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<svg version="1.1" width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg version="1.1" width="640" height="640" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
     <style id="bannerDefs">
@@ -33,14 +32,14 @@ xmlns:xlink="http://www.w3.org/1999/xlink">
     </style>
     <symbol id="bannersExit" viewBox="-2 0 24 12" width="24" height="12" class="banner">
       <g id="bannerExit" class="banner">
-        <use xlink:href="#bannerBase"/>
+        <use href="#bannerBase"/>
         <text x="1" y="2.5"><tspan x="1">E</tspan
           ><tspan x="1" dy="1em">X</tspan
           ><tspan x="1" dy="1em">I</tspan
           ><tspan x="1" dy="1em">T</tspan
           ></text>
       </g>
-      <use xlink:href="#bannerExit" transform="translate(18,0)"/>
+      <use href="#bannerExit" transform="translate(18,0)"/>
     </symbol>
     <symbol id="bannersStart" viewBox="-2 0 24 12" width="24" height="12" class="banner">
       <rect x="-2" y="9" width="3" height="1" class="shadow"/>
@@ -57,11 +56,11 @@ xmlns:xlink="http://www.w3.org/1999/xlink">
           ></text>
       </g>
       <rect x="14" y="9" width="5" height="1" class="shadow"/>
-      <use xlink:href="#bannerStart" transform="translate(18,0)"/>
+      <use href="#bannerStart" transform="translate(18,0)"/>
     </symbol>
   </defs>
   <g>
-    <use xlink:href="assetbase.svg#assetbaseT"/>
+    <use href="assetbase.svg#assetbaseT"/>
     <g id="usage">
       <use href="#bannersExit" transform="translate(20,2)"/>
     </g>
