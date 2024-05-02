@@ -19,20 +19,20 @@ limitations under the License.
     <pattern id="bricks" viewBox="0 -.5 16 8" width="8" height="4" patternUnits="userSpaceOnUse">
       <g class="bricks">
         <rect x="0" y="-1" width="16" height="17"/>
-        <rect x="0" y="-1" width="16" height="17" class="shadow"/>
+        <rect x="0" y="-1" width="16" height="17" class="dark"/>
         <rect x="0" y="0" width="7" height="3"/>
         <rect x="8" y="0" width="7" height="3"/>
         <rect x="8" y="0" width="7" height="3" style="fill:rgba(255,255,255,.1)"/>
         <rect x="-4" y="4" width="7" height="3"/>
         <!--<rect x="4" y="4" width="7" height="3" style="fill:rgba(255,255,255,.1)"/>-->
         <rect x="12" y="4" width="7" height="3"/>
-        <g class="shadowline">
+        <g class="brickline left">
           <path d="M.25,0v3"/>
           <path d="M8.25,0v3"/>
           <path d="M4.25,4v3"/>
           <path d="M12.25,4v3"/>
         </g>
-        <g class="lightline">
+        <g class="brickline right">
           <path d="M6.75,0v3"/>
           <path d="M14.75,0v3"/>
           <path d="M2.75,4v3"/>
@@ -45,10 +45,10 @@ limitations under the License.
       .bricks{
         fill:FireBrick;
         stroke:none;
-        .wallbg{;}
-        .lightline{stroke:rgba(255,255,255,.1);stroke-width:.5;fill:none;}
-        .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.5;fill:none;}
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+        .dark{fill:rgba(0,0,0,.1);stroke:none;}
+        .right{stroke:rgba(255,255,255,.1);}
+        .left{stroke:rgba(0,0,0,.2);}
+        .brickline{stroke-width:.5;fill:none;}
       }
     </style>
   </defs>
