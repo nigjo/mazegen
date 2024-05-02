@@ -217,18 +217,27 @@ document.addEventListener('keydown', (evt) => {
     return;
   }
   if (gamestate.moving) {
-    switch (evt.key) {
+    switch (evt.code) {
       case 'ArrowUp':
       case 'ArrowLeft':
       case 'ArrowDown':
       case 'ArrowRight':
+      case 'Space':
         evt.preventDefault();
         return;
     }
   }
   let nextCell = null;
   let currentCell = gamestate.currentCell;
-  switch (evt.key) {
+  switch (evt.code) {
+    case 'Space':
+      {
+        let playerChar = gamestate.img.getElementById('playerCharacter');
+        gamestate.direction = 'SOUTH';
+        let dir = view.player.directions[gamestate.direction];
+        playerChar.setAttribute('href', '#' + dir.still);
+      }
+      break;
     case 'ArrowUp':
       //if(currentCell.wall)
       if ((currentCell.walls & MazeGen.NORTH) === 0) {
