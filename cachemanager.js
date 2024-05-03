@@ -16,7 +16,7 @@
 //based on
 //https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/how-to/service-workers
 
-const CACHE_MANAGER_VERSION = 'v0.1.3';
+const CACHE_MANAGER_VERSION = 'v0.1.4';
 
 const CACHE_BASE_NAME = 'docksrunner';
 const CACHE_NAME = CACHE_BASE_NAME + '_' + CACHE_MANAGER_VERSION;
