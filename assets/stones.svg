@@ -20,19 +20,19 @@ limitations under the License.
       .stones{
       fill:#3f3a3a;
         &amp;.stone{
-          /*fill:url(#stonelight);*/
-          fill:#3f3a3a;
-          stroke:none;
-          stroke-width:.05px;
-        }
-        .stonesButtom{fill:url(#stonesBgBottom);}
-        .stonesRight{fill:url(#stonesBgRight);}
-        .stonesLeft{fill:url(#stonesBgLeft);}
-        .shadow{fill:rgba(0,0,0,.1);stroke:none;}
-        .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.3;fill:none;stroke-linecap:round;}
-        .light{fill:rgba(255,255,255,.1);stroke:none;}
-        .lightline{stroke:rgba(255,255,255,.1);stroke-width:.3;fill:none;stroke-linecap:round;}
-        .mark{stroke:red;opacity:.5;}
+      /*fill:url(#stonelight);*/
+      fill:#3f3a3a;
+      stroke:none;
+      stroke-width:.05px;
+      }
+      .stonesButtom{fill:url(#stonesBgBottom);}
+      .stonesRight{fill:url(#stonesBgRight);}
+      .stonesLeft{fill:url(#stonesBgLeft);}
+      .shadow{fill:rgba(0,0,0,.1);stroke:none;}
+      .shadowline{stroke:rgba(0,0,0,.2);stroke-width:.3;fill:none;stroke-linecap:round;}
+      .light{fill:rgba(255,255,255,.1);stroke:none;}
+      .lightline{stroke:rgba(255,255,255,.1);stroke-width:.3;fill:none;stroke-linecap:round;}
+      .mark{stroke:red;opacity:.5;}
       }
     </style>
     <radialGradient id="stonelight" cx="70%" cy="50%">
@@ -61,12 +61,17 @@ limitations under the License.
              viewBox="-1 0 8 16" width="8" height="16">
       <rect x="4" y="0" width="4" height="16" class="stones"/>
       <g class="stones stone">
-        <use href="#stone3b" x="4" y="-1"/>
-        <use href="#stone1b" x="7" y="1"/>
-        <use href="#stone2b" x="7" y="3"/>
+        <g id="stonesBgRightTop">
+          <use href="#stone3b" x="4" y="-1"/>
+          <use href="#stone1b" x="7" y="1"/>
+          <!--<use href="#stone1b" x="5" y="3"/>-->
+        </g>
         
-        <use href="#stone1b" x="5" y="3"/>
-        <use href="#stone1b" x="6" y="5"/>
+        <g id="stonesBgRightBottom">
+          <use href="#stone2b" x="7" y="3"/>
+          <use href="#stone1b" x="5" y="3"/>
+          <use href="#stone1b" x="6" y="5"/>
+        </g>
         <use href="#stone1b" x="4.5" y="7"/>
         <use href="#stone1b" x="7" y="9"/>
         <use href="#stone2b" x="5" y="9"/>
@@ -82,13 +87,17 @@ limitations under the License.
              viewBox="1 0 8 16" width="8" height="16">
       <rect x="0" y="0" width="4" height="16" class="stones"/>
       <g class="stones stone">
-        <use href="#stone2b" x="3.75" y="-.25"/>
         <use href="#stone1b" x="1.5" y="-1.5"/>
-        <use href="#stone1b" x="2.5" y="1.5"/>
+        <g id="stonesBgLeftTop">
+          <use href="#stone2b" x="3.75" y="-.25"/>
+          <use href="#stone1b" x="2.5" y="1.5"/>
+        </g>
 
         <use href="#stone3b" x="3.5" y="3"/>
-        <use href="#stone2b" x="3.5" y="4.5"/>
-        <use href="#stone3b" x="1.75" y="4"/>
+        <g id="stonesBgLeftBottom">
+          <use href="#stone3b" x="1.75" y="4"/>
+          <use href="#stone2b" x="3.5" y="4.5"/>
+        </g>
         <use href="#stone1b" x="3.25" y="7"/>
         <use href="#stone2b" x="1" y="7"/>
         <use href="#stone1b" x="2" y="9"/>
@@ -107,8 +116,10 @@ limitations under the License.
       <!--<rect x="0" y="0" width="16" height="8" style="fill:none;stroke:red;stroke-width:.25px;"/>-->
       <g class="stones stone">
         <use href="#stone1b" x="-1.5" y="4"/>
+        <g id="stonesBgBottomEdge">
         <use href="#stone2b" x="0" y="6.5"/>
         <use href="#stone1b" x="1" y="5"/>
+        </g>
         <use href="#stone2b" x="2" y="7"/>
         <use href="#stone1b" x="4" y="4.5"/>
         <use href="#stone2b" x="5" y="6.5"/>
@@ -129,11 +140,53 @@ limitations under the License.
     <symbol id="stonesBottom" viewBox="0 0 64 8" width="64" height="8" class="stones">
       <rect x="0" y="0" width="64" height="8" class="stonesButtom"/>
     </symbol>
+    <symbol id="stonesBottomGapLR" viewBox="0 0 64 8" width="64" height="8" class="stones">
+      <use href="#stonesBgBottomEdge" x="16" y="1.5"/>
+      <rect x="16" y="0" width="32" height="8" class="stonesButtom"/>
+      <use href="#stonesBgBottomEdge" x="48" y="1.5"/>
+    </symbol>
+    <symbol id="stonesBottomGapL" viewBox="0 0 64 8" width="64" height="8" class="stones">
+      <use href="#stonesBgBottomEdge" x="16" y="1.5"/>
+      <rect x="16" y="0" width="48" height="8" class="stonesButtom"/>
+    </symbol>
+    <symbol id="stonesBottomGapR" viewBox="0 0 64 8" width="64" height="8" class="stones">
+      <rect x="0" y="0" width="48" height="8" class="stonesButtom"/>
+      <use href="#stonesBgBottomEdge" x="48" y="1.5"/>
+    </symbol>
     <symbol id="stonesRight" viewBox="0 0 8 64" width="8" height="64" class="stones">
       <rect x="0" y="0" width="8" height="64" class="stonesRight"/>
     </symbol>
+    <symbol id="stonesRightGapB" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <rect x="0" y="0" width="8" height="48" class="stonesRight"/>
+      <use href="#stonesBgRightTop" x="1" y="48"/>
+      <!--<rect x="0" y="32" width="8" height="32" class="stonesRight"/>-->
+    </symbol>
+    <symbol id="stonesRightGapT" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <use href="#stonesBgRightBottom" x="1" y="16"/>
+      <rect x="0" y="20" width="8" height="44" class="stonesRight"/>
+      <!--<rect x="0" y="32" width="8" height="32" class="stonesRight"/>-->
+    </symbol>
+    <symbol id="stonesRightGapTB" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <use href="#stonesBgRightBottom" x="1" y="16"/>
+      <rect x="0" y="21" width="8" height="27" class="stonesRight"/>
+      <use href="#stonesBgRightTop" x="1" y="48"/>
+      <!--<rect x="0" y="32" width="8" height="32" class="stonesRight"/>-->
+    </symbol>
     <symbol id="stonesLeft" viewBox="0 0 8 64" width="8" height="64" class="stones">
       <rect x="0" y="0" width="8" height="64" class="stonesLeft"/>
+    </symbol>
+    <symbol id="stonesLeftGapTB" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <use href="#stonesBgLeftBottom" x="-1" y="16"/>
+      <rect x="0" y="20" width="8" height="29" class="stonesLeft"/>
+      <use href="#stonesBgLeftTop" x="-1" y="48"/>
+    </symbol>
+    <symbol id="stonesLeftGapB" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <rect x="0" y="" width="8" height="49" class="stonesLeft"/>
+      <use href="#stonesBgLeftTop" x="-1" y="48"/>
+    </symbol>
+    <symbol id="stonesLeftGapT" viewBox="0 0 8 64" width="8" height="64" class="stones">
+      <use href="#stonesBgLeftBottom" x="-1" y="16"/>
+      <rect x="0" y="20" width="8" height="44" class="stonesLeft"/>
     </symbol>
     <link rel="stylesheet" href="assetbase.css" xmlns="http://www.w3.org/1999/xhtml"/>
   </defs>
@@ -143,13 +196,13 @@ limitations under the License.
       <use href="#stone1b" transform="translate(24,32) scale(2)"/>
       <use href="#stone2b" transform="translate(32,24) scale(2)"/>
       <use href="#stone3b" transform="translate(40,32) scale(2)"/>
-      <use href="#stonesLeft" transform="translate(0,0)"/>
-      <rect x="0" y="16" width="8" height="16" style="fill:none;stroke:red;stroke-width:.25px;"/>
-      <use href="#stonesLeft" transform="translate(0,0)"/>
+      <!--<use href="#stonesLeft" transform="translate(0,0)"/>-->
+      <rect x="0" y="32" width="8" height="16" style="fill:none;stroke:red;stroke-width:.25px;"/>
+      <use href="#stonesLeftGapB" transform="translate(0,0)"/>
       <rect x="16" y="56" width="16" height="32" style="fill:none;stroke:red;stroke-width:.25px;"/>
-      <use href="#stonesBottom" transform="translate(0,56)"/>
+      <use href="#stonesBottomGapLR" transform="translate(0,56)"/>
       <rect x="56" y="32" width="8" height="16" style="fill:none;stroke:red;stroke-width:.25px;"/>
-      <use href="#stonesRight" transform="translate(56,0)"/>
+      <use href="#stonesRightGapB" transform="translate(56,0)"/>
     </g>
   </g>
 </svg>

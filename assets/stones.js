@@ -36,16 +36,48 @@ export const asset = {
       parent.querySelector('.boden')
               .insertAdjacentElement('afterend', l);
     };
-    while (row.nextElementSibling) {
+    let lastrow = row;
+    while (row) {
       //links und rechts die Steine setzen
-      addStones(row.firstElementChild, '#stonesLeft', 0, 0);
-      addStones(row.lastElementChild, '#stonesRight', 56, 0);
+      if (row.firstElementChild.getElementsByClassName('wallTop').length > 0) {
+        if (row.nextElementSibling && row.firstElementChild.getElementsByClassName('wallBottom').length > 0)
+          addStones(row.firstElementChild, '#stonesLeftGapTB', 0, 0);
+        else
+          addStones(row.firstElementChild, '#stonesLeftGapT', 0, 0);
+      } else if (row.nextElementSibling && row.firstElementChild.getElementsByClassName('wallBottom').length > 0) {
+        addStones(row.firstElementChild, '#stonesLeftGapB', 0, 0);
+      } else {
+        addStones(row.firstElementChild, '#stonesLeft', 0, 0);
+      }
+
+      if (row.lastElementChild.getElementsByClassName('wallTop').length > 0) {
+        if (row.nextElementSibling && row.lastElementChild.getElementsByClassName('wallBottom').length > 0)
+          addStones(row.lastElementChild, '#stonesRightGapTB', 56, 0);
+        else
+          addStones(row.lastElementChild, '#stonesRightGapT', 56, 0);
+      } else if (row.nextElementSibling && row.lastElementChild.getElementsByClassName('wallBottom').length > 0) {
+        addStones(row.lastElementChild, '#stonesRightGapB', 56, 0);
+      } else {
+        addStones(row.lastElementChild, '#stonesRight', 56, 0);
+      }
+
       //next
+      lastrow = row;
       row = row.nextElementSibling;
     }
     //console.debug('STONES', row);
-    addStones(row.lastElementChild, '#stonesRight', 56, 0);
-    [...row.children].forEach(c => addStones(c, '#stonesBottom', 0, 56));
-    addStones(row.firstElementChild, '#stonesLeft', 0, 0);
+    [...lastrow.children].forEach((c, i) => {
+      //console.debug('STONES', c);
+      if (i > 0 && c.getElementsByClassName('wallLeft').length > 0) {
+        if (i + 1 < lastrow.children.length && c.getElementsByClassName('wallRight').length > 0) {
+          addStones(c, '#stonesBottomGapLR', 0, 56);
+        } else {
+          addStones(c, '#stonesBottomGapL', 0, 56);
+        }
+      } else if (i + 1 < lastrow.children.length && c.getElementsByClassName('wallRight').length > 0) {
+        addStones(c, '#stonesBottomGapR', 0, 56);
+      } else
+        addStones(c, '#stonesBottom', 0, 56);
+    });
   }
 };
