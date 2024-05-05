@@ -181,7 +181,7 @@ limitations under the License.
       <use href="#stonesBgLeftTop" x="-1" y="48"/>
     </symbol>
     <symbol id="stonesLeftGapB" viewBox="0 0 8 64" width="8" height="64" class="stones">
-      <rect x="0" y="" width="8" height="49" class="stonesLeft"/>
+      <rect x="0" y="0" width="8" height="49" class="stonesLeft"/>
       <use href="#stonesBgLeftTop" x="-1" y="48"/>
     </symbol>
     <symbol id="stonesLeftGapT" viewBox="0 0 8 64" width="8" height="64" class="stones">
