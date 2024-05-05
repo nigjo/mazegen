@@ -2,6 +2,10 @@ class Cell {
   //Maze parent;
   constructor(parent) {
     this.parent = parent;
+
+    this.row = -1;
+    this.col = -1;
+    this.walls = -1;
   }
 }
 
@@ -14,6 +18,10 @@ export default class Maze {
   static EAST = 2;
   static SOUTH = 4;
   static WEST = 8;
+
+  #cells = null;
+  #entrance = null;
+  #exit = null;
 
   static randomGenerator(seed) {
     let a = seed;
@@ -59,27 +67,70 @@ export default class Maze {
     this.seed = usedSeed;
     //console.debug('width:', width, 'height:', height, 'seed:', seed, usedSeed);
 
-    let rng = Maze.randomGenerator(usedSeed);
     this.width = width;
     this.height = height;
-    this.cells = Array(height);
+    this.#cells = Array(height);
     let allWalls = Maze.NORTH | Maze.EAST | Maze.SOUTH | Maze.WEST;
     for (let r = 0; r < height; r++) {
-      this.cells[r] = Array(width);
+      this.#cells[r] = Array(width);
       for (let c = 0; c < width; c++) {
-        this.cells[r][c] = new Cell(this);
-        this.cells[r][c].row = r;
-        this.cells[r][c].col = c;
-        this.cells[r][c].walls = allWalls;
+        this.#cells[r][c] = new Cell(this);
+        this.#cells[r][c].row = r;
+        this.#cells[r][c].col = c;
+        this.#cells[r][c].walls = allWalls;
       }
     }
+    console.debug('MAZE', 'initialized');
+  }
 
-    this.entrance = this.cells[0][1 + rng(width - 2)];
-    this.entrance.walls ^= Maze.NORTH;
-    this.exit = this.cells[height - 1][1 + rng(width - 2)];
-    this.exit.walls ^= Maze.SOUTH;
+  #ensureMazedata() {
+    if (!this.#entrance) {
+      let rng = Maze.randomGenerator(this.seed);
+      this._setEntrance(this.#cells[0][1 + rng(this.width - 2)]);
+      this._setExit(this.#cells[this.height - 1][1 + rng(this.width - 2)]);
 
-    this.generate(rng);
+      console.debug('MAZE', 'generating');
+      this.generate(rng, this.#cells);
+    }
+  }
+
+  _setEntrance(cell) {
+    if (cell.row !== 0) {
+      throw new Error('entrance must be in the top row');
+    }
+    if (cell !== this.#entrance) {
+      if (this.#entrance){
+        console.debug('MAZE', this.#entrance.walls);
+        this.#entrance.walls |= Maze.NORTH;
+        console.debug('MAZE', this.#entrance.walls);
+      }
+      this.#entrance = cell
+      this.#entrance.walls ^= Maze.NORTH;
+    }
+  }
+  _setExit(cell) {
+    if (cell.row !== this.height - 1) {
+      throw new Error('exist must be in the bottom row');
+    }
+    if (cell !== this.#exit) {
+      if (this.#exit)
+        this.#exit.walls |= Maze.SOUTH;
+      this.#exit = cell
+      this.#exit.walls ^= Maze.SOUTH;
+    }
+  }
+
+  get entrance() {
+    this.#ensureMazedata();
+    return this.#entrance;
+  }
+  get exit() {
+    this.#ensureMazedata();
+    return this.#exit;
+  }
+  get cells() {
+    this.#ensureMazedata();
+    return this.#cells;
   }
 
   getNeighbour(cell, direction) {
@@ -156,7 +207,6 @@ export default class Maze {
     console.error('no generator defined. Please use a subclass');
   }
 }
-
 
 //const m51=new Maze(12, 8, 51);
 //console.log(m51);
