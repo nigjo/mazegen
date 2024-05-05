@@ -20,7 +20,7 @@ limitations under the License.
       .bench{
       fill:#8A4B08;
       stroke:#7c4307;
-      xstroke:#371e03;
+      /*xstroke:#371e03;*/
       stroke-width:.1px;
       }
     </style>
