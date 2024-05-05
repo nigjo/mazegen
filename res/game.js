@@ -64,8 +64,16 @@ const gamestate = {
   moving: true,
   direction: 'NORTH',
   playerDir: null,
-  getViewX: (cell) => gamestate.oX + gamestate.w * cell.col,
-  getViewY: (cell) => gamestate.oY + gamestate.h * cell.row
+  getViewX: (cell) => gamestate.oX + gamestate.cw * cell.col,
+  getViewY: (cell) => gamestate.oY + gamestate.ch * cell.row,
+  viewBox: (x, y) => {
+    return [
+      Math.max(0, Math.min(x - gamestate.dx, gamestate.maxWidth)),
+      Math.max(0, Math.min(y - gamestate.dy, gamestate.maxHeight)),
+      gamestate.viewWidth,
+      gamestate.viewHeight
+    ].join(' ');
+  }
 };
 gamestate.currentCell = gamestate.startCell;
 
@@ -78,22 +86,42 @@ function initializeGame() {
   });
   var img = view.create();
   shadow.append(img);
-  if (img.hasAttribute('width'))
-    wrapper.dataset.width = Number(img.getAttribute('width')) + 'px';
-  if (img.hasAttribute('height'))
-    wrapper.dataset.height = Number(img.getAttribute('height')) + 'px';
+  gamestate.vbWidth = Number(img.getAttribute('viewBox').split(' ')[2]);
+  gamestate.vbHeight = Number(img.getAttribute('viewBox').split(' ')[3]);
+  if (img.hasAttribute('width')) {
+    gamestate.width = Number(img.getAttribute('width'));
+  } else {
+    gamestate.width = gamestate.vbWidth;
+  }
+  if (img.hasAttribute('height')) {
+    gamestate.height = Number(img.getAttribute('height'));
+  } else {
+    gamestate.height = gamestate.vbHeight;
+  }
 
-  gamestate.w = Number(view.cellWidth);
-  gamestate.h = Number(view.cellHeight);
+  console.debug(LOGGER, img.getAttributeNames().map(n => [n, img.getAttribute(n)]));
+
+  wrapper.dataset.height = gamestate.height + 'px';
+  wrapper.dataset.width = gamestate.width + 'px';
+
+  gamestate.cw = Number(view.cellWidth);
+  gamestate.ch = Number(view.cellHeight);
   gamestate.oX = Number(view.offsetX);
   gamestate.oY = Number(view.offsetY);
+  gamestate.viewWidth = gamestate.cw;//* 1.125;
+  gamestate.viewHeight = gamestate.ch;//* 1.125;
+  gamestate.dx = (gamestate.viewWidth - gamestate.cw) / 2;
+  gamestate.dy = (gamestate.viewHeight - gamestate.ch) / 2;
+  gamestate.maxWidth = gamestate.vbWidth - gamestate.viewWidth;
+  gamestate.maxHeight = gamestate.vbHeight - gamestate.viewHeight;
+
+  console.debug(LOGGER, gamestate);
 
   const startX = gamestate.getViewX(gamestate.startCell);
   const startY = gamestate.getViewY(gamestate.startCell);
-  img.setAttribute('width', gamestate.w * 4);
-  img.setAttribute('height', gamestate.h * 4);
-  img.setAttribute('viewBox',
-          startX + ' ' + startY + ' ' + gamestate.w + ' ' + gamestate.h);
+  img.setAttribute('width', gamestate.cw * 4);
+  img.setAttribute('height', gamestate.ch * 4);
+  img.setAttribute('viewBox', gamestate.viewBox(startX, startY));
   img.setAttribute('part', 'mazeview');
 
   gamestate.playerOffsetX = 0;
@@ -106,14 +134,14 @@ function initializeGame() {
     //console.debug(LOGGER, view.player);
     let dir = view.player.directions[gamestate.direction];
     gamestate.playerOffsetX = "playerOffsetX" in view
-            ? view.playerOffsetX : (gamestate.w / 2);
+            ? view.playerOffsetX : (gamestate.cw / 2);
     gamestate.playerOffsetY = "playerOffsetY" in view
-            ? view.playerOffsetY : (gamestate.h / 2);
+            ? view.playerOffsetY : (gamestate.ch / 2);
     let player = document.createElementNS(img.namespaceURI, 'use');
     player.setAttribute('id', 'playerCharacter');
     player.setAttribute('href', '#' + dir.still);
     player.setAttribute('x', startX + gamestate.playerOffsetX + dir.offsetX);
-    player.setAttribute('y', startY + gamestate.h + gamestate.playerOffsetY + dir.offsetY);
+    player.setAttribute('y', startY + gamestate.viewHeight + gamestate.playerOffsetY + dir.offsetY);
     img.append(player);
     let targetY = startY + gamestate.playerOffsetY + dir.offsetY;
     movePlayerOnly(player, targetY, true);
@@ -375,8 +403,7 @@ function moveToNext(nextCell) {
       if (Math.abs(nextX - targetX) < 0.1
               && (Math.abs(nextY - targetY) < 0.1)) {
         gamestate.currentCell = nextCell;
-        gamestate.img.setAttribute('viewBox',
-                (targetX) + ' ' + (targetY) + ' ' + gamestate.w + ' ' + gamestate.h);
+        gamestate.img.setAttribute('viewBox', gamestate.viewBox(targetX, targetY));
         if (playerChar) {
           playerChar.setAttribute('x', targetX + gamestate.playerOffsetX + gamestate.playerDir.offsetX);
           playerChar.setAttribute('y', targetY + gamestate.playerOffsetY + gamestate.playerDir.offsetY);
@@ -392,12 +419,11 @@ function moveToNext(nextCell) {
           playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
 
           movePlayerOnly(playerChar,
-                  targetY - gamestate.h + gamestate.playerOffsetY + gamestate.playerDir.offsetY, false);
+                  targetY - gamestate.viewHeight + gamestate.playerOffsetY + gamestate.playerDir.offsetY, false);
         }
       } else {
         //console.debug(LOGGER, "move", "next");
-        gamestate.img.setAttribute('viewBox',
-                (nextX) + ' ' + (nextY) + ' ' + gamestate.w + ' ' + gamestate.h);
+        gamestate.img.setAttribute('viewBox', gamestate.viewBox(nextX, nextY));
         if (playerChar) {
           let px = Number(playerChar.getAttribute('x'));
           playerChar.setAttribute('x', px - deltaX);
