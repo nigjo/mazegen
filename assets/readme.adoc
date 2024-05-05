@@ -127,6 +127,21 @@ return::
 Sollte die Transformation konstant sein und unabhängig vom `tile`, so kann
 die `transform`-Angabe auch eine konstante Zeichenkette statt einer Funktion sein.
 
+[discrete]
+==== "Z-Order" der Assets.
+
+Alle Assets einer Zelle werden entsprechend ihrer Position innerhalb der Zelle
+so sortiert, dass die Elemente "oben" zuerst und die Elemente "unten" später
+gezeichnet werden. Dies ist durch die "Drawing-Order" im SVG-Standard
+begründet. Wird keine weiterer Angabe gemacht wird der Y-Wert aus dem
+"`translate`"-Kommando verwendet.
+
+Dies ist jedoch nicht in allen Fällen gewünscht. So kann es sein, dass ein
+Gegenstand so "groß" ist, dass der Y-Wert nicht dem Wert entspricht wo er
+auf der Kaimauer "steht". In diesem Fall kann der "Z-Wert" des Assets manuell
+angepasst werden. Dazu muss das Attribut `data-z` des `use`-Elements in
+der `transform()`-Funktion auf einen "korrekten" Wert gesetzt werden.
+
 
 [discrete]
 ==== `validator(cell, id)`
