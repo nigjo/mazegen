@@ -77,9 +77,10 @@ limitations under the License.
         warn.style.backgroundColor = 'lightsalmon';
         warn.style.color = 'darkred';
         warn.style.padding = '.5em 1em';
+        warn.style.textShadow = 'none';
         warn.textContent = error;
         document.querySelector('main').append(warn);
-        createParameterList({});
+        //createParameterList({});
       });
 
       function initParameters(view) {
