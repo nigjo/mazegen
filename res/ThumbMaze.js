@@ -26,13 +26,9 @@ export default class ThumbMaze extends Maze {
   }
 
   generate() {
-    this.entrance.walls += Maze.NORTH;
-    this.entrance = this.cells[0][1];
-    this.entrance.walls ^= Maze.NORTH;
+    this._setEntrance(this.cells[0][1]);
+    this._setExit(this.cells[4][2]);
 
-    this.exit.walls += Maze.SOUTH;
-    this.exit = this.cells[4][2];
-    this.exit.walls ^= Maze.SOUTH;
     this.removeWall(this.cells[0][1], this.cells[0][2]);
     this.removeWall(this.cells[0][2], this.cells[1][2]);
     this.removeWall(this.cells[1][1], this.cells[1][2]);
