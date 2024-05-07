@@ -114,8 +114,11 @@ assetFetcher.then(list => {
     for ([a, svg] of assetList) {
       //const add = svg => {
       addDefinitions(svg, 'asset_styles', (def) => {
-        if (def.tagName === 'g' || def.tagName === 'symbol')
+        if (def.tagName === 'g' || def.tagName === 'symbol'){
           assets[def.id] = a;
+          a.ids = a.ids||[];
+          a.ids.push(def.id);
+        }
       });
       if ("init" in a) {
         a.init();
