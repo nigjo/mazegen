@@ -64,6 +64,7 @@ const gamestate = {
   moving: true,
   direction: 'NORTH',
   playerDir: null,
+  getViewCell: () => gamestate.img.querySelector('.maze').children[gamestate.currentCell.row].children[gamestate.currentCell.col],
   getViewX: (cell) => gamestate.oX + gamestate.cw * cell.col,
   getViewY: (cell) => gamestate.oY + gamestate.ch * cell.row,
   viewBox: (x, y) => {
@@ -208,7 +209,15 @@ function updateTimer() {
   let delta = currentTime - startTime;
   const ui = document.getElementById('timer');
   let sec = Math.floor(delta / 1000);
-  ui.textContent = 'Time elapsed: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
+  let text = 'Time elapsed: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
+  if (gamestate.score) {
+    text += ' - ' + String(gamestate.score) + ' pts';
+  }
+  if (gamestate.message) {
+    text += ' - ' + String(gamestate.message);
+  }
+  ui.textContent = text;
+
   if (timer) {
     timer = setTimeout(updateTimer, 150);
   } else {
@@ -254,6 +263,39 @@ function stopTimer() {
   timer = null;
 }
 
+function checkForCollectable() {
+  const cell = gamestate.getViewCell();
+
+  let collectables = cell.getElementsByClassName('collectable');
+  if (collectables.length > 0) {
+    const collectable = collectables.item(0);
+    document.dispatchEvent(new CustomEvent('docksrunner.collected', {detail: {
+        collectable: collectable,
+        mazeCell: gamestate.currentCell
+      }}
+    ));
+  }
+}
+
+function handleCollectItem(evt) {
+  const target = evt.detail.collectable;
+
+  target.parentElement.dispatchEvent(new CustomEvent('docksrunner.collected', {detail: evt.detail}));
+}
+document.addEventListener('docksrunner.collected', handleCollectItem);
+document.addEventListener('docksrunner.score.add', (evt) => {
+  gamestate.score = gamestate.score | 0;
+  gamestate.score += Number(evt.detail.score);
+  if (evt.detail.message) {
+    if (gamestate.timer)
+      clearTimeout(gamestate.timer);
+    gamestate.message = evt.detail.message;
+    gamestate.timer = setTimeout(() => {
+      gamestate.message = null;
+    }, 2000);
+  }
+});
+
 document.addEventListener('keydown', (evt) => {
   if (evt.isComposing || evt.keyCode === 229) {
     //from mdn docs
@@ -266,6 +308,7 @@ document.addEventListener('keydown', (evt) => {
       case 'ArrowDown':
       case 'ArrowRight':
       case 'Space':
+      case 'Enter':
         evt.preventDefault();
         return;
     }
@@ -273,6 +316,9 @@ document.addEventListener('keydown', (evt) => {
   let nextCell = null;
   let currentCell = gamestate.currentCell;
   switch (evt.code) {
+    case 'Enter':
+      checkForCollectable(currentCell);
+      break;
     case 'Space':
       {
         let playerChar = gamestate.img.getElementById('playerCharacter');
