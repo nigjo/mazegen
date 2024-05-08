@@ -379,6 +379,9 @@ document.addEventListener('keydown', (evt) => {
       let deltaY = evt.changedTouches[0].pageY - startPoint.pageY;
       //console.log(LOGGER, 'DELTA', deltaX, deltaY);
       if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+        //Tapp?
+        //console.log(LOGGER, evt);
+        checkForCollectable();
         return;
       }
       let nextCell = null;
