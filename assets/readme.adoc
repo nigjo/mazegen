@@ -163,11 +163,33 @@ auch wenn sie nur zu einem bestimmten "Tile" passend sind.
 return::
   Liefert `true`, wenn das Asset zur aktuellen Zelle passt.
 
-=== `tail`
+=== `tail(svg, maze, rng)`
 
  - Nachdem `tiles` alle gesetzt
  - Bevor `data-item` ausgewertet wird
  - Synopsis: `tile: (svg, maze, rng)=>{}`
+
+
+=== `init()` und `reset()`
+
+Eine weitere optionale Verfeinerung der Assets sind die Methoden `init()` und
+`reset()`. Die dienen dazu den "Lebenszyklus" der Irrgarten-Generierung
+genauer definieren zu können.
+
+`init()` wird für jedes Asset genau einmal aufgerufen. Die geschieht direkte
+nachdem das Asset geladen und in der Konfiguration gespeichert wurde. Zu diesem
+Zeitpunkt wurde das `ids` Array des Assets bereits mit den entsprechenden
+IDs aus dem View befüllt, allerdings ist sind andere Assets noch nicht
+sicher verfügbar. Die Reihenfolge in der die Assets geladen werden ist nicht
+definiert.
+
+Bevor der Irrgarten tatsächlich erstellt wird wird für jedes Asset die
+optionale Funktion `reset()` aufgerufen. Der Irrgarten kann durchaus mehrfach
+generiert werden. Dies kann mit dem gleichen oder auch anderen Zufallsgeneratoren
+erfolgen. Das Asset sollte daher keine Werte dauerhaft speichern die das
+Aussehen des Irrgartens beeinflussen könnten. Falls doch, muss in der `reset()`
+Funktion alles wieder auf den "Initial-Status" zurückgesetzt werden.
+
 
 == Player Assets
 
