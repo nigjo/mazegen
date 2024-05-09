@@ -30,20 +30,33 @@ limitations under the License.
     <script src="res/swinit.js"></script>
     <script src="res/game.js" type="module"></script>
     <link rel="stylesheet" href="res/game.css"/>
-    <style>body{background-color: royalblue;color:white}</style>
+    <style>body{
+      background-color: royalblue;
+      color:white
+    }</style>
   </head>
   <body class="bgWater">
-    <header class="bgWay">
-      <h1><a href="./index.html">Docks Runner</a></h1>
-      <h2 class="bgWall" id="seed">loading...</h2>
+    <header>
+      <div id="logo" class="bgWay">
+        <h1><a href="./index.html">Docks Runner</a></h1>
+        <h2 class="bgWall" id="seed">loading...</h2>
+      </div>
+      <div class="wayblock">
+        <div id="timer" class="bgWay">
+          Be prepared...
+        </div><div class="bgWall"></div>
+        <div id="points" class="bgWay">
+          0 pts
+        </div><div class="bgWall"></div>
+        <div id="message" class="bgWay">
+          
+        </div><div class="bgWall"></div>
+      </div>
     </header>
-    <nav></nav>
     <main>
-      <div class="game"></div>
-      <p class="bgWay " id="timer">
-        Be prepared...
-      </p>
+      <div id="game"></div>
     </main>
+    <nav></nav>
     <footer>
       &copy; Nigjo Iqn
       - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>

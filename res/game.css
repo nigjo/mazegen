@@ -22,23 +22,50 @@ body{
   font-size:min(2vh,3vw,12pt);
   background-color: royalblue;
 }
+header,nav,main {
+  display:inline-block;
+  vertical-align:top;
+  position:relative;
+}
 header,nav{
   margin:.5em;
 }
-header{
-  border:2px solid dimgray;
+header {
+  display:inline-flex;
+  flex-wrap:nowrap;
+  flex-direction:column;
+  gap:1em;
+  @media (orientation:portrait) {
+    flex-direction:row;
+  }
+}
+#logo {
+  white-space:nowrap;
   a{
     text-decoration: none;
   }
+  * {
+    margin:0px;
+    padding:.5em;
+  }
 }
-header *{
-  margin:0px;
-  padding:.5em;
+.wayblock {
+  width:18em;
+  max-width:35vw;
+  font-size:.8em;
+  min-height:1em;
+  .bgWay {
+    min-height:1em;
+    line-height:1em;
+    margin-top:.2em;
+    padding:.25em .5em;
+  }
+  .bgWall {
+    height:1em;
+    min-height:.66rem;
+  }
 }
-#timer{
-  padding:.25em .5em;
-}
-.bgWater{
+.bgWater {
   color:White;
   text-shadow:dimgray 2px 2px;
   background: royalblue url('game_bg_water.svg');
@@ -49,36 +76,38 @@ header *{
 .bgWall{
   background: firebrick url('game_bg_wall.svg');
 }
-.game{
+#game{
   display:inline-block;
   margin:0;
   padding:1em;
   background-color:navy;
   line-height:0px;
+  position:relative;
   .mazeview::part(mazeview), &::part(mazeview){
-    /*reset settings*/
     font: initial;
     text-shadow: initial;
     line-height: initial;
     color: initial;
   }
+  &.done:after {
+    background-color:rgba(0,0,0,.66);
+    height:1em;
+    position:absolute;
+    width:calc(100% - 2em);
+    height:calc(100% - 2em);
+    top:1em;
+    content:'';
+    display:block;
+  }
 }
-header,nav,main {
-  display: inline-block;
-  vertical-align: top;
-}
-nav {
+#scoreboard,nav {
   padding-top: .5em;
-  font-size: min(2.4vw,12pt);
-  .button {
+  .button{
     cursor: pointer;
     padding: .5em;
     text-decoration: none;
     text-shadow: gray 1px 1px;
-    position:relative;
-    margin-right:.5em;
-    margin-bottom:1.5em;
-    display:inline-block;
+    position: relative;
   }
   .button:after{
     content:'';
@@ -88,6 +117,22 @@ nav {
     left:0px;
     background: firebrick url('game_bg_wall.svg');
     width:100%;
+  }
+  .button+.button{
+    margin-left: 1em;
+  }
+}
+#scoreboard {
+  display: block;
+  width: 90%;
+  position: absolute;
+  top: 2em;
+  left: 5%;
+  font-size: min(3vh,3vw,12pt);
+  .button {
+    margin-bottom: 3em;
+    display: inline-block;
+    width: calc(45% - .5em);
   }
 }
 @media (orientation:landscape){
@@ -133,7 +178,7 @@ nav {
     line-height:1em;
     margin:.25em 0px;
   }
-  .game{
+  #game{
     width:calc(100% - 2em);
     .mazeview::part(mazeview){
       width: 100%;
@@ -142,7 +187,7 @@ nav {
   }
 }
 @media screen and (orientation:portrait) {
-  .game{
+  #game{
     width:calc(100% - 2em);
   }
   nav #qrcode{

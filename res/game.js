@@ -162,15 +162,16 @@ function initializeGame() {
       }
     }
 
+    ui.textContent = ' ';
     setTimeout(ticker, tick);
   })();
 
-  document.querySelector('main .game').append(wrapper);
-  try {
-    document.querySelector('main').append(new DebugView(maze).create());
-  } catch (e) {
-    console.debug(LOGGER, "debug mode disabled");
-  }
+  document.querySelector('main #game').append(wrapper);
+//  try {
+//    document.querySelector('main').append(new DebugView(maze).create());
+//  } catch (e) {
+//    console.debug(LOGGER, "debug mode disabled");
+//  }
 
 }
 
@@ -210,17 +211,26 @@ function updateTimer() {
   const ui = document.getElementById('timer');
   let sec = Math.floor(delta / 1000);
   let text = 'Time elapsed: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
+  ui.textContent = text;
   if (gamestate.score) {
-    text += ' - ' + String(gamestate.score) + ' pts';
+    document.getElementById('points').textContent
+            = String(gamestate.score) + ' pts';
   }
   if (gamestate.message) {
-    text += ' - ' + String(gamestate.message);
+    document.getElementById('message').textContent
+            = String(gamestate.message);
+  } else {
+    document.getElementById('message').textContent = '';
   }
-  ui.textContent = text;
 
   if (timer) {
     timer = setTimeout(updateTimer, 150);
   } else {
+    document.getElementById('game').classList.add('done');
+
+    const nav = document.createElement('div');
+    nav.id = "scoreboard";
+
     let viewLink = document.createElement('a');
     viewLink.className = 'bgWay button';
     let next = {seed: docrunner.Seed};
@@ -230,17 +240,25 @@ function updateTimer() {
     if (q.has('height'))
       next.height = docrunner.Height;
     viewLink.href = './view.html?' + new URLSearchParams(next);
-    viewLink.textContent = 'Level Time: ' + ui.textContent.substring(ui.textContent.indexOf(':') + 1);
-    const nav = document.querySelector('nav');
-    nav.replaceChildren(viewLink);
+    viewLink.textContent = '\u23F1\uFE0F Level Time: ' + ui.textContent.substring(ui.textContent.indexOf(':') + 1);
+    const navline1 = document.createElement('div');
+    navline1.append(viewLink);
 
-    let navline = document.createElement('div');
+    const ptsUi = document.getElementById('points');
+    let points = document.createElement('div');
+    points.className = 'bgWay button';
+    points.href = './?' + new URLSearchParams(next);
+    points.textContent = '\uD83C\uDFC5\uFE0F ' + ptsUi.textContent;
+    navline1.append(points);
+
+    nav.append(navline1);
+    let navline2 = document.createElement('div');
 
     let restartLink = document.createElement('a');
     restartLink.className = 'bgWay button';
     restartLink.href = './?' + new URLSearchParams(next);
-    restartLink.textContent = 'Wiederholen';
-    navline.append(restartLink);
+    restartLink.textContent = '\u21BA\uFE0F Wiederholen';
+    navline2.append(restartLink);
 
     let randomLink = document.createElement('a');
     let alphabeth = "abcdefghijklmnopqrstuvwxyz";
@@ -254,9 +272,11 @@ function updateTimer() {
     next.seed = seed;
     randomLink.className = 'bgWay button';
     randomLink.href = './?' + new URLSearchParams(next);
-    randomLink.textContent = 'Zufallsspiel';
-    navline.append(randomLink);
-    nav.append(navline);
+    randomLink.textContent = '\u21AD\uFE0F Zufallsspiel';
+    navline2.append(randomLink);
+    nav.append(navline2);
+
+    document.getElementById('game').insertAdjacentElement('afterend', nav);
   }
 }
 function stopTimer() {
@@ -361,7 +381,7 @@ document.addEventListener('keydown', (evt) => {
 
 // initTouch
 (() => {
-  const el = document.querySelector('main .game');
+  const el = document.querySelector('main #game');
   el.addEventListener("touchstart", handleTouchStart);
   el.addEventListener("touchend", handleTouchEnd);
   el.addEventListener("touchcancel", handleTouchEnd);

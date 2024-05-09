@@ -36,12 +36,12 @@ limitations under the License.
       };
       workshop.Width = String(settings.width);
       workshop.Height = String(settings.height);
-      
+
       for (let name of Object.keys(workshop)) {
         let key = 'workshop' + name;
         workshop[name] = args.get(key)
-            || args.get(name.toLowerCase())
-            || workshop[name];
+                || args.get(name.toLowerCase())
+                || workshop[name];
       }
       let backArgs = new URLSearchParams();
       document.getElementById('seed').textContent = workshop.Seed;
@@ -109,7 +109,7 @@ limitations under the License.
 
       function generateViewContent(view) {
         let w = document.createElement('div');
-        w.className = 'game';
+        w.id = 'game';
         let shadow = w.attachShadow({
           mode: 'closed'
         });
@@ -129,15 +129,17 @@ limitations under the License.
     </script>
   </head>
   <body class="view bgWater">
-    <header class="bgWay">
-      <h1><a href="./index.html">Docks Runner</a></h1>
-      <h2 class="bgWall" id="seed">loading...</h2>
+    <header>
+      <div id="logo" class="bgWay">
+        <h1><a href="./index.html">Docks Runner</a></h1>
+        <h2 class="bgWall" id="seed">loading...</h2>
+      </div>
     </header>
+    <main></main>
     <nav>
       <a class="bgWay button" id="thisLevel" href="./index.html">Wiederholen</a>
-       <a class="bgWay button" id="nextLevel">Zufallsspiel</a>
+      <a class="bgWay button" id="nextLevel">Zufallsspiel</a>
     </nav>
-    <main></main>
     <script>
       (() => {
         const a = document.getElementById('nextLevel');
