@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 class CollectableBoxes {
+  #LM;
   constructor() {
     this.view = 'boxes.svg';
     this.tiles = {};
+    import('../res/m_lang.js').then(m => this.#LM = m.default);
+  }
+  lang() {
+    return this.#LM?.message(...arguments) || arguments[0];
   }
   tail(s, m, r) {
     console.debug('BOXES', 'this', this);
@@ -70,11 +75,13 @@ class CollectableBoxes {
       document.dispatchEvent(new CustomEvent('docksrunner.score.add', {
         detail: {
           score: 100,
-          message: 'collected ' + id.replace(/^boxes/, '')
+          message: this.lang('boxes.collected',
+                  this.lang('boxes.' + id.replace(/^boxes/, '')))
         }
       }));
     });
   }
-};
+}
+;
 
 export {CollectableBoxes as asset};

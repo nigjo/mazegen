@@ -16,8 +16,10 @@
 import MazeGen from './RandomKruskal.js';
 import MazeView from './v_topdown.js';
 import settings from './m_usersettings.js';
+import LM from './m_lang.js';
 
 const LOGGER = 'GAME';
+console.debug(LOGGER, LM);
 
 const docrunner = {
   Width: String(settings.width),
@@ -148,7 +150,11 @@ function initializeGame() {
     movePlayerOnly(player, targetY, true);
   }
   (() => {
-    let rsg = ['Ready.', 'Steady.', 'GO!'];
+    let rsg = [
+      LM.message('init.ready'),
+      LM.message('init.steady'),
+      LM.message('init.go')];
+    console.debug(rsg);
     const tick = (24 * 75) / rsg.length;
     const ui = document.getElementById('timer');
     function ticker() {
@@ -157,7 +163,7 @@ function initializeGame() {
       if (rsg.length > 0)
         setTimeout(ticker, tick);
       else {
-        console.log(LOGGER, 'GO!');
+        console.log(LOGGER, LM.message('init.go'));
         gamestate.moving = false;
       }
     }
@@ -210,11 +216,15 @@ function updateTimer() {
   let delta = currentTime - startTime;
   const ui = document.getElementById('timer');
   let sec = Math.floor(delta / 1000);
-  let text = 'Time elapsed: ' + (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
-  ui.textContent = text;
+  if (sec >= 60) {
+    ui.textContent = LM.message('time_elapsed_min', Math.floor(sec / 60), sec % 60);
+  } else {
+    ui.textContent = LM.message('time_elapsed', sec);
+  }
+  //let text = (sec >= 60 ? Math.floor(sec / 60) + 'm ' : '') + (sec % 60) + 's';
   if (gamestate.score) {
     document.getElementById('points').textContent
-            = String(gamestate.score) + ' pts';
+            = LM.message('current_points', String(gamestate.score));
   }
   if (gamestate.message) {
     document.getElementById('message').textContent
@@ -240,7 +250,8 @@ function updateTimer() {
     if (q.has('height'))
       next.height = docrunner.Height;
     viewLink.href = './view.html?' + new URLSearchParams(next);
-    viewLink.textContent = '\u23F1\uFE0F Level Time: ' + ui.textContent.substring(ui.textContent.indexOf(':') + 1);
+
+    viewLink.textContent = LM.message('scoreboard.time', ui.textContent);
     const navline1 = document.createElement('div');
     navline1.append(viewLink);
 
@@ -248,7 +259,7 @@ function updateTimer() {
     let points = document.createElement('div');
     points.className = 'bgWay button';
     points.href = './?' + new URLSearchParams(next);
-    points.textContent = '\uD83C\uDFC5\uFE0F ' + ptsUi.textContent;
+    points.textContent = LM.message('scoreboard.points', ptsUi.textContent);
     navline1.append(points);
 
     nav.append(navline1);
@@ -257,7 +268,7 @@ function updateTimer() {
     let restartLink = document.createElement('a');
     restartLink.className = 'bgWay button';
     restartLink.href = './?' + new URLSearchParams(next);
-    restartLink.textContent = '\u21BA\uFE0F Wiederholen';
+    restartLink.textContent = LM.message('scoreboard.repeat');
     navline2.append(restartLink);
 
     let randomLink = document.createElement('a');
@@ -272,7 +283,7 @@ function updateTimer() {
     next.seed = seed;
     randomLink.className = 'bgWay button';
     randomLink.href = './?' + new URLSearchParams(next);
-    randomLink.textContent = '\u21AD\uFE0F Zufallsspiel';
+    randomLink.textContent = LM.message('scoreboard.random');
     navline2.append(randomLink);
     nav.append(navline2);
 
