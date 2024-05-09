@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const asset = {
-  view: 'boxes.svg',
-  tiles: {
-  },
-  tail: (s, m, r) => {
+class CollectableBoxes {
+  constructor() {
+    this.view = 'boxes.svg';
+    this.tiles = {};
+  }
+  tail(s, m, r) {
+    console.debug('BOXES', 'this', this);
     //console.debug('BOXES', this, asset.ids);
-    asset.fullBoxes = asset.ids.filter(i => i !== 'boxes1');
-    console.debug('BOXES', asset.ids, asset.fullBoxes);
+    this.fullBoxes = this.ids.filter(i => i !== 'boxes1');
+    console.debug('BOXES', this.ids, this.fullBoxes);
     const view = s.querySelector('.maze');
-    console.debug('BOXES', view);
     const north = m.constructor.NORTH;
     const south = m.constructor.SOUTH;
     const east = m.constructor.EAST;
@@ -44,18 +45,18 @@ export const asset = {
     while (deadends.length > 0 && counter-- > 0) {
       const cellIdx = r(deadends.length);
       const c = deadends.splice(cellIdx, 1);
-      const typeIdx = r(asset.fullBoxes.length);
+      const typeIdx = r(this.fullBoxes.length);
       const off = r(3) * 4 - 4;
       //console.debug('BOXES', cell, c);
       //console.debug('BOXES', typeIdx, asset.fullBoxes[typeIdx]);
       if (c[0].querySelector('.doorBottom')) {
-        asset._addBox(c[0], 28 + off, 14, asset.fullBoxes[typeIdx]);
+        this.#addBox(c[0], 28 + off, 14, this.fullBoxes[typeIdx]);
       } else
-        asset._addBox(c[0], 28 + off, 32, asset.fullBoxes[typeIdx]);
+        this.#addBox(c[0], 28 + off, 32, this.fullBoxes[typeIdx]);
     }
     console.debug('BOXES', counter);
-  },
-  _addBox(cell, x, y, id) {
+  }
+  #addBox(cell, x, y, id) {
     const u = document.createElementNS(cell.namespaceURI, 'use');
     u.setAttribute('data-z', y + 4);
     u.setAttribute('href', '#' + id);
@@ -76,3 +77,4 @@ export const asset = {
   }
 };
 
+export {CollectableBoxes as asset};
