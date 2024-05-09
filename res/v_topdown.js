@@ -34,6 +34,7 @@ async function fetchSvg(uri) {
 }
 
 const svgDefs = new Map();
+console.groupCollapsed(LOGGER, 'loading base view...');
 await
 Promise.all([
   fetchSvg('res/v_topdown.svg'),
@@ -57,6 +58,7 @@ Promise.all([
   }
   return;
 });
+console.groupEnd();
 
 function addDefinitions(svg, styleTarget, cb) {
   const defs = [...svg.querySelectorAll('defs>[id]')];
@@ -85,6 +87,7 @@ function addDefinitions(svg, styleTarget, cb) {
 
 
 const assets = {};
+console.groupCollapsed(LOGGER, 'loading assets...');
 await
 assetFetcher.then(list => {
   //console.debug(LOGGER, list, svgDefs);
@@ -92,31 +95,43 @@ assetFetcher.then(list => {
   for (let name of list) {
     assetDefs.push(
     import('../assets/' + name).then(mod => {
-      mod.asset.name = name;
-      mod.asset.position = list.indexOf(name);
+      if (!('asset' in mod)) {
+        throw "module '" + name + "' does not export an 'asset' Object or class";
+      }
       return mod.asset;
     }).then(a => {
-      if ("view" in a) {
-        console.debug(LOGGER, "ASSETS", a.view, "loading...");
-        return fetch('assets/' + a.view)
-                .then(r => r.text())
-                .then(t => t
-                          .replace(/>\s*/gs, '>')
-                          .replace(/\s*</gs, '<'))
-                .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
+      if (typeof (a) === 'function') {
+        console.debug(LOGGER, 'class', a);
+        return new a();
+      } else
+        return a;
+    }).then(a => {
+      a.basename = name;
+      a.position = list.indexOf(name);
+      return a;
+    }).then(a => {
+      if (!("view" in a)) {
+        throw "no 'view' in " + a.basename;
       }
-      return [a, null];
+      console.debug(LOGGER, "ASSETS", a.view, "loading...");
+      return fetch('assets/' + a.view)
+              .then(r => r.text())
+              .then(t => t
+                        .replace(/>\s*/gs, '>')
+                        .replace(/\s*</gs, '<'))
+              .then(t => [a, new DOMParser().parseFromString(t, "image/svg+xml")]);
     }));
   }
   return Promise.all(assetDefs).then(assetList => {
-    console.debug(LOGGER, 'ASSETS', assetList.map(i => i[0].position + '/' + i[0].name));
+    console.debug(LOGGER, 'assets loaded', assetList.map(i => i[0].position + '/' + i[0].basename));
     let a, svg;
     for ([a, svg] of assetList) {
       //const add = svg => {
+      //console.debug(LOGGER, 'ASSET', a, svg);
       addDefinitions(svg, 'asset_styles', (def) => {
-        if (def.tagName === 'g' || def.tagName === 'symbol'){
+        if (def.tagName === 'g' || def.tagName === 'symbol') {
           assets[def.id] = a;
-          a.ids = a.ids||[];
+          a.ids = a.ids || [];
           a.ids.push(def.id);
         }
       });
@@ -126,6 +141,7 @@ assetFetcher.then(list => {
     }
   });
 });
+console.groupEnd();
 
 export default class TopDownView extends SVGGenerator {
   constructor(m) {
@@ -160,8 +176,9 @@ export default class TopDownView extends SVGGenerator {
       let items = [];
       for (let id of Object.keys(assets)) {
         if ("tiles" in assets[id] && tile in assets[id].tiles) {
-          if ("validator" in assets[id].tiles[tile]) {
-            if (!assets[id].tiles[tile].validator(cell, id)) {
+          const assetTile = assets[id].tiles[tile];
+          if ("validator" in assetTile) {
+            if (!assetTile.validator(cell, id)) {
               continue;
             }
           }
@@ -205,6 +222,7 @@ export default class TopDownView extends SVGGenerator {
     }
 
     // reset all assets
+    console.groupCollapsed(LOGGER, 'reset assets');
     const knownAssetDefs = new Set();
     Object.values(assets).forEach(a => {
       if (!knownAssetDefs.has(a)) {
@@ -215,16 +233,19 @@ export default class TopDownView extends SVGGenerator {
         }
       }
     });
+    console.groupEnd();
 
     let svg = super.create();
 
-    //console.debug(LOGGER, 'TAILS', knownAssetDefs);
+    console.groupCollapsed(LOGGER, 'update constant assets');
     for (let a of knownAssetDefs) {
       if ("tail" in a) {
         a.tail(svg, this.maze, this.rnd);
       }
     }
+    console.groupEnd();
 
+    console.groupCollapsed(LOGGER, 'finalize view');
     let items = svg.querySelectorAll('[data-item]');
     console.debug(LOGGER, items.length, 'items');
     items.forEach(tile => {
@@ -254,6 +275,7 @@ export default class TopDownView extends SVGGenerator {
       }
     });
 
+    console.debug(LOGGER, 'reorder assets');
     const m = svg.querySelector('.maze');
     let row = m.firstElementChild;
     while (row) {
@@ -275,6 +297,7 @@ export default class TopDownView extends SVGGenerator {
       }
       row = row.nextElementSibling;
     }
+    console.groupEnd();
 
     return svg;
   }
