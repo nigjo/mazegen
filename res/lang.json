@@ -8,7 +8,7 @@
   "current_points": "Score: {0} pts",
   "scoreboard.time": "\u23F1\uFE0F {0}",
   "scoreboard.points": "\uD83C\uDFC5\uFE0F {0}",
-  "scoreboard.repeat": "\u21BA\uFE0F Repeat Level",
+  "scoreboard.replay": "\u21BA\uFE0F Replay Level",
   "scoreboard.random": "\u21AD\uFE0F Random Level",
   "boxes.collected": "collected {0}",
   "boxes.Apples": "apples",

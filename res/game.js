@@ -268,7 +268,7 @@ function updateTimer() {
     let restartLink = document.createElement('a');
     restartLink.className = 'bgWay button';
     restartLink.href = './?' + new URLSearchParams(next);
-    restartLink.textContent = LM.message('scoreboard.repeat');
+    restartLink.textContent = LM.message('scoreboard.replay');
     navline2.append(restartLink);
 
     let randomLink = document.createElement('a');
