@@ -35,8 +35,8 @@ async function tryLanguages(languages) {
               return tryLanguages(languages);
           });
 }
-const names = ['ac', 'de'];
-//const names = Intl.getCanonicalLocales(navigator.languages);
+//const names = ['ac', 'de'];
+const names = Intl.getCanonicalLocales(navigator.languages);
 await tryLanguages(names);
 console.debug(LOGGER, 'ok');
 
