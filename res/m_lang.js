@@ -42,6 +42,9 @@ console.debug(LOGGER, 'ok');
 
 class LanguageManager {
 
+  has(key) {
+    return key in data;
+  }
   message(key) {
     if (key in data) {
       if (arguments.length > 1) {
@@ -54,6 +57,13 @@ class LanguageManager {
       return data[key];
     }
     return key;
+  }
+  updatePage(){
+    const keys = document.querySelectorAll('[data-l10nkey]');
+    for (var item of keys) {
+      if (LM.has(item.dataset.l10nkey))
+        item.textContent = LM.message(item.dataset.l10nkey);
+    }
   }
 }
 

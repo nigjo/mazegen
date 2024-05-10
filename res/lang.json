@@ -14,5 +14,11 @@
   "boxes.Apples": "apples",
   "boxes.Plums": "plums",
   "boxes.Potatos": "potatoes",
+  "index.loading": "Loading...",
+  "index.prepared": "Be prepared...",
+  "index.initialPoints": "Score: 0 pts",
+  "index.github": "View on Github",
+  "index.share": "Share",
+  "index.settings": "Settings",
   "": ""
 }

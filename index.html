@@ -28,28 +28,37 @@ limitations under the License.
     <link rel="manifest" href="game.json" />
     <meta name="theme-color" content="#4169e1">
     <script src="res/swinit.js"></script>
+    <script>
+      console.log('INDEX', 'init scripts');
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('INDEX', 'DOM loaded');
+      });
+    </script>
+    <script type="module">
+      import LM from './res/m_lang.js';
+      LM.updatePage();
+    </script>
     <script src="res/game.js" type="module"></script>
     <link rel="stylesheet" href="res/game.css"/>
     <style>body{
-      background-color: royalblue;
-      color:white
-    }</style>
+        background-color: royalblue;
+        color:white
+      }</style>
   </head>
   <body class="bgWater">
     <header>
       <div id="logo" class="bgWay">
         <h1><a href="./index.html">Docks Runner</a></h1>
-        <h2 class="bgWall" id="seed">loading...</h2>
+        <h2 class="bgWall" id="seed" data-l10nkey="index.loading">loading...</h2>
       </div>
       <div class="wayblock">
-        <div id="timer" class="bgWay">
+        <div id="timer" class="bgWay" data-l10nkey="index.prepared">
           Be prepared...
         </div><div class="bgWall"></div>
-        <div id="points" class="bgWay">
+        <div id="points" class="bgWay" data-l10nkey="index.initialPoints">
           0 pts
         </div><div class="bgWall"></div>
         <div id="message" class="bgWay">
-          
         </div><div class="bgWall"></div>
       </div>
     </header>
@@ -59,9 +68,9 @@ limitations under the License.
     <nav></nav>
     <footer>
       &copy; Nigjo Iqn
-      - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
-      - <a href="code.html">Teilen</a>
-      - <a href="settings.html">Einstellungen</a>
+      - <a href="https://github.com/nigjo/mazegen/" data-l10nkey="index.github">View on GitHub</a>
+      - <a href="code.html" data-l10nkey="index.share">Share</a>
+      - <a href="settings.html" data-l10nkey="index.settings">Settings</a>
     </footer>
   </body>
 </html>
