@@ -19,7 +19,7 @@ import settings from './m_usersettings.js';
 import LM from './m_lang.js';
 
 const LOGGER = 'GAME';
-console.debug(LOGGER, LM);
+//console.debug(LOGGER, LM);
 
 const docrunner = {
   Width: String(settings.width),
@@ -102,7 +102,7 @@ function initializeGame() {
     gamestate.height = gamestate.vbHeight;
   }
 
-  console.debug(LOGGER, img.getAttributeNames().map(n => [n, img.getAttribute(n)]));
+  //console.debug(LOGGER, img.getAttributeNames().map(n => [n, img.getAttribute(n)]));
 
   wrapper.dataset.height = gamestate.height + 'px';
   wrapper.dataset.width = gamestate.width + 'px';
@@ -118,7 +118,7 @@ function initializeGame() {
   gamestate.maxWidth = gamestate.vbWidth - gamestate.viewWidth;
   gamestate.maxHeight = gamestate.vbHeight - gamestate.viewHeight;
 
-  console.debug(LOGGER, gamestate);
+  //console.debug(LOGGER, gamestate);
 
   const startX = gamestate.getViewX(gamestate.startCell);
   const startY = gamestate.getViewY(gamestate.startCell);
@@ -154,7 +154,7 @@ function initializeGame() {
       LM.message('init.ready'),
       LM.message('init.steady'),
       LM.message('init.go')];
-    console.debug(rsg);
+    console.debug(LOGGER, rsg.join(' '));
     const tick = (24 * 75) / rsg.length;
     const ui = document.getElementById('timer');
     function ticker() {
@@ -190,7 +190,7 @@ function movePlayerOnly(player, targetY, moveAfter) {
     if (Math.abs(playerY - targetY) < 0.1) {
       gamestate.direction = 'SOUTH';
       let dir = view.player.directions[gamestate.direction];
-      console.debug('GAME', gamestate.direction, dir);
+      //console.debug('GAME', gamestate.direction, dir);
       player.setAttribute('href', '#' + dir.still);
       player.setAttribute('y', targetY);
       gamestate.moving = !moveAfter;
