@@ -16,10 +16,14 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>Docks Runner - Teilen</title>
+    <title data-l10nkey="pagetitle.share">Docks Runner - Share</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="res/game.css"/>
+    <script type="module">
+      import LM from './res/m_lang.js';
+      LM.updatePage();
+    </script>
     <style>body{background-color: royalblue;color:white}
       #qrcode{
         width:calc(100% - 1em);
@@ -42,8 +46,8 @@ limitations under the License.
     </main>
     <footer>
       &copy; Nigjo Iqn
-      - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
-      - <a href="./index.html">zurück</a>
+      - <a href="https://github.com/nigjo/mazegen/" data-l10nkey="index.github">View on GitHub</a>
+      - <a href="./index.html" data-l10nkey="index.back">Back</a>
     </footer>
   </body>
 </html>

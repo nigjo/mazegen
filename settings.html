@@ -16,11 +16,15 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>Docks Runner - Settings</title>
+    <title data-l10nkey="pagetitle.settings">Docks Runner - Settings</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" sizes="any" href="res/dock_runner.svg" type="image/svg+xml">
     <link rel="stylesheet" href="res/game.css"/>
+    <script type="module">
+      import LM from './res/m_lang.js';
+      LM.updatePage();
+    </script>
     <script src="res/settings.js" type="module"></script>
     <style>body{
         background-color: royalblue;

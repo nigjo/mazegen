@@ -20,5 +20,8 @@
   "index.github": "View on Github",
   "index.share": "Share",
   "index.settings": "Settings",
+  "index.back": "Back",
+  "pagetitle.share": "Docks Runner - Share",
+  "pagetitle.settings": "Docks Runner - Settings",
   "": ""
 }

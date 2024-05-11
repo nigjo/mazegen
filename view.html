@@ -26,6 +26,10 @@ limitations under the License.
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="res/dock_runner-180.png">
     <link rel="stylesheet" href="res/game.css"/>
     <script type="module">
+      import LM from './res/m_lang.js';
+      LM.updatePage();
+    </script>
+    <script type="module">
       import RandomKruskal from './res/RandomKruskal.js';
       import settings from './res/m_usersettings.js';
       let args = new URLSearchParams(location.search);
@@ -44,6 +48,7 @@ limitations under the License.
                 || workshop[name];
       }
       let backArgs = new URLSearchParams();
+      delete document.getElementById('seed').dataset['l10nkey'];
       document.getElementById('seed').textContent = workshop.Seed;
       const back = document.getElementById('thisLevel');
       console.debug('back', back);
@@ -132,13 +137,13 @@ limitations under the License.
     <header>
       <div id="logo" class="bgWay">
         <h1><a href="./index.html">Docks Runner</a></h1>
-        <h2 class="bgWall" id="seed">loading...</h2>
+        <h2 class="bgWall" id="seed" data-l10nkey="index.loading">loading...</h2>
       </div>
     </header>
     <main></main>
     <nav>
-      <a class="bgWay button" id="thisLevel" href="./index.html">Wiederholen</a>
-      <a class="bgWay button" id="nextLevel">Zufallsspiel</a>
+      <a class="bgWay button" id="thisLevel" href="./index.html" data-l10nkey="scoreboard.replay">Replay Level</a>
+      <a class="bgWay button" id="nextLevel" data-l10nkey="scoreboard.random">Random Level</a>
     </nav>
     <script>
       (() => {
