@@ -27,13 +27,15 @@ async function tryLanguages(languages) {
   await fetch('res/lang_' + lang + '.json')
           .then(r => {
             if (r.ok)
-              r.json();
+              return r.json();
             else
               throw r;
           })
           .then(lngData => {
-
-            console.debug(LOGGER, 'loaded', lang, lngData);
+            if (!lngData) {
+              throw "missing data for " + lang;
+            }
+            //console.debug(LOGGER, 'loaded', lang, lngData);
             if (!settings.locale) {
               settings.locale = lang;
               settings.store();
@@ -43,6 +45,7 @@ async function tryLanguages(languages) {
             }
           })
           .catch(e => {
+            //console.warn(LOGGER, e);
             if (languages.length > 0) {
               return tryLanguages(languages);
             } else {
@@ -55,7 +58,10 @@ const names = Intl.getCanonicalLocales(navigator.languages);
 if (settings.locale) {
   names.unshift(settings.locale);
 }
-await tryLanguages(names);
+//console.debug(LOGGER, names);
+const userLanguages = [... new Set(names)];
+//console.debug(LOGGER, userLanguages);
+await tryLanguages(userLanguages);
 console.debug(LOGGER, 'initialized');
 
 class LanguageManager {
