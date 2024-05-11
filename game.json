@@ -7,6 +7,7 @@
   "background_color": "#4169e1",
   "theme_color": "#4169e1",
   "description": "Find your way through the docks",
+  "categories":["games", "maze", "casual"]
   "_internal_sw_version": "v0.1.4",
   "icons": [
     {
