@@ -62,19 +62,28 @@ limitations under the License.
         <h2 class="bgWall">Einstellungen</h2>
       </div>
     </header>
-    <main class="settings"><form name="settings" id="settings">
+    <main class="settings">
+      <form name="settings" id="settings">
         <section id="gamedata">
-          <h2>Spielfeld</h2>
-          <span class="row">
+          <h1>Spielfeld</h1>
+          <div class="row">
             <label><input type="radio" value="6x10" checked name="gamesize"> Standard</label>
             <label><input type="radio" value="8x12" name="gamesize"> Größer</label>
             <label><input type="radio" value="10x16" name="gamesize"> Max</label>
-          </span><span class="row">
+          </div><div class="row">
             <label><input type="radio" value="custom" name="gamesize"> Custom:</label>
             <input placeholder="width x height" pattern="[0-9]+ *[xX] *[0-9]+" name="customsize">
-          </span>
+          </div>
         </section>
-      </form></main>
+        <section id="gameopts">
+          <h1>Spielotionen</h1>
+          <div class="row">
+            <label><input type="radio" value="timing" checked name="gamemode"> Zeitspiel</label>
+            <label><input type="radio" value="search" name="gamemode"> Suchspiel</label>
+          </div>
+        </section>
+      </form>
+    </main>
     <nav>
       <div id="btnSave" class="bgWay button">Speichern</div>
       <div id="btnBack" class="bgWay button">Zurück</div>

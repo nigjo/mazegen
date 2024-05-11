@@ -28,52 +28,54 @@ async function fetchSvg(uri) {
           .then(t => new DOMParser().parseFromString(t, "image/svg+xml"));
 }
 
+function setError(message) {
+  let formdata = document.forms.settings;
+  formdata.customsize.setCustomValidity(message);
+  console.warn(LOGGER, message);
+  settings.reset();
+  formdata.customsize.reportValidity();
+}
+
+function saveData() {
+  let formdata = document.forms.settings;
+  console.debug(LOGGER, formdata);
+
+  let sizeValue = formdata.gamesize.value;
+  if (sizeValue === 'custom') {
+    sizeValue = formdata.customsize.value;
+  }
+  let size = sizeValue.match(/^\s*(\d+)\s*[xX]\s*(\d+)\s*$/);
+  console.warn(LOGGER, sizeValue, size);
+  if (!size) {
+    setError("invalid size value");
+    return;
+  } else {
+    let w = Number(size[1]);
+    let h = Number(size[2]);
+    if (w > 50 || h > 50) {
+      setError("exceeded max size");
+      return;
+    }
+    if (w < 2 || h < 2) {
+      setError("invalid minimal size value");
+      return;
+    }
+    console.debug(LOGGER, w, h);
+    settings.width = w;
+    settings.height = h;
+  }
+  
+  settings.mode = formdata.gamemode.value;
+  
+  settings.store();
+  window.location = './index.html';
+}
 
 function initButtons() {
   document.getElementById('btnBack').onclick = () => {
     window.location = './index.html';
   };
-  document.getElementById('btnSave').onclick = () => {
-    let formdata = document.forms.settings;
-    console.debug(LOGGER, formdata);
-
-    let sizeValue = formdata.gamesize.value;
-    if (sizeValue === 'custom') {
-      sizeValue = formdata.customsize.value;
-    }
-    let size = sizeValue.match(/^\s*(\d+)\s*[xX]\s*(\d+)\s*$/);
-    console.warn(LOGGER, sizeValue, size);
-    if (!size) {
-      formdata.customsize.setCustomValidity("invalid size value");
-      console.warn(LOGGER, "invalid size value");
-      settings.reset();
-      formdata.customsize.reportValidity();
-      return;
-    } else {
-      let w = Number(size[1]);
-      let h = Number(size[2]);
-      if (w > 50 || h > 50) {
-        formdata.customsize.setCustomValidity("invalid size value");
-        console.warn(LOGGER, "invalid size value");
-        settings.reset();
-        formdata.customsize.reportValidity();
-        return;
-      }
-      if (w < 2 || h < 2) {
-        formdata.customsize.setCustomValidity("invalid size value");
-        console.warn(LOGGER, "invalid size value");
-        settings.reset();
-        formdata.customsize.reportValidity();
-        return;
-      }
-      console.debug(LOGGER, w, h);
-      settings.width = w;
-      settings.height = h;
-    }
-
-    settings.store();
-    window.location = './index.html';
-  };
+  document.getElementById('btnSave').onclick = saveData;
 
   document.forms.settings.customsize.onchange = () => {
     document.forms.settings.gamesize.value = 'custom';
@@ -96,6 +98,11 @@ function initSettings() {
     formdata.customsize.value = sizeVal;
   }
 
+  let mode = settings.mode;
+  formdata.gamemode.value = mode;
+  if (formdata.gamemode.value !== mode) {
+    formdata.gamemode.value = 'timing';
+  }
 }
 
 

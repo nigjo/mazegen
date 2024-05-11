@@ -86,6 +86,24 @@ const gamestate = {
   }
 };
 gamestate.currentCell = gamestate.startCell;
+gamestate.checkFinish = () => {
+  switch (settings.mode) {
+    case 'search':
+      if (gamestate.currentCell === gamestate.targetCell) {
+        console.debug(LOGGER, 'checkFinish', settings.mode, gamestate.collectableItems);
+        return gamestate.collectableItems <= 0;
+      }
+      break;
+    case 'default':
+    case 'timing':
+    default:
+      if (gamestate.currentCell === gamestate.targetCell) {
+        console.debug(LOGGER, 'checkFinish', settings.mode);
+        return true;
+      }
+  }
+  return false;
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // GAME INIT
@@ -159,36 +177,36 @@ function initializeGame() {
     let targetY = startY + gamestate.playerOffsetY + dir.offsetY;
     movePlayerOnly(player, targetY, true);
   }
-  (() => {
-    let rsg = [
-      LM.message('init.ready'),
-      LM.message('init.steady'),
-      LM.message('init.go')];
-    console.debug(LOGGER, rsg.join(' '));
-    const tick = (24 * 75) / rsg.length;
-    const ui = document.getElementById('timer');
-    function ticker() {
-      let token = rsg.shift();
-      ui.textContent = ui.textContent + ' ' + token;
-      if (rsg.length > 0)
-        setTimeout(ticker, tick);
-      else {
-        console.log(LOGGER, LM.message('init.go'));
-        gamestate.moving = false;
-      }
-    }
-
-    ui.textContent = ' ';
-    setTimeout(ticker, tick);
-  })();
-
   document.querySelector('main #game').append(wrapper);
-//  try {
-//    document.querySelector('main').append(new DebugView(maze).create());
-//  } catch (e) {
-//    console.debug(LOGGER, "debug mode disabled");
-//  }
 
+  document.dispatchEvent(new CustomEvent('docksrunner.generated'));
+
+  if (view.hasPlayer) {
+    entranceOfThePlayer();
+  }
+}
+
+function entranceOfThePlayer() {
+  let rsg = [
+    LM.message('init.ready'),
+    LM.message('init.steady'),
+    LM.message('init.go')];
+  console.debug(LOGGER, rsg.join(' '));
+  const tick = (24 * 75) / rsg.length;
+  const ui = document.getElementById('timer');
+  function ticker() {
+    let token = rsg.shift();
+    ui.textContent = ui.textContent + ' ' + token;
+    if (rsg.length > 0)
+      setTimeout(ticker, tick);
+    else {
+      console.log(LOGGER, LM.message('init.go'));
+      gamestate.moving = false;
+    }
+  }
+
+  ui.textContent = ' ';
+  setTimeout(ticker, tick);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -303,9 +321,14 @@ function checkForCollectable() {
     ));
   }
 }
-
+document.addEventListener('docksrunner.generated', () => {
+  let collectables = gamestate.img.getElementsByClassName('collectable');
+  console.debug(LOGGER, collectables.length, 'collecteables');
+  gamestate.collectableItems = collectables.length;
+});
 function handleCollectItem(evt) {
   const target = evt.detail.collectable;
+  --gamestate.collectableItems;
 
   target.parentElement.dispatchEvent(new CustomEvent('docksrunner.collected', {detail: evt.detail}));
 }
@@ -385,7 +408,7 @@ function moveToNext(nextCell) {
         }
         gamestate.moving = false;
         //console.debug(LOGGER, "move", "done");
-        if (nextCell === gamestate.targetCell) {
+        if (gamestate.checkFinish()) {
           gamestate.moving = true; // verhindert weitere Bewegung
           stopTimer();
           gamestate.playerDir = 'NORTH' in view.player.directions
@@ -397,7 +420,7 @@ function moveToNext(nextCell) {
                   targetY - gamestate.viewHeight + gamestate.playerOffsetY + gamestate.playerDir.offsetY, false);
         }
       } else {
-        //console.debug(LOGGER, "move", "next");
+//console.debug(LOGGER, "move", "next");
         gamestate.img.setAttribute('viewBox', gamestate.viewBox(nextX, nextY));
         if (playerChar) {
           let px = Number(playerChar.getAttribute('x'));
@@ -418,7 +441,7 @@ function moveToNext(nextCell) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 document.addEventListener('keydown', (evt) => {
   if (evt.isComposing || evt.keyCode === 229) {
-    //from mdn docs
+//from mdn docs
     return;
   }
   if (gamestate.moving) {

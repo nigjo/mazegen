@@ -18,7 +18,8 @@
 const defaultSettings = {
   width: 6,
   height: 10,
-  locale: null
+  locale: null,
+  mode: 'default'
 };
 let userSettings = {...defaultSettings};
 function reloadSettings() {
