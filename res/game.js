@@ -55,9 +55,16 @@ const docrunner = {
   console.log(LOGGER, docrunner);
 })();
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// MAZE
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 document.getElementById('seed').textContent = docrunner.Seed;
 const maze = new MazeGen(Number(docrunner.Width), Number(docrunner.Height), docrunner.Seed);
 const view = new MazeView(maze);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// GAMESTATE
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 const gamestate = {
   startCell: maze.exit,
@@ -80,6 +87,9 @@ const gamestate = {
 };
 gamestate.currentCell = gamestate.startCell;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// GAME INIT
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //console.debug(LOGGER, gamestate.startCell, gamestate.targetCell);
 function initializeGame() {
   let wrapper = document.createElement('div');
@@ -181,27 +191,9 @@ function initializeGame() {
 
 }
 
-function movePlayerOnly(player, targetY, moveAfter) {
-  let playerY = Number(player.getAttribute('y'));
-  gamestate.moving = true;
-  const deltaY = (targetY - playerY) / 24;
-  function movePlayerToStart() {
-    playerY = playerY + deltaY;
-    if (Math.abs(playerY - targetY) < 0.1) {
-      gamestate.direction = 'SOUTH';
-      let dir = view.player.directions[gamestate.direction];
-      //console.debug('GAME', gamestate.direction, dir);
-      player.setAttribute('href', '#' + dir.still);
-      player.setAttribute('y', targetY);
-      gamestate.moving = !moveAfter;
-    } else {
-      player.setAttribute('y', playerY);
-      setTimeout(movePlayerToStart, 75);
-    }
-  }
-  setTimeout(movePlayerToStart, 0);
-}
-
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// TIMING MANAGER
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let timer = null;
 let startTime = null;
 function startTimer() {
@@ -294,6 +286,10 @@ function stopTimer() {
   timer = null;
 }
 
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// COLLECTABLES
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 function checkForCollectable() {
   const cell = gamestate.getViewCell();
 
@@ -314,6 +310,10 @@ function handleCollectItem(evt) {
   target.parentElement.dispatchEvent(new CustomEvent('docksrunner.collected', {detail: evt.detail}));
 }
 document.addEventListener('docksrunner.collected', handleCollectItem);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// GAME SCORES
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 document.addEventListener('docksrunner.score.add', (evt) => {
   gamestate.score = gamestate.score | 0;
   gamestate.score += Number(evt.detail.score);
@@ -327,6 +327,95 @@ document.addEventListener('docksrunner.score.add', (evt) => {
   }
 });
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// PLAYER MOVEMENT
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+function movePlayerOnly(player, targetY, moveAfter) {
+  let playerY = Number(player.getAttribute('y'));
+  gamestate.moving = true;
+  const deltaY = (targetY - playerY) / 24;
+  function movePlayerToStart() {
+    playerY = playerY + deltaY;
+    if (Math.abs(playerY - targetY) < 0.1) {
+      gamestate.direction = 'SOUTH';
+      let dir = view.player.directions[gamestate.direction];
+      //console.debug('GAME', gamestate.direction, dir);
+      player.setAttribute('href', '#' + dir.still);
+      player.setAttribute('y', targetY);
+      gamestate.moving = !moveAfter;
+    } else {
+      player.setAttribute('y', playerY);
+      setTimeout(movePlayerToStart, 75);
+    }
+  }
+  setTimeout(movePlayerToStart, 0);
+}
+
+function moveToNext(nextCell) {
+  startTimer();
+  //console.debug(LOGGER, currentCell);
+  if (nextCell) {
+    const currentX = gamestate.getViewX(gamestate.currentCell);
+    const currentY = gamestate.getViewY(gamestate.currentCell);
+    const targetX = gamestate.getViewX(nextCell);
+    const targetY = gamestate.getViewY(nextCell);
+    const deltaX = (currentX - targetX) / 8;
+    const deltaY = (currentY - targetY) / 8;
+    let step = 0;
+    gamestate.moving = true;
+    let playerChar = gamestate.img.getElementById('playerCharacter');
+    if (playerChar) {
+      gamestate.playerDir = gamestate.direction in view.player.directions
+              ? view.player.directions[gamestate.direction]
+              : {offsetX: 0, offsetY: 0, still: ''};
+      playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
+    }
+
+    function move() {
+      ++step;
+      let nextX = currentX - step * deltaX;
+      let nextY = currentY - step * deltaY;
+      if (Math.abs(nextX - targetX) < 0.1
+              && (Math.abs(nextY - targetY) < 0.1)) {
+        gamestate.currentCell = nextCell;
+        gamestate.img.setAttribute('viewBox', gamestate.viewBox(targetX, targetY));
+        if (playerChar) {
+          playerChar.setAttribute('x', targetX + gamestate.playerOffsetX + gamestate.playerDir.offsetX);
+          playerChar.setAttribute('y', targetY + gamestate.playerOffsetY + gamestate.playerDir.offsetY);
+        }
+        gamestate.moving = false;
+        //console.debug(LOGGER, "move", "done");
+        if (nextCell === gamestate.targetCell) {
+          gamestate.moving = true; // verhindert weitere Bewegung
+          stopTimer();
+          gamestate.playerDir = 'NORTH' in view.player.directions
+                  ? view.player.directions['NORTH']
+                  : {offsetX: 0, offsetY: 0, still: ''};
+          playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
+
+          movePlayerOnly(playerChar,
+                  targetY - gamestate.viewHeight + gamestate.playerOffsetY + gamestate.playerDir.offsetY, false);
+        }
+      } else {
+        //console.debug(LOGGER, "move", "next");
+        gamestate.img.setAttribute('viewBox', gamestate.viewBox(nextX, nextY));
+        if (playerChar) {
+          let px = Number(playerChar.getAttribute('x'));
+          playerChar.setAttribute('x', px - deltaX);
+          let py = Number(playerChar.getAttribute('y'));
+          playerChar.setAttribute('y', py - deltaY);
+        }
+        setTimeout(move, 66);
+      }
+    }
+    setTimeout(move, 0);
+  }
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// KEY MANAGER
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 document.addEventListener('keydown', (evt) => {
   if (evt.isComposing || evt.keyCode === 229) {
     //from mdn docs
@@ -390,6 +479,9 @@ document.addEventListener('keydown', (evt) => {
   moveToNext(nextCell);
 });
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// TOUCH MANAGER
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // initTouch
 (() => {
   const el = document.querySelector('main #game');
@@ -456,65 +548,8 @@ document.addEventListener('keydown', (evt) => {
     }
   }
 })();
-function moveToNext(nextCell) {
-  startTimer();
-  //console.debug(LOGGER, currentCell);
-  if (nextCell) {
-    const currentX = gamestate.getViewX(gamestate.currentCell);
-    const currentY = gamestate.getViewY(gamestate.currentCell);
-    const targetX = gamestate.getViewX(nextCell);
-    const targetY = gamestate.getViewY(nextCell);
-    const deltaX = (currentX - targetX) / 8;
-    const deltaY = (currentY - targetY) / 8;
-    let step = 0;
-    gamestate.moving = true;
-    let playerChar = gamestate.img.getElementById('playerCharacter');
-    if (playerChar) {
-      gamestate.playerDir = gamestate.direction in view.player.directions
-              ? view.player.directions[gamestate.direction]
-              : {offsetX: 0, offsetY: 0, still: ''};
-      playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
-    }
 
-    function move() {
-      ++step;
-      let nextX = currentX - step * deltaX;
-      let nextY = currentY - step * deltaY;
-      if (Math.abs(nextX - targetX) < 0.1
-              && (Math.abs(nextY - targetY) < 0.1)) {
-        gamestate.currentCell = nextCell;
-        gamestate.img.setAttribute('viewBox', gamestate.viewBox(targetX, targetY));
-        if (playerChar) {
-          playerChar.setAttribute('x', targetX + gamestate.playerOffsetX + gamestate.playerDir.offsetX);
-          playerChar.setAttribute('y', targetY + gamestate.playerOffsetY + gamestate.playerDir.offsetY);
-        }
-        gamestate.moving = false;
-        //console.debug(LOGGER, "move", "done");
-        if (nextCell === gamestate.targetCell) {
-          gamestate.moving = true; // verhindert weitere Bewegung
-          stopTimer();
-          gamestate.playerDir = 'NORTH' in view.player.directions
-                  ? view.player.directions['NORTH']
-                  : {offsetX: 0, offsetY: 0, still: ''};
-          playerChar.setAttribute('href', '#' + gamestate.playerDir.still);
-
-          movePlayerOnly(playerChar,
-                  targetY - gamestate.viewHeight + gamestate.playerOffsetY + gamestate.playerDir.offsetY, false);
-        }
-      } else {
-        //console.debug(LOGGER, "move", "next");
-        gamestate.img.setAttribute('viewBox', gamestate.viewBox(nextX, nextY));
-        if (playerChar) {
-          let px = Number(playerChar.getAttribute('x'));
-          playerChar.setAttribute('x', px - deltaX);
-          let py = Number(playerChar.getAttribute('y'));
-          playerChar.setAttribute('y', py - deltaY);
-        }
-        setTimeout(move, 66);
-      }
-    }
-    setTimeout(move, 0);
-  }
-}
-
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Start game
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setTimeout(initializeGame, 0);
