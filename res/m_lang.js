@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import settings from './m_usersettings.js';
 const LOGGER = 'LANG';
+
 console.debug(LOGGER, 'initialize...');
 const data = await
 fetch('res/lang.json').then(r => r.json());
@@ -21,24 +23,40 @@ fetch('res/lang.json').then(r => r.json());
 console.debug(LOGGER, 'loading...');
 async function tryLanguages(languages) {
   const lang = languages.shift();
-  console.debug(LOGGER, 'try', lang);
+  //console.debug(LOGGER, 'try', lang);
   await fetch('res/lang_' + lang + '.json')
-          .then(r => r.json())
+          .then(r => {
+            if (r.ok)
+              r.json();
+            else
+              throw r;
+          })
           .then(lngData => {
+
             console.debug(LOGGER, 'loaded', lang, lngData);
+            if (!settings.locale) {
+              settings.locale = lang;
+              settings.store();
+            }
             for (var key of Object.keys(lngData)) {
               data[key] = lngData[key];
             }
           })
           .catch(e => {
-            if (languages.length > 0)
+            if (languages.length > 0) {
               return tryLanguages(languages);
+            } else {
+              console.warn(LOGGER, 'no preferred locale found');
+            }
           });
 }
 //const names = ['ac', 'de'];
 const names = Intl.getCanonicalLocales(navigator.languages);
+if (settings.locale) {
+  names.unshift(settings.locale);
+}
 await tryLanguages(names);
-console.debug(LOGGER, 'ok');
+console.debug(LOGGER, 'initialized');
 
 class LanguageManager {
 
@@ -58,7 +76,7 @@ class LanguageManager {
     }
     return key;
   }
-  updatePage(){
+  updatePage() {
     const keys = document.querySelectorAll('[data-l10nkey]');
     for (var item of keys) {
       if (LM.has(item.dataset.l10nkey))

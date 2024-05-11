@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
+//only settings defined here are allowed
 const defaultSettings = {
   width: 6,
-  height: 10
+  height: 10,
+  locale: null
 };
 let userSettings = {...defaultSettings};
 function reloadSettings() {
