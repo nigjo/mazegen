@@ -508,10 +508,10 @@ document.addEventListener('keydown', (evt) => {
 // initTouch
 (() => {
   const el = document.querySelector('main #game');
-  el.addEventListener("touchstart", handleTouchStart);
-  el.addEventListener("touchend", handleTouchEnd);
-  el.addEventListener("touchcancel", handleTouchEnd);
-  el.addEventListener("touchmove", handleTouchMove);
+  el.addEventListener("touchstart", handleTouchStart, {passive:false});
+  el.addEventListener("touchend", handleTouchEnd, {passive:false});
+  el.addEventListener("touchcancel", handleTouchEnd, {passive:false});
+  el.addEventListener("touchmove", handleTouchMove, {passive:false});
 
   let startPoint;
   function handleTouchMove(evt) {
