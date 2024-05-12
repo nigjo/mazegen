@@ -33,14 +33,14 @@ const data = await Promise.all([
   for (let lang of userLanguages) {
     let filename = 'lang_' + lang + '.json';
     if (known.includes(filename)) {
-      return tryLanguage(filename, data);
+      return tryLanguage(filename, lang, data);
     }
   }
   return data;
 });
 
 //console.debug(LOGGER, 'loading...');
-async function tryLanguage(filename, data) {
+async function tryLanguage(filename, lang, data) {
 //  const lang = languages.shift();
   console.debug(LOGGER, 'try', filename);
   await fetch('res/locale/' + filename)
