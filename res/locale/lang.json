@@ -23,5 +23,14 @@
   "index.back": "Back",
   "pagetitle.share": "Docks Runner - Share",
   "pagetitle.settings": "Docks Runner - Settings",
+  "settings.title": "Settings",
+  "settings.board": "Boardsize",
+  "settings.size.default": "Default",
+  "settings.size.bigger": "Bigger",
+  "settings.size.maximal": "King size",
+  "settings.size.custom": "Custom",
+  "settings.gameoptions": "Options",
+  "settings.mode.timing": "Fastest Time",
+  "settings.mode.search": "Find all Collectables",
   "": ""
 }

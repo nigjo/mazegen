@@ -59,39 +59,39 @@ limitations under the License.
     <header>
       <div id="logo" class="bgWay">
         <h1><a href="./index.html">Docks Runner</a></h1>
-        <h2 class="bgWall">Einstellungen</h2>
+        <h2 class="bgWall" data-l10nkey="settings.title">Einstellungen</h2>
       </div>
     </header>
     <main class="settings">
       <form name="settings" id="settings">
         <section id="gamedata">
-          <h1>Spielfeld</h1>
+          <h1 data-l10nkey="settings.board">Spielfeld</h1>
           <div class="row">
-            <label><input type="radio" value="6x10" checked name="gamesize"> Standard</label>
-            <label><input type="radio" value="8x12" name="gamesize"> Größer</label>
-            <label><input type="radio" value="10x16" name="gamesize"> Max</label>
+            <label><input type="radio" value="6x10" checked name="gamesize"> <span data-l10nkey="settings.size.default">Standard</span></label>
+            <label><input type="radio" value="8x12" name="gamesize"> <span data-l10nkey="settings.size.bigger">Größer</span></label>
+            <label><input type="radio" value="10x16" name="gamesize"> <span data-l10nkey="settings.size.maximal">Max</span></label>
           </div><div class="row">
-            <label><input type="radio" value="custom" name="gamesize"> Custom:</label>
+            <label><input type="radio" value="custom" name="gamesize"> <span data-l10nkey="settings.size.custom">Custom</span>:</label>
             <input placeholder="width x height" pattern="[0-9]+ *[xX] *[0-9]+" name="customsize">
           </div>
         </section>
         <section id="gameopts">
-          <h1>Spielotionen</h1>
+          <h1 data-l10nkey="settings.gameoptions">Spieloptionen</h1>
           <div class="row">
-            <label><input type="radio" value="timing" checked name="gamemode"> Zeitspiel</label>
-            <label><input type="radio" value="search" name="gamemode"> Suchspiel</label>
+            <label><input type="radio" value="timing" checked name="gamemode"> <span data-l10nkey="settings.mode.timing">Zeitspiel</span></label>
+            <label><input type="radio" value="search" name="gamemode"> <span data-l10nkey="settings.mode.search">Suchspiel</span></label>
           </div>
         </section>
       </form>
     </main>
     <nav>
-      <div id="btnSave" class="bgWay button">Speichern</div>
-      <div id="btnBack" class="bgWay button">Zurück</div>
+      <div id="btnSave" class="bgWay button" data-l10nkey="settings.save">Speichern</div>
+      <div id="btnBack" class="bgWay button" data-l10nkey="settings.back">Zurück</div>
     </nav>
     <footer>
       &copy; Nigjo Iqn
-      - <a href="https://github.com/nigjo/mazegen/">View on GitHub</a>
-      - <a href="code.html">Teilen</a>
+      - <a href="https://github.com/nigjo/mazegen/" data-l10nkey="index.github">View on GitHub</a>
+      - <a href="code.html" data-l10nkey="index.share">Teilen</a>
     </footer>
   </body>
 </html>

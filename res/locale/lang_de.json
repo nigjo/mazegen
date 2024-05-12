@@ -21,5 +21,16 @@
   "index.settings": "Einstellungen",
   "index.back": "Zurück",
   "pagetitle.share": "Docks Runner - Teilen",
+  "settings.title": "Einstellungen",
+  "settings.save": "Speichern",
+  "settings.back": "zurück",
+  "settings.board": "Spielfeld",
+  "settings.size.default": "Standard",
+  "settings.size.bigger": "Medium",
+  "settings.size.maximal": "Maxi",
+  "settings.size.custom": "Individuell",
+  "settings.gameoptions": "Spieloptionen",
+  "settings.mode.timing": "Zeitspiel",
+  "settings.mode.search": "Suchspiel",
   "": ""
 }
