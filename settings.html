@@ -24,6 +24,7 @@ limitations under the License.
     <script type="module">
       import LM from './res/m_lang.js';
       LM.updatePage();
+      LM.fillSelect(document.getElementById('localeSelection'));
     </script>
     <script src="res/settings.js" type="module"></script>
     <style>body{
@@ -80,6 +81,12 @@ limitations under the License.
           <div class="row">
             <label><input type="radio" value="timing" checked name="gamemode"> <span data-l10nkey="settings.mode.timing">Zeitspiel</span></label>
             <label><input type="radio" value="search" name="gamemode"> <span data-l10nkey="settings.mode.search">Suchspiel</span></label>
+          </div>
+        </section>
+        <section id="appopts">
+          <h1 data-l10nkey="settings.appoptions">Weitere Einstellungen</h1>
+          <div class="row">
+            <label><span data-l10nkey="settings.locale">Sprache</span> <select name="locale" id="localeSelection"></select></label>
           </div>
         </section>
       </form>

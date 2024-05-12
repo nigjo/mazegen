@@ -32,5 +32,7 @@
   "settings.gameoptions": "Spieloptionen",
   "settings.mode.timing": "Zeitspiel",
   "settings.mode.search": "Suchspiel",
+  "settings.appoptions": "Weitere Einstellungen",
+  "settings.locale": "Sprache",
   "": ""
 }

@@ -18,6 +18,7 @@ const LOGGER = 'SETTINGS';
 const SVGNS = 'http://www.w3.org/2000/svg';
 
 import settings from './m_usersettings.js';
+import LM from './m_lang.js';
 
 async function fetchSvg(uri) {
   return fetch(uri)
@@ -64,9 +65,10 @@ function saveData() {
     settings.width = w;
     settings.height = h;
   }
-  
+
   settings.mode = formdata.gamemode.value;
-  
+  settings.locale = formdata.locale.value;
+
   settings.store();
   window.location = './index.html';
 }
@@ -103,6 +105,14 @@ function initSettings() {
   if (formdata.gamemode.value !== mode) {
     formdata.gamemode.value = 'timing';
   }
+
+  let locale = settings.locale;
+  formdata.locale.value = locale;
+  console.debug(LOGGER, settings.locale, locale, formdata.locale.value);
+  if (formdata.locale.value !== locale) {
+    formdata.locale.value = 'default';
+  }
+  console.debug(LOGGER, formdata.locale.value);
 }
 
 
@@ -112,10 +122,9 @@ function initSettingsPage() {
   initSettings();
 }
 
-if (document.readyState !== 'loaded') {
-  console.debug(LOGGER, 'wait for init');
+if (document.readyState === 'loading') {
+  console.debug(LOGGER, 'wait for init', document.readyState);
   document.addEventListener('DOMContentLoaded', initSettingsPage);
 } else {
-  console.debug(LOGGER, 'init page');
   initSettingsPage();
 }

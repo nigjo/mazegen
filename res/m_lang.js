@@ -16,6 +16,7 @@
 import settings from './m_usersettings.js';
 const LOGGER = 'LANG';
 
+const knownLocales = [];
 console.debug(LOGGER, 'initialize...');
 const data = await Promise.all([
   fetch('res/locale/lang.json').then(r => r.json()),
@@ -23,9 +24,13 @@ const data = await Promise.all([
 ]).then(basedata => {
   let data = basedata[0];
   let known = basedata[1];
+  knownLocales.push(...known.map(name => name.match(/lang_?(\w+)?\.json/)[1]));
 
   const names = Intl.getCanonicalLocales(navigator.languages);
   if (settings.locale) {
+    if ('default' === settings.locale) {
+      return data;
+    }
     names.unshift(settings.locale);
   }
   //console.debug(LOGGER, names);
@@ -82,7 +87,9 @@ async function tryLanguage(filename, lang, data) {
 //const userLanguages = [... new Set(names)];
 //console.debug(LOGGER, userLanguages);
 //await tryLanguages(userLanguages);
+//console.debug(LOGGER, knownLocales);
 console.debug(LOGGER, 'initialized');
+
 
 class LanguageManager {
 
@@ -107,6 +114,25 @@ class LanguageManager {
     for (var item of keys) {
       if (LM.has(item.dataset.l10nkey))
         item.textContent = LM.message(item.dataset.l10nkey);
+    }
+  }
+  fillSelect(target) {
+    function regionIndicator(c) {
+      const l = c.toLowerCase().substring(0, 2);
+      const base = 0x1F1E6 - 'a'.charCodeAt(0);
+      return String.fromCodePoint(base + l.charCodeAt(0), base + l.charCodeAt(1));
+    }
+    const names = new Intl.DisplayNames(undefined, {type: 'language'});
+    for (var lang of knownLocales) {
+      const option = document.createElement('option');
+      option.setAttribute('value', lang || 'default');
+      if (lang) {
+        option.textContent = regionIndicator(lang) + ' ' + names.of(lang);
+      } else {
+//        option.textContent = '\uD83C\u{0xDDE6+}\uD83C\uDDE6';
+        option.textContent = regionIndicator('gb') + ' ' + names.of('en');
+      }
+      target.append(option);
     }
   }
 }
