@@ -17,14 +17,33 @@ import settings from './m_usersettings.js';
 const LOGGER = 'LANG';
 
 console.debug(LOGGER, 'initialize...');
-const data = await
-fetch('res/lang.json').then(r => r.json());
+const data = await Promise.all([
+  fetch('res/locale/lang.json').then(r => r.json()),
+  fetch('res/locale/locales.json').then(r => r.json())
+]).then(basedata => {
+  let data = basedata[0];
+  let known = basedata[1];
 
-console.debug(LOGGER, 'loading...');
-async function tryLanguages(languages) {
-  const lang = languages.shift();
-  //console.debug(LOGGER, 'try', lang);
-  await fetch('res/lang_' + lang + '.json')
+  const names = Intl.getCanonicalLocales(navigator.languages);
+  if (settings.locale) {
+    names.unshift(settings.locale);
+  }
+  //console.debug(LOGGER, names);
+  const userLanguages = new Set(names);
+  for (let lang of userLanguages) {
+    let filename = 'lang_' + lang + '.json';
+    if (known.includes(filename)) {
+      return tryLanguage(filename, data);
+    }
+  }
+  return data;
+});
+
+//console.debug(LOGGER, 'loading...');
+async function tryLanguage(filename, data) {
+//  const lang = languages.shift();
+  console.debug(LOGGER, 'try', filename);
+  await fetch('res/locale/' + filename)
           .then(r => {
             if (r.ok)
               return r.json();
@@ -46,22 +65,23 @@ async function tryLanguages(languages) {
           })
           .catch(e => {
             //console.warn(LOGGER, e);
-            if (languages.length > 0) {
-              return tryLanguages(languages);
-            } else {
-              console.warn(LOGGER, 'no preferred locale found');
-            }
+//            if (languages.length > 0) {
+//              return tryLanguages(languages);
+//            } else {
+            console.warn(LOGGER, 'no preferred locale found', e);
+//            }
           });
+  return data;
 }
 //const names = ['ac', 'de'];
-const names = Intl.getCanonicalLocales(navigator.languages);
-if (settings.locale) {
-  names.unshift(settings.locale);
-}
+//const names = Intl.getCanonicalLocales(navigator.languages);
+//if (settings.locale) {
+//  names.unshift(settings.locale);
+//}
 //console.debug(LOGGER, names);
-const userLanguages = [... new Set(names)];
+//const userLanguages = [... new Set(names)];
 //console.debug(LOGGER, userLanguages);
-await tryLanguages(userLanguages);
+//await tryLanguages(userLanguages);
 console.debug(LOGGER, 'initialized');
 
 class LanguageManager {
