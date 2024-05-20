@@ -20,6 +20,10 @@ if ("serviceWorker" in navigator) {
   }).then(ok => {
     console.log('SW', 'enabled cache control');
   }, error => {
-    console.warn(error);
+    if (error instanceof DOMException) {
+      console.warn('SW', 'cache control can not be enabled in iframes', error);
+    } else {
+      console.warn('SW', 'unable to enable cache control', error);
+    }
   });
 }
