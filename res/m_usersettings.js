@@ -22,15 +22,37 @@ const defaultSettings = {
   mode: 'default'
 };
 let userSettings = {...defaultSettings};
-function reloadSettings() {
-  const stored = localStorage.getItem("docksrunner.settings");
-  if (stored) {
-    const storedData = JSON.parse(stored);
-    for (const p in defaultSettings)
-      userSettings[p] = (p in storedData ? storedData : defaultSettings)[p];
+
+const appStorage = (() => {
+  var storage;
+  if (window !== window.parent) {
+    console.log('SETTINGS', 'enabled session settings');
+    storage = sessionStorage;
   } else {
-    //store defaults. should happen only once.
-    localStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
+    try{
+      storage = localStorage;
+      storage.getItem('accesstest');
+    }catch(e){
+      console.log('SETTINGS', 'fallback to session settings', e);
+      storage = sessionStorage;
+    }
+  }
+  return storage;
+})();
+
+function reloadSettings() {
+  try {
+    const stored = appStorage.getItem("docksrunner.settings");
+    if (stored) {
+      const storedData = JSON.parse(stored);
+      for (const p in defaultSettings)
+        userSettings[p] = (p in storedData ? storedData : defaultSettings)[p];
+    } else {
+      //store defaults. should happen only once.
+      appStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
+    }
+  } catch (e) {
+    console.warn('unable to load user settings', e);
   }
 }
 reloadSettings();
@@ -48,8 +70,12 @@ window.addEventListener('message', (e) => {
 
 const settingsManager = {
   store: () => {
-    localStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
-    postMessage('docksrunner.settings.stored', "*");
+    try {
+      appStorage.setItem("docksrunner.settings", JSON.stringify(userSettings));
+      postMessage('docksrunner.settings.stored', "*");
+    } catch (e) {
+      console.warn('unable to store user settings', e);
+    }
   },
   reset: (full) => {
     if (full) {
